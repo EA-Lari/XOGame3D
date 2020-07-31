@@ -5,14 +5,4 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Business\Новая папка\**" />
-    <EmbeddedResource Remove="Business\Новая папка\**" />
-    <None Remove="Business\Новая папка\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Business\" />
-  </ItemGroup>
-
 </Project>

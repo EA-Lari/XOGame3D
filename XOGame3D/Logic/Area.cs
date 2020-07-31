@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using XOGame3D.Enum;
+using XOGame3D.Models;
 
-namespace XOGame3D.Interface
+namespace XOGame3D.Logic
 {
     internal abstract class Area<T> where T: ICell,new()
     {

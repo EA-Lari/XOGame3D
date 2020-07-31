@@ -1,9 +1,8 @@
 ﻿
-using XOGame3D.Business;
 using XOGame3D.Enum;
-using XOGame3D.Interface;
+using XOGame3D.Models;
 
-namespace XOGame3D.Models
+namespace XOGame3D.Logic
 {
     class PartField : Area<Cell>, ICell
     {

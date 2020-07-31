@@ -1,6 +1,6 @@
 ﻿using XOGame3D.Enum;
 
-namespace XOGame3D.Interface
+namespace XOGame3D.Models
 {
     public interface ICell
     {

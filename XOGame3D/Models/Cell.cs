@@ -1,7 +1,6 @@
 ﻿using XOGame3D.Enum;
-using XOGame3D.Interface;
 
-namespace XOGame3D.Business
+namespace XOGame3D.Models
 {
     internal class Cell : ICell
     {
