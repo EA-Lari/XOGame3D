@@ -4,7 +4,7 @@ using System.Text;
 
 namespace XOGame3D.Business
 {
-    class 122
+    class PlayField
     {
         public int Cells
         {
