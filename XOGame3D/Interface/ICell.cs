@@ -1,7 +1,12 @@
-﻿namespace XOGame3D.Interface
+﻿using XOGame3D.Enum;
+
+namespace XOGame3D.Interface
 {
     public interface ICell
     {
-        bool? Status { get; set; }
+        int Oy { get; set; }
+        int Ox { get; set; }
+        State State { get; set; }
+        bool Equals(ICell obj);
     }
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace XOGame3D.Enum
+﻿namespace XOGame3D.Enum
 {
-    internal enum State
+    public enum State
     {
         X = 2,
         O = 1,
