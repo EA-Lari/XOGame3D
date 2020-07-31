@@ -28,7 +28,7 @@ namespace XOGame3D.Logic
             return State.Empty;
         }
 
-        public void SetState(T cell)
+        public virtual void SetState(T cell)
         {
             _cells.FirstOrDefault(x => x.Ox == cell.Ox && x.Oy == cell.Oy)
             .State = cell.State;
