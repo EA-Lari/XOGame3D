@@ -1,4 +1,7 @@
-﻿public interface ICell
+﻿namespace XOGame3D.Interface
 {
-    bool? Status { get; set; }
+    public interface ICell
+    {
+        bool? Status { get; set; }
+    }
 }
