@@ -6,7 +6,7 @@ namespace XOGame3D.Logic
 {
     public class GameController
     {
-        private PlayField _faild;
+        private GameField _faild;
 
 
     }

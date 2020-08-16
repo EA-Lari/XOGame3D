@@ -1,6 +1,6 @@
 ﻿namespace XOGame3D.Enum
 {
-    public enum State
+    public enum States
     {
         X = 2,
         O = 1,
