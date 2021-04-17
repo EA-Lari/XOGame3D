@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1209
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XOGame3D", "XOGame3D\XOGame3D.csproj", "{158C97A0-868A-467B-B0D8-865BBF4ED035}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.BLL.Wrapper", "..\WPF\TicTacToeGame\TicTacToe.BLL.Wrapper\TicTacToe.BLL.Wrapper.csproj", "{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeGame.BLL", "..\WPF\TicTacToeGame\TicTacToeGame.BLL\TicTacToeGame.BLL.csproj", "{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeGame.MSTest", "..\WPF\TicTacToeGame\TicTacToeGame.MSTest\TicTacToeGame.MSTest.csproj", "{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeGame.WPF", "..\WPF\TicTacToeGame\TicTacToeGame.WPF\TicTacToeGame.WPF.csproj", "{509E1CD7-BF40-4892-8744-86352CA5C189}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{158C97A0-868A-467B-B0D8-865BBF4ED035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{158C97A0-868A-467B-B0D8-865BBF4ED035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{158C97A0-868A-467B-B0D8-865BBF4ED035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{509E1CD7-BF40-4892-8744-86352CA5C189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{509E1CD7-BF40-4892-8744-86352CA5C189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{509E1CD7-BF40-4892-8744-86352CA5C189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{509E1CD7-BF40-4892-8744-86352CA5C189}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
