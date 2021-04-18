@@ -6,7 +6,7 @@ using XOGame3D.Enum;
 
 namespace XOGame3D.Models
 {
-    internal class SmallArea : BaseArea<Cell>, ICell
+    public class SmallArea : BaseArea<Cell>, ICell
     {
         States _state;
 

@@ -5,7 +5,7 @@ using XOGame3D.Enum;
 
 namespace XOGame3D.Models
 {
-    public abstract class BaseArea<C> where C : ICell,new()
+    public abstract class BaseArea<C> : IArea<C> where C : ICell,new()
     {
         protected int _sizeArea = 3;
         public BaseArea()
@@ -22,8 +22,21 @@ namespace XOGame3D.Models
 
         public List<C> Cells { get; }
 
-        public States Winner { get; set; }
+        public C CurrentCell { get; set; }
 
-        public C LastCell { get; set; }
+        public int Size => _sizeArea;
+
+        public States State { get; set; }
+
+        public event EventState SetState;
+    }
+
+    public interface IArea<C> : IState where C : ICell
+    {
+        List<C> Cells { get; }
+
+        int Size { get; }
+
+        C CurrentCell { get; set; }
     }
 }
