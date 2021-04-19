@@ -5,17 +5,15 @@ namespace XOGame3D.Models
 {
     public interface ICell : IState
     {
+        IArea<ICell> ParentArea { get; set; }
         int Oy { get; set; }
         int Ox { get; set; }
         
     }
 
-    public delegate void EventState(ICell sender);
-
     public interface IState
     {
-        States State { get; set; }
-        event EventState SetState;
+        States State { get; set; } 
     }
 
 }

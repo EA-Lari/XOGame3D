@@ -6,20 +6,20 @@ namespace XOGame3D.Models
     public class Cell : ICell
     {
         public int Oy { get; set; }
-        public int Ox { get; set; }
-        private States _state;
 
-        public event EventState SetState;
+        public int Ox { get; set; }
+
+        private States _state = States.Empty;
 
         public States State { get => _state;
             set
             {
                 if (value != States.Empty) throw new Exception("Статус уже установлен");
                 _state = value;
-                SetState?.Invoke(this);
-
             }
         }
+
+        public IArea<ICell> ParentArea { get; set; }
     }
 
 }

@@ -10,12 +10,18 @@ namespace XOGame3D.Models
         protected int _sizeArea = 3;
         public BaseArea()
         {
+            var area = this as IArea<ICell>;
             Cells = new List<C>();
             for (int x = 0; x < _sizeArea; x++)
             {
                 for (int y = 0; y < _sizeArea; y++)
                 {
-                    Cells.Add(new C {Ox=x, Oy=y});
+                    Cells.Add(new C 
+                    {
+                        Ox = x, 
+                        Oy = y, 
+                        ParentArea = area
+                    });
                 }
             }
         }
@@ -27,8 +33,7 @@ namespace XOGame3D.Models
         public int Size => _sizeArea;
 
         public States State { get; set; }
-
-        public event EventState SetState;
+            = States.Empty;
     }
 
     public interface IArea<C> : IState where C : ICell
