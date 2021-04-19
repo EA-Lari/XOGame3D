@@ -7,25 +7,28 @@ using XOGame3D.Models;
 
 namespace XOGame3D.Logic
 {
-    class AreaController
+    class AreaChecked
     {
         public IArea<ICell> Area { get; }
 
-        public AreaController(IArea<ICell> area)
+        public AreaChecked(IArea<ICell> area)
         {
             Area = area;
         }
-
-        public void SetState(States states, ICell cell)
+        
+        /// <summary>
+        /// Проверка поля на выйгрышь статуса
+        /// </summary>
+        /// <param name="states">статус по которому нужно проверить выйгрышь</param>
+        /// <returns>Статус установленный полю</returns>
+        public States CheckByState(States states)
         {
-            cell.State = states;
-
-            Area.CurrentCell = cell;
-            if (Area.State != States.Empty) return;
-
-            if (CheckWin(States.X)) Area.State = States.X;
-            if (CheckWin(States.O)) Area.State = States.O;
-            if (CheckDraw()) Area.State = States.Draw;
+            var newState = Area.State;
+            if (states != States.Draw)
+                if (CheckWin(states))
+                    newState = states;
+            if (CheckDraw()) newState = States.Draw;
+            return newState;
         }
 
         /// <summary>
@@ -48,7 +51,8 @@ namespace XOGame3D.Logic
                 .ToList();
 
             if (forDraw)
-                cellsState.AddRange(Area.Cells.Where(x => x.State == States.Empty));
+                cellsState.AddRange(Area.Cells
+                    .Where(x => x.State == States.Empty));
 
             var diagonalR = 0;
             var diagonalL = 0;
