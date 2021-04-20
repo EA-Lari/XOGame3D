@@ -25,10 +25,9 @@ namespace XOGame3D.Models
             {
                 if (value != States.Empty) throw new Exception("Статус уже установлен");
                 _state = value;
-                SetState?.Invoke(this);
             }
         }
 
-        public event EventState SetState;
+        public IArea<ICell> ParentArea { get; set; }
     }
 }

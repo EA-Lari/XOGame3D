@@ -28,8 +28,6 @@ namespace XOGame3D.Models
 
         public List<C> Cells { get; }
 
-        public C CurrentCell { get; set; }
-
         public int Size => _sizeArea;
 
         public States State { get; set; }
@@ -41,7 +39,5 @@ namespace XOGame3D.Models
         List<C> Cells { get; }
 
         int Size { get; }
-
-        C CurrentCell { get; set; }
     }
 }
