@@ -4,7 +4,7 @@ using System.Text;
 
 namespace XOGame3D.Models
 {
-    class BigArea : BaseArea<SmallArea>
+    internal class BigArea : BaseArea<SmallArea>
     {
         public BigArea() : base()
         {

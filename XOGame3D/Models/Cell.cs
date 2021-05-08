@@ -4,7 +4,7 @@ using XOGame3D.Interfaces;
 
 namespace XOGame3D.Models
 {
-    public class Cell : ICell
+    internal class Cell : ICell
     {
         public int Oy { get; set; }
 

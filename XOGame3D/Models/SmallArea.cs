@@ -7,7 +7,7 @@ using XOGame3D.Interfaces;
 
 namespace XOGame3D.Models
 {
-    public class SmallArea : BaseArea<Cell>, ICell
+    internal class SmallArea : BaseArea<Cell>, ICell
     {
         
         public SmallArea() : base()

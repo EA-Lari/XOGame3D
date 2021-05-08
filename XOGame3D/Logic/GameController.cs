@@ -25,6 +25,7 @@ namespace XOGame3D.Logic
 
         public GameController (IUser user1, IUser user2)
         {
+            _bigArea = new BigArea();
             User2 = user2;
             User1 = user1;
             User1.Fraction = States.X;

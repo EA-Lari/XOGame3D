@@ -6,7 +6,7 @@ using XOGame3D.Interfaces;
 
 namespace XOGame3D.Models
 {
-    public abstract class BaseArea<C> : IArea<C> where C : ICell,new()
+    internal abstract class BaseArea<C> : IArea<C> where C : ICell,new()
     {
         States _state = States.Empty;
         protected int _sizeArea = 3;
