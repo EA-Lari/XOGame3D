@@ -6,6 +6,9 @@ namespace XOGame3D.Models
 {
     class BigArea : BaseArea<SmallArea>
     {
-        public SmallArea CurrentArea { get; set; }
+        public BigArea() : base()
+        {
+
+        }
     }
 }

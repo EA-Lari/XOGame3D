@@ -1,5 +1,6 @@
 ﻿using System;
 using XOGame3D.Enum;
+using XOGame3D.Interfaces;
 
 namespace XOGame3D.Models
 {

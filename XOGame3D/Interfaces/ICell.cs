@@ -1,7 +1,8 @@
 ﻿using System;
 using XOGame3D.Enum;
+using XOGame3D.Models;
 
-namespace XOGame3D.Models
+namespace XOGame3D.Interfaces
 {
     public interface ICell : IState
     {

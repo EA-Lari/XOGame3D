@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using XOGame3D.Enum;
+using XOGame3D.Interfaces;
 
 namespace XOGame3D.Models
 {
     public abstract class BaseArea<C> : IArea<C> where C : ICell,new()
     {
+        States _state = States.Empty;
         protected int _sizeArea = 3;
+
         public BaseArea()
         {
             var area = this as IArea<ICell>;
@@ -30,14 +33,16 @@ namespace XOGame3D.Models
 
         public int Size => _sizeArea;
 
-        public States State { get; set; }
-            = States.Empty;
-    }
+        public C CurrentCell { get; set; }
 
-    public interface IArea<C> : IState where C : ICell
-    {
-        List<C> Cells { get; }
-
-        int Size { get; }
+        public States State
+        {
+            get => _state;
+            set
+            {
+                if (value != States.Empty) throw new Exception("Статус уже установлен");
+                _state = value;
+            }
+        }
     }
 }
