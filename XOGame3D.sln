@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1209
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XOGame3D", "XOGame3D\XOGame3D.csproj", "{158C97A0-868A-467B-B0D8-865BBF4ED035}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "ClrUI\ConsoleUI.csproj", "{24C92EBB-0323-42A3-90DA-69733C9002F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{158C97A0-868A-467B-B0D8-865BBF4ED035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{158C97A0-868A-467B-B0D8-865BBF4ED035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{158C97A0-868A-467B-B0D8-865BBF4ED035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24C92EBB-0323-42A3-90DA-69733C9002F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24C92EBB-0323-42A3-90DA-69733C9002F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24C92EBB-0323-42A3-90DA-69733C9002F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24C92EBB-0323-42A3-90DA-69733C9002F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,7 +23,7 @@ namespace XOGame3D.Logic
 
         public IUser WinnerUser { get; set; }
 
-        public GameController (IUser user1, IUser user2)
+        public GameController(IUser user1, IUser user2)
         {
             _bigArea = new BigArea();
             User2 = user2;
@@ -73,6 +73,7 @@ namespace XOGame3D.Logic
                 SetWinner?.Invoke(_bigArea.State);
             }
         }
+
         private void SetWinnerUser(States winnerState)
         {
             if (User1.Fraction == winnerState) WinnerUser = User1;
@@ -89,5 +90,10 @@ namespace XOGame3D.Logic
         public IArea<ICell> GetCurrentArea() => _bigArea.CurrentCell as IArea<ICell>;
 
         public IArea<ICell> GetBigArea() => _bigArea as IArea<ICell>;
+
+        public IArea<ICell> GetAllSmallAreasByCell(ICell cell)
+        {
+            return _bigArea.Cells.Single(x => x == cell) as IArea<ICell>;
+        }
     }
 }
