@@ -20,7 +20,7 @@ namespace XOGame3D.Models
             }
         }
 
-        public IArea<ICell> ParentArea { get; set; }
+        public IArea ParentArea { get; set; }
 
         public override bool Equals(object obj)
         {

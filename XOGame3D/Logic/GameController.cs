@@ -25,7 +25,7 @@ namespace XOGame3D.Logic
 
         public GameController(IUser user1, IUser user2)
         {
-            _bigArea = new BigArea();
+            _bigArea = BigArea.GetBigArea();
             User2 = user2;
             User1 = user1;
             User1.Fraction = States.X;
@@ -52,7 +52,7 @@ namespace XOGame3D.Logic
             CurrenUser = CurrenUser == User1 ? User2 : User1;
         }
 
-        private void CheckStateInArea(IArea<ICell> area, States state)
+        private void CheckStateInArea(IArea area, States state)
         {
             if (area == null) return;
             var checker = new AreaChecked(area);
@@ -65,7 +65,7 @@ namespace XOGame3D.Logic
             }
         }
 
-        private void FindedWinner(IArea<ICell> area)
+        private void FindedWinner(IArea area)
         {
             if (area == _bigArea)
             {
@@ -82,18 +82,19 @@ namespace XOGame3D.Logic
 
         private void SetNextArea(ICell cell)
         {
-            _bigArea.CurrentCell = _bigArea.Cells.Single(x => cell.Equals(x));
-            if (!_bigArea.CurrentCell.Cells.Any(x => x.State == States.Empty))
+            var smallArea = _bigArea.Cells.Single(x => cell.Equals(x)) as SmallArea;
+            _bigArea.CurrentCell = smallArea;
+            if (!smallArea.Cells.Any(x => x.State == States.Empty))
                 _bigArea.CurrentCell = null;
         }
 
-        public IArea<ICell> GetCurrentArea() => _bigArea.CurrentCell as IArea<ICell>;
+        public IArea GetCurrentArea() => _bigArea.CurrentCell as IArea;
 
-        public IArea<ICell> GetBigArea() => _bigArea as IArea<ICell>;
+        public IArea GetBigArea() => _bigArea as IArea;
 
-        public IArea<ICell> GetAllSmallAreasByCell(ICell cell)
+        public IArea GetAllSmallAreasByCell(ICell cell)
         {
-            return _bigArea.Cells.Single(x => x == cell) as IArea<ICell>;
+            return _bigArea.Cells.Single(x => x == cell) as IArea;
         }
     }
 }

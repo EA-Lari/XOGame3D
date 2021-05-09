@@ -4,9 +4,9 @@ using System.Text;
 
 namespace XOGame3D.Interfaces
 {
-    public interface IArea<C> : IState where C : ICell
+    public interface IArea : IState
     {
-        List<C> Cells { get; }
+        List<ICell> Cells { get; }
 
         int Size { get; }
     }

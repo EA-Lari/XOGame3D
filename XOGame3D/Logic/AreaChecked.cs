@@ -10,9 +10,9 @@ namespace XOGame3D.Logic
 {
     class AreaChecked
     {
-        public IArea<ICell> Area { get; }
+        public IArea Area { get; }
 
-        public AreaChecked(IArea<ICell> area)
+        public AreaChecked(IArea area)
         {
             Area = area;
         }

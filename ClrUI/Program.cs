@@ -88,7 +88,7 @@ namespace ClrUI
             }
         }
 
-        private static void DrawRow(int hight, List<IArea<ICell>> areas)
+        private static void DrawRow(int hight, List<IArea> areas)
         {
             for (int h = 0; h < hight; h++)
             {

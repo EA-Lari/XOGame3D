@@ -6,7 +6,7 @@ namespace XOGame3D.Interfaces
 {
     public interface ICell : IState
     {
-        IArea<ICell> ParentArea { get; set; }
+        IArea ParentArea { get; set; }
         int Oy { get; set; }
         int Ox { get; set; }
         
