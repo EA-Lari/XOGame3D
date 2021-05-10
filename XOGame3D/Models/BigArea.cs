@@ -53,7 +53,7 @@ namespace XOGame3D.Models
             get => _state;
             set
             {
-                if (value != States.Empty) throw new Exception("Статус уже установлен");
+                if (_state != States.Empty) throw new Exception("Статус уже установлен");
                 _state = value;
             }
         }

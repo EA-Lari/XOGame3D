@@ -13,12 +13,16 @@ namespace ConsoleUI
         {
             try
             {
+                Console.SetWindowSize(100,40);
                 Console.WriteLine("Hello World!");
                 var player1 = GeneratePlayers();
                 var player2 = GeneratePlayers();
                 _controller = new GameController(player1, player2);
                 _controller.SetWinner += _controller_SetWinner;
                 Play();
+                Console.WriteLine("Game Over!" +
+                "\nPress any key for Exit.");
+                Console.ReadKey();
             }
             catch(Exception e)
             {
@@ -35,7 +39,6 @@ namespace ConsoleUI
         private static void _controller_SetWinner(XOGame3D.Enum.States states)
         {
             GameOver = true;
-            Console.WriteLine("Game Over!");
             if (_controller.WinnerUser == null)
                 Console.WriteLine("Draw");
             else
@@ -57,7 +60,7 @@ namespace ConsoleUI
                 var artist = new PlayingAreaArtist(_controller);
                 artist.DrawArea();
                 Console.WriteLine();
-                Console.WriteLine($"Player turn {_controller.CurrenUser.Name} ");
+                Console.WriteLine($"Player '{_controller.CurrenUser.Name}' turn");
                 MakeMove();
             }
         }
@@ -72,7 +75,7 @@ namespace ConsoleUI
                     Console.WriteLine("Enter current area(column, row):");
                     int rowCurrent, columnCurrent;
                     EnterCoordinates(out columnCurrent, out rowCurrent);
-                    _controller.SetCurrentArea(columnCurrent, rowCurrent);
+                    _controller.SetCurrentArea(rowCurrent, columnCurrent);
                 }
                 else
                 {

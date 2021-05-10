@@ -51,8 +51,8 @@ namespace XOGame3D.Logic
             cell.State = state;
             var area = cell.ParentArea;
             if (area == null) return;
-            if (area.State != States.Empty) return;
-            CheckStateInArea(area, cell.State);
+            if (area.State == States.Empty) 
+                CheckStateInArea(area, cell.State);
             SetNextArea(cell);
             if (_bigArea.State != States.Empty)
                 SetWinner?.Invoke(_bigArea.State);
