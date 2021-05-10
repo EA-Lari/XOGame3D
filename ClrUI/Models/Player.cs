@@ -4,7 +4,7 @@ using System.Text;
 using XOGame3D.Enum;
 using XOGame3D.Interfaces;
 
-namespace ClrUI.Models
+namespace ConsoleUI.Models
 {
     class Player : IUser
     {

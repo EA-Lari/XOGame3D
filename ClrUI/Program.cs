@@ -1,11 +1,11 @@
-﻿using ClrUI.Models;
+﻿using ConsoleUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using XOGame3D.Interfaces;
 using XOGame3D.Logic;
 
-namespace ClrUI
+namespace ConsoleUI
 {
     
     class Program
@@ -46,66 +46,10 @@ namespace ClrUI
         {
             while (!GameOver)
             {
-                PaintArea();
+                var artist = new PlayingAreaArtist(_controller);
+                artist.DrawArea();
                 Console.ReadKey();
                 return;
-            }
-        }
-
-        private static void PaintArea()
-        {
-            var maxSize = 3;
-            Console.Clear();
-            var bigArea = _controller.GetBigArea();
-
-            for (int rowArea = 1; rowArea <= maxSize; rowArea++)
-            {
-                var cellsArea = bigArea.Cells
-                    .Where(x => x.Ox == rowArea);
-
-                var areas = bigArea.Cells
-                    .Where(x => x.Ox == rowArea)
-                    .Select(x => _controller.GetAllSmallAreasByCell(x));
-
-                DrawHorisontalMain(areas.Count());
-
-                DrawRow(5, areas.ToList());
-                DrawHorisontalMain(areas.Count()); 
-            }
-        }
-
-        private static void DrawHorisontalMain(int count)
-        {
-            Console.WriteLine();
-            var breakSymbol = " ";
-            var columnSymbol = "______";
-            for (int i = 0; i < count; i++)
-            {
-                Console.Write(breakSymbol);
-                for (int j = 0; j < count; j++)
-                    Console.Write(columnSymbol);
-                Console.Write(breakSymbol);
-            }
-        }
-
-        private static void DrawRow(int hight, List<IArea> areas)
-        {
-            for (int h = 0; h < hight; h++)
-            {
-                DrawRowAreas("     |", areas.Count());
-            }
-            DrawRowAreas("_____|", areas.Count());
-        }
-
-        private static void DrawRowAreas(string columnSymbol, int count)
-        {
-            Console.WriteLine();
-            Console.Write("||");
-            for (int i = 1; i < count; i++)
-            {
-                for (int j = 1; j < count; j++)
-                    Console.Write(columnSymbol);
-                Console.Write("||");
             }
         }
     }

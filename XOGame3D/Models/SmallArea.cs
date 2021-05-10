@@ -9,6 +9,7 @@ namespace XOGame3D.Models
 {
     internal class SmallArea : IArea, ICell
     {
+        private int _sizeArea = 3;
         public SmallArea()
         {
             Cells = new List<ICell>();
@@ -21,7 +22,7 @@ namespace XOGame3D.Models
 
         public List<ICell> Cells {get;}
 
-        public int Size {get;}
+        public int Size => _sizeArea;
 
         public States State { get; set; }
     }
