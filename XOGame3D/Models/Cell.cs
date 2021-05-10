@@ -6,16 +6,16 @@ namespace XOGame3D.Models
 {
     internal class Cell : ICell
     {
-        public int Oy { get; set; }
+        public int Row { get; set; }
 
-        public int Ox { get; set; }
+        public int Column { get; set; }
 
         private States _state = States.Empty;
 
         public States State { get => _state;
             set
             {
-                if (value != States.Empty) throw new Exception("Статус уже установлен");
+                if (_state != States.Empty) throw new Exception("Статус уже установлен");
                 _state = value;
             }
         }
@@ -25,8 +25,8 @@ namespace XOGame3D.Models
         public override bool Equals(object obj)
         {
             return obj is ICell cell &&
-                   Oy == cell.Oy &&
-                   Ox == cell.Ox;
+                   Row == cell.Row &&
+                   Column == cell.Column;
         }
     }
 

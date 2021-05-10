@@ -65,14 +65,14 @@ namespace XOGame3D.Logic
 
                 for (int y = 0; y < Area.Size; y++)
                 {
-                    vertical += cellsState.Any(d => d.Ox == x && d.Oy == y) ? 1 : 0;
-                    horisontal += cellsState.Any(d => d.Ox == y && d.Oy == x) ? 1 : 0;
+                    vertical += cellsState.Any(d => d.Column == x && d.Row == y) ? 1 : 0;
+                    horisontal += cellsState.Any(d => d.Column == y && d.Row == x) ? 1 : 0;
                 }
 
                 if (vertical == 3 || horisontal == 3) return true;
 
-                diagonalR += cellsState.Any(d => d.Ox == x && d.Oy == x) ? 1 : 0;
-                diagonalL += cellsState.Any(d => d.Ox == x && d.Oy == Area.Size - x - 1) ? 1 : 0;
+                diagonalR += cellsState.Any(d => d.Column == x && d.Row == x) ? 1 : 0;
+                diagonalL += cellsState.Any(d => d.Column == x && d.Row == Area.Size - x - 1) ? 1 : 0;
             }
 
             if (diagonalR == 3 || diagonalL == 3) return true;

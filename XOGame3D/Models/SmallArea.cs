@@ -15,8 +15,8 @@ namespace XOGame3D.Models
             Cells = new List<ICell>();
         }
         public bool IsCrowded => !Cells.Any(x => x.State == States.Empty);
-        public int Oy { get; set; }
-        public int Ox { get; set; }
+        public int Row { get; set; }
+        public int Column { get; set; }
      
         public IArea ParentArea { get; set; }
 

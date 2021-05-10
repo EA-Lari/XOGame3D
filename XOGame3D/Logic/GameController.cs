@@ -33,6 +33,13 @@ namespace XOGame3D.Logic
             CurrenUser = User1;
         }
 
+        public void SetState(int row, int column)
+        {
+            var area = _bigArea.CurrentCell as IArea;
+            var cell = area.Cells.Single(x => x.Row == row && x.Column == column);
+            SetState(cell);
+        }
+
         public void SetState(ICell cell)
         {
             var state = CurrenUser.Fraction;
@@ -40,7 +47,7 @@ namespace XOGame3D.Logic
                 throw new ApplicationException("Невозможно продолжить игру!" +
                     "\nИгра завершина.");
             if (cell.State != States.Empty)
-                throw new ArgumentException("Невозможно изменить заполненное поле");
+                throw new ApplicationException("Невозможно изменить заполненное поле");
             cell.State = state;
             var area = cell.ParentArea;
             if (area == null) return;
@@ -59,6 +66,7 @@ namespace XOGame3D.Logic
             var newState = checker.CheckByState(state);
             if (newState != States.Empty)
             {
+                area.State = newState;
                 if (area is ICell cellArea)
                     CheckStateInArea(cellArea.ParentArea, newState);
                 FindedWinner(area);
@@ -89,6 +97,25 @@ namespace XOGame3D.Logic
         }
 
         public IArea GetCurrentArea() => _bigArea.CurrentCell as IArea;
+
+        public void SetCurrentArea(int row, int column)
+        {
+            var cell = _bigArea.Cells
+                .Single(x => x.Row == row && x.Column == column);
+            SetCurrentArea(cell);
+        }
+
+        public void SetCurrentArea(IArea area)
+        {
+            SetCurrentArea(area as ICell);
+        }
+
+        private void SetCurrentArea(ICell cell)
+        {
+            if (_bigArea.CurrentCell != null)
+                throw new Exception("Current Cell not empty");
+            _bigArea.CurrentCell = cell;
+        }
 
         public IArea GetBigArea() => _bigArea as IArea;
 

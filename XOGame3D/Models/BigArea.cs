@@ -33,8 +33,8 @@ namespace XOGame3D.Models
                 {
                     area.Cells.Add(new C
                     {
-                        Ox = x,
-                        Oy = y,
+                        Column = x,
+                        Row = y,
                         ParentArea = area,
                         State = States.Empty
                     });
