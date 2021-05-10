@@ -11,6 +11,8 @@ namespace ConsoleUI
     {
         private IArea _bigArea;
         private GameController _controller;
+        private int _sizeBigArea, _sizeSmallArea;
+        private int _higthCell = 3;
 
         public PlayingAreaArtist(GameController controller)
         {
@@ -20,63 +22,58 @@ namespace ConsoleUI
 
         public void DrawArea()
         {
-            var maxSize = 3;
             Console.Clear();
 
-            //for (int rowArea = 1; rowArea <= maxSize; rowArea++)
-            //{
-            //    var cellsArea = _bigArea.Cells
-            //        .Where(x => x.Ox == rowArea);
+            var areas = _bigArea.Cells
+                .Select(x => _controller.GetAllSmallAreasByCell(x));
 
-            //    var areas = _bigArea.Cells
-            //        .Where(x => x.Ox == rowArea)
-            //        .Select(x => _controller.GetAllSmallAreasByCell(x));
+            _sizeBigArea = _bigArea.Size;
+            _sizeSmallArea = areas.FirstOrDefault().Size;
 
-                var size = _bigArea.Size;
-                for (int j = 0; j < size; j++)
+            for (int j = 0; j < _sizeBigArea; j++)
+            {
+                DrawHorisontalMain();
+
+                for (int i = 0; i < _sizeSmallArea; i++)
                 {
-                    DrawHorisontalMain(size);
-
-                    for (int i = 0; i < size; i++)
-                    {
-                        DrawRow(3, size);
-                    }
+                    DrawRow(_higthCell);
                 }
-                DrawHorisontalMain(size);
-            //}
+            }
         }
 
-        private void DrawHorisontalMain(int size)
+        private void DrawHorisontalMain()
         {
             Console.WriteLine();
             var breakSymbol = " ";
             var columnSymbol = "______";
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < _sizeBigArea; i++)
             {
                 Console.Write(breakSymbol);
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < _sizeSmallArea; j++)
                     Console.Write(columnSymbol);
                 Console.Write(breakSymbol);
             }
         }
 
-        private void DrawRow(int hight, int count)
+        private void DrawRow(int hight)
         {
-            for (int h = 0; h < hight; h++)
+            for (int h = 1; h < hight; h++)
             {
-                DrawRowAreas("     |", count);
+                DrawRowAreas("     |");
             }
-            DrawRowAreas("_____|", count);
+            DrawRowAreas("_____|");
         }
 
-        private void DrawRowAreas(string columnSymbol, int count)
+        private void DrawRowAreas(string columnSymbol)
         {
             Console.WriteLine();
             Console.Write("||");
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < _sizeBigArea; i++)
             {
-                for (int j = 0; j < count; j++)
+                Console.ForegroundColor= ConsoleColor.Blue;
+                for (int j = 0; j < _sizeSmallArea; j++)
                     Console.Write(columnSymbol);
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("||");
             }
         }
