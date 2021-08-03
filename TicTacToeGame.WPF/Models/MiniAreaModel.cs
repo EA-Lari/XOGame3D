@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using TicTacToeGame.BLL.Enums;
+
 using TicTacToeGame.BLL.Interfaces;
 using TicTacToeGame.BLL.NotifyBinding;
 using TicTacToeGame.BLL.Structures;
 
-namespace TicTacToeGame.BLL.Models
+namespace TicTacToeGame.WPF.Models
 {
     /// <summary>
     /// Мини-поле, состоит из ячеек
     /// </summary>
-    public class MiniAreaModel : NotifyPropertyChanged, Area<Cell>, Cell
+    public class MiniAreaModel : NotifyPropertyChanged
     {
         public string MiniAreaGuid { get; }
         public int Size                 { get; set; }
         public List<Cell> CellsList     { get; set; }
         
-        public State AreaState { get; set; }
+        public States AreaState { get; set; }
         
 
-        private State _winner;
-        public State Winner
+        private States _winner;
+        public States Winner
         {
             get => _winner;
             set
@@ -42,8 +42,8 @@ namespace TicTacToeGame.BLL.Models
         }
         public Coordinates Coordinates  { get; set; }
         
-        private State _cellState;
-        public State CellState
+        private States _cellState;
+        public States CellState
         {
             get => _cellState;
             set
@@ -55,7 +55,7 @@ namespace TicTacToeGame.BLL.Models
 
         public string ParentAreaGuid => throw new NotImplementedException();
 
-        public MiniAreaModel ( int x, int y, State areaState, int smallAreaSize )
+        public MiniAreaModel ( int x, int y, States areaState, int smallAreaSize )
         {
             // Костыль, привести в порядок дубликаты полей
             this.MiniAreaGuid = Guid.NewGuid().ToString();

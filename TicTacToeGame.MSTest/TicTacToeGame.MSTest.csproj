@@ -63,6 +63,10 @@
       <Project>{5fd3bbc1-b689-4350-a982-45fa3e24bdb2}</Project>
       <Name>TicTacToeGame.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TicTacToeGame.WPF\TicTacToeGame.WPF.csproj">
+      <Project>{509E1CD7-BF40-4892-8744-86352CA5C189}</Project>
+      <Name>TicTacToeGame.WPF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

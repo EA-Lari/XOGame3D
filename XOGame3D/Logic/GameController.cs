@@ -33,6 +33,11 @@ namespace XOGame3D.Logic
             CurrenUser = User1;
         }
 
+        /// <summary>
+        /// Set the current state in cell by number row and column
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
         public void SetState(int row, int column)
         {
             var area = _bigArea.CurrentCell as IArea;
@@ -40,7 +45,7 @@ namespace XOGame3D.Logic
             SetState(cell);
         }
 
-        public void SetState(ICell cell)
+        private void SetState(ICell cell)
         {
             var state = CurrenUser.Fraction;
             if (_bigArea.State != States.Empty)
@@ -96,18 +101,22 @@ namespace XOGame3D.Logic
                 _bigArea.CurrentCell = null;
         }
 
+        /// <summary>
+        /// Return current area for next turn player
+        /// </summary>
+        /// <returns></returns>
         public IArea GetCurrentArea() => _bigArea.CurrentCell as IArea;
 
+        /// <summary>
+        /// Set area for turn, allow if there is no current area
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
         public void SetCurrentArea(int row, int column)
         {
             var cell = _bigArea.Cells
                 .Single(x => x.Row == row && x.Column == column);
             SetCurrentArea(cell);
-        }
-
-        public void SetCurrentArea(IArea area)
-        {
-            SetCurrentArea(area as ICell);
         }
 
         private void SetCurrentArea(ICell cell)
@@ -117,8 +126,17 @@ namespace XOGame3D.Logic
             _bigArea.CurrentCell = cell;
         }
 
+        /// <summary>
+        /// Get Main plaing area
+        /// </summary>
+        /// <returns></returns>
         public IArea GetBigArea() => _bigArea as IArea;
 
+        /// <summary>
+        /// Convert cell to area(working for only small area)
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
         public IArea GetAllSmallAreasByCell(ICell cell)
         {
             return _bigArea.Cells.Single(x => x == cell) as IArea;

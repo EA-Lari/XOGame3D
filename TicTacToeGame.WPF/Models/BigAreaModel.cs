@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
-using TicTacToeGame.BLL.Enums;
+
 using TicTacToeGame.BLL.Interfaces;
 using TicTacToeGame.BLL.NotifyBinding;
 
-namespace TicTacToeGame.BLL.Models
+namespace TicTacToeGame.WPF.Models
 {
     /// <summary>
     /// Класс большого игрового поля
     /// </summary>
-    public class BigAreaModel : NotifyPropertyChanged, Area<Cell>
+    public class BigAreaModel : NotifyPropertyChanged
     {
         public int Size { get; set; } = 3;
         public List<Cell> CellsList { get; set; }
 
-        private State _areaState;
-        public State AreaState
+        private States _areaState;
+        public States AreaState
         {
             get => _areaState;
             set
@@ -27,7 +27,7 @@ namespace TicTacToeGame.BLL.Models
         public bool IsActive        { get; set; }
 
         public string MiniAreaGuid  { get; }
-        public State Winner         { get; set; }
+        public States Winner         { get; set; }
 
         public BigAreaModel()
         {

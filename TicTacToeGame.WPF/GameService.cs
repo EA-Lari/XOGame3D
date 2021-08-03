@@ -1,11 +1,9 @@
 ﻿using System.Linq;
-using TicTacToeGame.BLL.Enums;
-using TicTacToeGame.BLL.Interfaces;
-using TicTacToeGame.BLL.Models;
+using TicTacToeGame.WPF.Models;
 
-namespace TicTacToeGame.BLL.Algorithm
+namespace TicTacToeGame.WPF
 {
-    public class Algorithm
+    public class GameService
     {
         public BigAreaModel CreateGame()
         {
@@ -13,7 +11,7 @@ namespace TicTacToeGame.BLL.Algorithm
             return bigAreaModel;
         }
 
-        public void CheckWin(Area<Cell> area, State cellState)
+        public void CheckWin(MiniAreaModel area, States cellState)
         {
             
             var checkedCells = area.CellsList.Where(x => x.CellState == cellState);
@@ -51,7 +49,7 @@ namespace TicTacToeGame.BLL.Algorithm
             CheckDraw(area);
         }
 
-        private void SetWinner(Area<Cell> area, State winState)
+        private void SetWinner(Area<Cell> area, States winState)
         {
             // TODO похоже на костыль, исправить, в универсальном классе не должны быть реальные объекты
             if ( area is MiniAreaModel model)
@@ -64,12 +62,12 @@ namespace TicTacToeGame.BLL.Algorithm
             }
         }
 
-        private void CheckDraw(Area<Cell> area)
+        private void CheckDraw(MiniAreaModel area)
         {
-            bool flagOfDraw = area.CellsList.All(x => x.CellState != State.Empty);
+            bool flagOfDraw = area.CellsList.All(x => x.CellState != States.Empty);
             if (flagOfDraw)
             {
-                area.AreaState = State.Draw;
+                area.AreaState = States.Draw;
             }
         }        
     }

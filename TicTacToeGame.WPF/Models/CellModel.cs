@@ -1,21 +1,20 @@
-﻿using TicTacToeGame.BLL.Enums;
-using TicTacToeGame.BLL.Interfaces;
-using TicTacToeGame.BLL.NotifyBinding;
+﻿using TicTacToeGame.BLL.NotifyBinding;
 using TicTacToeGame.BLL.Structures;
+using XOGame3D.Enum;
 
-namespace TicTacToeGame.BLL.Models
+namespace TicTacToeGame.WPF.Models
 {
     /// <summary>
     /// Ячейка, минимальная игровая единица
     /// </summary>
-    public class CellModel : NotifyPropertyChanged, Cell
+    public class CellModel : NotifyPropertyChanged
     {
         public string ParentAreaGuid { get; }
 
         public Coordinates Coordinates  { get; set; }
 
-        private State _cellState;
-        public State CellState          
+        private States _cellState;
+        public States CellState          
         {
             get => _cellState;
             set
@@ -27,7 +26,7 @@ namespace TicTacToeGame.BLL.Models
 
         public bool IsActive { get; set; }
 
-        public CellModel(int x, int y, State state, string parentAreaGuid)
+        public CellModel(int x, int y, States state, string parentAreaGuid)
         {
             this.ParentAreaGuid = parentAreaGuid;
             this.Coordinates = new Coordinates(x, y);

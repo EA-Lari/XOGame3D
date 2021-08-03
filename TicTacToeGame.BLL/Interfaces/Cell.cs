@@ -1,4 +1,4 @@
-﻿using TicTacToeGame.BLL.Enums;
+﻿
 using TicTacToeGame.BLL.Structures;
 
 namespace TicTacToeGame.BLL.Interfaces
@@ -15,7 +15,7 @@ namespace TicTacToeGame.BLL.Interfaces
         /// <summary>
         /// Статус ячейки - O X Ничья
         /// </summary>
-        State CellState         { get; set; }
+        States CellState         { get; set; }
         
         /// <summary>
         /// Флаг активности ячейки

@@ -3,9 +3,9 @@ using System.Linq;
 
 using TicTacToeGame.BLL.NotifyBinding;
 using TicTacToeGame.BLL.Interfaces;
-using TicTacToeGame.BLL.Algorithm;
-using TicTacToeGame.BLL.Models;
-using TicTacToeGame.BLL.Enums;
+
+
+
 
 using TicTacToeGame.WPF.Commands;
 using System.Diagnostics;
@@ -17,7 +17,7 @@ namespace TicTacToeGame.WPF.ViewModels
     {
         #region Поля        
 
-        private Algorithm _algorithm;
+        private GameService _algorithm;
 
         private Area<Cell> _nextActiveArea;
         private Area<Cell> _currentActiveArea;
@@ -35,8 +35,8 @@ namespace TicTacToeGame.WPF.ViewModels
         // TODO Реальный MVVM костыль, переделать!
         private int _turnCounter;
 
-        private State _turn;
-        public State Turn
+        private States _turn;
+        public States Turn
         {
             get => _turn;
             set
@@ -83,7 +83,7 @@ namespace TicTacToeGame.WPF.ViewModels
         private void NewGame()
         {            
             this.Turn = State.Cross;
-            this._algorithm = new Algorithm();            
+            this._algorithm = new GameService();            
             // Создаем игровое поле размерностью 3 х 3
             this.BigGameArea = this._algorithm.CreateGame();
             

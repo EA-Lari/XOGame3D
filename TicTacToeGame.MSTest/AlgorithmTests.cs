@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TicTacToeGame.BLL.Algorithm;
-using TicTacToeGame.BLL.Enums;
 using TicTacToeGame.BLL.Interfaces;
-using TicTacToeGame.BLL.Models;
+using TicTacToeGame.WPF;
+using TicTacToeGame.WPF.Models;
 
 namespace TicTacToeGame.MSTest
 {
     [TestClass]
     public class AlgorithmTests
     {
-        private Algorithm _algorithm;
+        private GameService _algorithm;
         private BigAreaModel _bigArea;
 
         [TestInitialize]
         public void InitTest()
         {
-            this._algorithm = new Algorithm();
+            this._algorithm = new GameService();
             this._bigArea = _algorithm.CreateGame();           
         }
         /// <summary>

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TicTacToeGame.BLL.Enums;
 
 namespace TicTacToeGame.BLL.Interfaces
 {
@@ -19,12 +18,12 @@ namespace TicTacToeGame.BLL.Interfaces
         /// <summary>
         /// Состояние поля
         /// </summary>
-        State AreaState     { get; set; }
+        States AreaState     { get; set; }
 
         /// <summary>
         /// Победитель в поле
         /// </summary>
-        State Winner        { get; set; }
+        States Winner        { get; set; }
 
         /// <summary>
         /// Активность поля для хода игрока
