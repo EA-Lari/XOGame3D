@@ -1,40 +1,15 @@
-﻿using Microsoft.AspNet.SignalR.Client;
-using System;
+﻿using System;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using TicTacToeGame.WPF.Models;
+using TicTacToeGame.BLL.Interfaces;
+using TicTacToeWPF.Models;
+using XOGame3D.Enum;
 
-namespace TicTacToeGame.WPF
+namespace TicTacToeWPF
 {
     public class GameService
     {
-        public async Task Test()
-        {
-            using (var hubConnection = new HubConnection("http://www.contoso.com/"))
-            {
-                IHubProxy stockTickerHubProxy = hubConnection.CreateHubProxy("StockTickerHub");
-                stockTickerHubProxy.On<Stock>("UpdateStockPrice", stock => Console.WriteLine("Stock update for {0} new price {1}", stock.Symbol, stock.Price));
-                await hubConnection.Start();
-            }
-        }
-
-        public class Stock
-        {
-            public string Symbol { get; set; }
-            public decimal Price { get; set; }
-        }
-
-        public enum States { }
-        public class Area<T> { }
-        public class Cell { }
-
-        public BigAreaModel CreateGame()
-        {
-            BigAreaModel bigAreaModel = new BigAreaModel();
-            return bigAreaModel;
-        }
-
         public void CheckWin(MiniAreaModel area, States cellState)
         {
             
@@ -64,7 +39,7 @@ namespace TicTacToeGame.WPF
                 diagonalLeft += checkedCells.Any(d => d.Coordinates.CoordX == x && d.Coordinates.CoordY == area.Size - x - 1) ? 1 : 0;
             }            
 
-            if ( (diagonalRight == 3 || diagonalLeft == 3) && area.AreaState == State.Empty )
+            if ( (diagonalRight == 3 || diagonalLeft == 3) && area.AreaState == States.Empty )
             {
                 SetWinner(area, cellState);
                 return;

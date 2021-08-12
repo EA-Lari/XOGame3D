@@ -9,13 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ClrUI\ConsoleU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.BLL.Wrapper", "TicTacToe.BLL.Wrapper\TicTacToe.BLL.Wrapper.csproj", "{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeGame.BLL", "TicTacToeGame.BLL\TicTacToeGame.BLL.csproj", "{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeGame.MSTest", "TicTacToeGame.MSTest\TicTacToeGame.MSTest.csproj", "{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeGame.WPF", "TicTacToeGame.WPF\TicTacToeGame.WPF.csproj", "{509E1CD7-BF40-4892-8744-86352CA5C189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetTicTacToe", "AspNetTicTacToe\AspNetTicTacToe.csproj", "{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetTicTacToe", "AspNetTicTacToe\AspNetTicTacToe.csproj", "{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeWPF", "TicTacToeWPF\TicTacToeWPF.csproj", "{84A76975-14AE-468F-BA03-D54D897E4625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,22 +33,18 @@ Global
 		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FD3BBC1-B689-4350-A982-45FA3E24BDB2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{509E1CD7-BF40-4892-8744-86352CA5C189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{509E1CD7-BF40-4892-8744-86352CA5C189}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{509E1CD7-BF40-4892-8744-86352CA5C189}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{509E1CD7-BF40-4892-8744-86352CA5C189}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84A76975-14AE-468F-BA03-D54D897E4625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84A76975-14AE-468F-BA03-D54D897E4625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84A76975-14AE-468F-BA03-D54D897E4625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84A76975-14AE-468F-BA03-D54D897E4625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
