@@ -31,7 +31,7 @@ namespace TicTacToeWPF
 
                 if ( (verticalLines == 3 || horizontLines == 3) && area.AreaState == States.Empty )
                 {
-                    SetWinner(area, cellState);                    
+                    //SetWinner(area, cellState);                    
                     return;
                 }
 
@@ -41,7 +41,7 @@ namespace TicTacToeWPF
 
             if ( (diagonalRight == 3 || diagonalLeft == 3) && area.AreaState == States.Empty )
             {
-                SetWinner(area, cellState);
+                //SetWinner(area, cellState);
                 return;
             }
 

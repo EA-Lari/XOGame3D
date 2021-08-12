@@ -2,6 +2,7 @@
 
 using TicTacToeGame.BLL.Interfaces;
 using TicTacToeGame.BLL.NotifyBinding;
+using XOGame3D.Enum;
 
 namespace TicTacToeWPF.Models
 {
@@ -31,14 +32,14 @@ namespace TicTacToeWPF.Models
 
         public BigAreaModel()
         {
-            this.AreaState  = State.Empty;            
+            this.AreaState  = States.Empty;            
             this.CellsList  = new List<Cell>();
 
             for (int i = 0; i < Size; i++)
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    this.CellsList.Add(new MiniAreaModel(i, j, State.Empty, Size));
+                   // this.CellsList.Add(new MiniAreaModel(i, j, States.Empty, Size));
                 }
             }
         }

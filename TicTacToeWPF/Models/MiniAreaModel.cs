@@ -70,7 +70,7 @@ namespace TicTacToeWPF.Models
             {
                 for (int j = 0; j < smallAreaSize; j++)
                 {
-                    this.CellsList.Add(new CellModel(i, j, States.Empty, this.MiniAreaGuid));
+                   // this.CellsList.Add(new CellModel(i, j, States.Empty, this.MiniAreaGuid));
                 }
             }
         }

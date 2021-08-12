@@ -10,6 +10,8 @@ using TicTacToeGame.BLL.Interfaces;
 using TicTacToeWPF.Commands;
 using System.Diagnostics;
 using System.Collections.Generic;
+using XOGame3D.Enum;
+using TicTacToeWPF.Models;
 
 namespace TicTacToeWPF.ViewModels
 {
@@ -82,17 +84,17 @@ namespace TicTacToeWPF.ViewModels
         /// </summary>
         private void NewGame()
         {            
-            this.Turn = State.Cross;
+            this.Turn = States.Empty;
             this._algorithm = new GameService();            
             // Создаем игровое поле размерностью 3 х 3
-            this.BigGameArea = this._algorithm.CreateGame();
+          //  this.BigGameArea = this._algorithm.CreateGame();
             
             // Разблокируем все игровые области
             this.BigGameArea.CellsList.ForEach( x => x.IsActive = true );
             this._turnCounter = 0;
             // TODO Перенести в тесты
-            //this.BigGameArea.AreaState = State.Draw;
-            //this.BigGameArea.CellsList.ForEach(x => x.CellState = State.Zero);            
+            //this.BigGameArea.AreaState = States.Draw;
+            //this.BigGameArea.CellsList.ForEach(x => x.CellState = States.Zero);            
         }
         /// <summary>
         /// Установка фигуры на игровое поле
@@ -104,11 +106,11 @@ namespace TicTacToeWPF.ViewModels
             {
                 this._turnCounter++;
 
-                if (cell.CellState == State.Empty)
+                if (cell.CellState == States.Empty)
                 {
                     cell.CellState = _turn;                    
 
-                    Turn = Turn == State.Cross ? State.Zero : State.Cross;
+                    //Turn = Turn == States.Cross ? States.Zero : States.Cross;
                     
                     // Все игровые области отключаются для исключения нарушения правил
                     BigGameArea.CellsList.ForEach(x => x.IsActive = false);
@@ -118,7 +120,7 @@ namespace TicTacToeWPF.ViewModels
                     this._nextActiveArea.IsActive = true;                    
 
                     // Если мы отправляем соперника в мини-поле, где закончились свободные ячейки
-                    bool isMiniAreaFill = this._nextActiveArea.CellsList.All(x => x.CellState != State.Empty);
+                    bool isMiniAreaFill = this._nextActiveArea.CellsList.All(x => x.CellState != States.Empty);
 
                     if (isMiniAreaFill)
                     {
@@ -163,7 +165,7 @@ namespace TicTacToeWPF.ViewModels
             {
                 GetCurrentActiveMiniArea(cell);
                 // Только если поле еще не было выиграно
-                if ( ((MiniAreaModel)this._currentActiveArea).CellState == State.Empty ) 
+                if ( ((MiniAreaModel)this._currentActiveArea).CellState == States.Empty ) 
                 {
                     // Проверяем, есть ли победитель в мини-поле
                     this._algorithm.CheckWin(this._currentActiveArea, cell.CellState);                   
@@ -187,7 +189,7 @@ namespace TicTacToeWPF.ViewModels
         {
             if (this._turnCounter == 81)
             {
-                this.BigGameArea.AreaState = State.Draw;
+                this.BigGameArea.AreaState = States.Draw;
             }
         }
 

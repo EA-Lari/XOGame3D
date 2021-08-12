@@ -8,9 +8,9 @@ namespace AspNetTicTacToe.Signal
 {
     public class GameHub:Hub
     {
-        public async Task Test()
-        {
+        //public async Task Test()
+        //{
 
-        }
+        //}
     }
 }
