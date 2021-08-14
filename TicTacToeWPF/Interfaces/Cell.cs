@@ -1,5 +1,6 @@
 ﻿
 using TicTacToeGame.BLL.Structures;
+using XOGame3D.Enum;
 
 namespace TicTacToeGame.BLL.Interfaces
 {

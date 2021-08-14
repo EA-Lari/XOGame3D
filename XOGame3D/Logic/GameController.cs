@@ -112,6 +112,7 @@ namespace XOGame3D.Logic
         /// </summary>
         /// <param name="row"></param>
         /// <param name="column"></param>
+        
         public void SetCurrentArea(int row, int column)
         {
             var cell = _bigArea.Cells

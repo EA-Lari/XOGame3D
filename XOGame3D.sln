@@ -13,9 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeGame.MSTest", "Tic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetTicTacToe", "AspNetTicTacToe\AspNetTicTacToe.csproj", "{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeWPF", "TicTacToeWPF\TicTacToeWPF.csproj", "{84A76975-14AE-468F-BA03-D54D897E4625}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{67AC9928-4CCD-4D54-99BF-A3AF52029721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeWPF", "TicTacToeWPF\TicTacToeWPF.csproj", "{84A76975-14AE-468F-BA03-D54D897E4625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +45,6 @@ Global
 		{84A76975-14AE-468F-BA03-D54D897E4625}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84A76975-14AE-468F-BA03-D54D897E4625}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84A76975-14AE-468F-BA03-D54D897E4625}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67AC9928-4CCD-4D54-99BF-A3AF52029721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67AC9928-4CCD-4D54-99BF-A3AF52029721}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67AC9928-4CCD-4D54-99BF-A3AF52029721}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67AC9928-4CCD-4D54-99BF-A3AF52029721}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using XOGame3D.Enum;
 
 namespace TicTacToeGame.BLL.Interfaces
 {

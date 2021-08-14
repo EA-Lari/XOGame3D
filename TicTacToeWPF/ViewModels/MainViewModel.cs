@@ -1,12 +1,7 @@
 ﻿using System.Windows.Input;
 using System.Linq;
-
 using TicTacToeGame.BLL.NotifyBinding;
 using TicTacToeGame.BLL.Interfaces;
-
-
-
-
 using TicTacToeWPF.Commands;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -151,7 +146,7 @@ namespace TicTacToeWPF.ViewModels
                         x=> ((MiniAreaModel)x).MiniAreaGuid == cell.ParentAreaGuid
                         );
 
-            // Test
+
             Debug.WriteLine($"Sel curr Area, AreaState: {((MiniAreaModel)this._currentActiveArea).CellState}");
         }
 
@@ -171,7 +166,8 @@ namespace TicTacToeWPF.ViewModels
                     this._algorithm.CheckWin(this._currentActiveArea, cell.CellState);                   
                     
                     // Проверяем победителя в большом поле, завершаем игру                    
-                    this._algorithm.CheckWin(this.BigGameArea, cell.CellState);
+                    this._algorithm.CheckWin(
+                        this.BigGameArea, cell.CellState);
 
                     // Проверка и установка ничьей в игре
                     var listAreas = (List<Cell>)this.BigGameArea.CellsList;

@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,17 +13,6 @@
     <None Remove="Resources\Icon.ico" />
     <None Remove="Resources\IconDark.ico" />
     <None Remove="Resources\Zero.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Remove="App.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </ApplicationDefinition>
   </ItemGroup>
 
   <ItemGroup>
@@ -53,10 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="App.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
     <Compile Update="MainWindow.cs">
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
