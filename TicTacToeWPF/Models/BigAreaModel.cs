@@ -9,7 +9,7 @@ namespace TicTacToeWPF.Models
     /// <summary>
     /// Класс большого игрового поля
     /// </summary>
-    public class BigAreaModel : NotifyPropertyChanged
+    public class BigAreaModel : NotifyPropertyChanged, Area<Cell>
     {
         public int Size { get; set; } = 3;
         public List<Cell> CellsList { get; set; }
@@ -32,7 +32,7 @@ namespace TicTacToeWPF.Models
 
         public BigAreaModel()
         {
-            this.AreaState  = States.Empty;            
+            this.AreaStates  = States.Empty;            
             this.CellsList  = new List<Cell>();
 
             for (int i = 0; i < Size; i++)

@@ -7,19 +7,21 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using XOGame3D.Enum;
 using TicTacToeWPF.Models;
+using XOGame3D.Logic;
+using AutoMapper;
+using XOGame3D.Interfaces;
 
 namespace TicTacToeWPF.ViewModels
 {
     public class MainViewModel : NotifyPropertyChanged
     {
         #region Поля        
-
-        private GameService _algorithm;
-
-        private Area<Cell> _nextActiveArea;
-        private Area<Cell> _currentActiveArea;
+        private readonly GameController _gameController;
+        private readonly IMapper _mapper;
+        private bool _hasCurrentArea = false;
 
         private Area<Cell> _bigGameArea;
+
         public Area<Cell> BigGameArea
         {
             get => _bigGameArea;
@@ -29,8 +31,6 @@ namespace TicTacToeWPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        // TODO Реальный MVVM костыль, переделать!
-        private int _turnCounter;
 
         private States _turn;
         public States Turn
@@ -45,9 +45,10 @@ namespace TicTacToeWPF.ViewModels
         #endregion
 
         #region Конструктор
-        public MainViewModel()
+        public MainViewModel(GameController gameController)
         {
-            NewGame();
+            _gameController = gameController;
+            LoadGame();
         }
         #endregion
 
@@ -58,7 +59,8 @@ namespace TicTacToeWPF.ViewModels
         private ICommand _newGameCommand;
         public ICommand NewGameCommand => _newGameCommand ??= new RelayCommand(parameter =>
         {
-            NewGame();
+            _gameController.Reset();
+            LoadGame();
         });
 
         /// <summary>
@@ -68,8 +70,6 @@ namespace TicTacToeWPF.ViewModels
         public ICommand DoTurnCommand => _doTurn ??= new RelayCommand(parameter =>
         {
             PutFigureOnArea(parameter);
-            CheckDraw();
-            CheckWin(parameter);
         });
         #endregion
 
@@ -77,118 +77,71 @@ namespace TicTacToeWPF.ViewModels
         /// <summary>
         /// Метод начала новой игры, заполняет поле 3х3
         /// </summary>
-        private void NewGame()
-        {            
+        private void LoadGame()
+        {
+            _gameController.SetWinner += _gameController_SetWinner;
             this.Turn = States.Empty;
-            this._algorithm = new GameService();            
-            // Создаем игровое поле размерностью 3 х 3
-          //  this.BigGameArea = this._algorithm.CreateGame();
-            
+            //TODO: Needs siplification
+            var controllerArea = _gameController.GetBigArea();
+            this.BigGameArea = (Area<Cell>)_mapper.Map<BigAreaModel>(controllerArea);
+            foreach (IArea areaC in controllerArea.Cells)
+            {
+                var area = _mapper.Map<MiniAreaModel>(areaC);
+                foreach (var cellC in areaC.Cells)
+                {
+                    var cell = _mapper.Map<CellModel>(cellC);
+                    area.CellsList.Add((Cell)cell);
+                }
+                BigGameArea.CellsList.Add((Cell)area);
+            }
+
             // Разблокируем все игровые области
-            this.BigGameArea.CellsList.ForEach( x => x.IsActive = true );
-            this._turnCounter = 0;
+            //this.BigGameArea.CellsList.ForEach(x => x.IsActive = true);
+            //this._turnCounter = 0;
             // TODO Перенести в тесты
             //this.BigGameArea.AreaState = States.Draw;
             //this.BigGameArea.CellsList.ForEach(x => x.CellState = States.Zero);            
         }
+
+        private void _gameController_SetWinner(States states)
+        {
+            BigGameArea.Winner = states;
+        }
+
+
         /// <summary>
         /// Установка фигуры на игровое поле
         /// </summary>
         /// <param name="figure">Объект фигуры из View</param>
         private void PutFigureOnArea(object figure)
-        {            
+        {
             if (figure is Cell cell)
             {
-                this._turnCounter++;
-
                 if (cell.CellState == States.Empty)
                 {
-                    cell.CellState = _turn;                    
-
-                    //Turn = Turn == States.Cross ? States.Zero : States.Cross;
-                    
                     // Все игровые области отключаются для исключения нарушения правил
                     BigGameArea.CellsList.ForEach(x => x.IsActive = false);
-
-                    GetNextActiveMiniArea(cell);
-                    
-                    this._nextActiveArea.IsActive = true;                    
-
-                    // Если мы отправляем соперника в мини-поле, где закончились свободные ячейки
-                    bool isMiniAreaFill = this._nextActiveArea.CellsList.All(x => x.CellState != States.Empty);
-
-                    if (isMiniAreaFill)
-                    {
-                        // Все игровые области разблокируются для совершения хода
-                        BigGameArea.CellsList.ForEach(x => x.IsActive = true);
-                    }
+                    cell.CellState = _turn;
+                    _gameController.SetState(cell.Coordinates.CoordX, cell.Coordinates.CoordY);
+                    UpdateActiveArea();
                 }
             }
         }
 
-        private void GetNextActiveMiniArea(Cell cell)
+        private void UpdateActiveArea()
         {
-            // Активным полем становится поле с координатами == координатам ячейки                
-            this._nextActiveArea =
-                (Area<Cell>)this.BigGameArea
-                    .CellsList
-                    .First(
-                        x => x.Coordinates.CoordX == cell.Coordinates.CoordX && x.Coordinates.CoordY == cell.Coordinates.CoordY
-                        );
-        }
-
-        private void GetCurrentActiveMiniArea(Cell cell)
-        {
-            this._currentActiveArea = 
-                (Area<Cell>)this.BigGameArea
-                    .CellsList
-                    .First(
-                        x=> ((MiniAreaModel)x).MiniAreaGuid == cell.ParentAreaGuid
-                        );
-
-
-            Debug.WriteLine($"Sel curr Area, AreaState: {((MiniAreaModel)this._currentActiveArea).CellState}");
-        }
-
-        /// <summary>
-        /// Метод проверки победы в поле
-        /// </summary>
-        /// <param name="figure"></param>
-        private void CheckWin(object figure)
-        {
-            if (figure is Cell cell)
+            var currentArea = _gameController.GetCurrentArea() as ICell;
+            if (currentArea == null)
+                BigGameArea.CellsList.ForEach(x => x.IsActive = true);
+            else
             {
-                GetCurrentActiveMiniArea(cell);
-                // Только если поле еще не было выиграно
-                if ( ((MiniAreaModel)this._currentActiveArea).CellState == States.Empty ) 
-                {
-                    // Проверяем, есть ли победитель в мини-поле
-                    this._algorithm.CheckWin(this._currentActiveArea, cell.CellState);                   
-                    
-                    // Проверяем победителя в большом поле, завершаем игру                    
-                    this._algorithm.CheckWin(
-                        this.BigGameArea, cell.CellState);
-
-                    // Проверка и установка ничьей в игре
-                    var listAreas = (List<Cell>)this.BigGameArea.CellsList;
-                    
-                }
-
-                // Test
-                //Debug.WriteLine($"Check Draw in Small Area, MiniAreaState: {((MiniAreaModel)this._currentActiveArea).AreaState}");
-                // Test
-                //Debug.WriteLine($"Check Draw in Big Area, BigAreaState: {this.BigGameArea.AreaState}");
+                var area = BigGameArea.CellsList
+                    .FirstOrDefault(x => x.Coordinates.CoordX == currentArea.Row
+                        && x.Coordinates.CoordY == currentArea.Column);
+                area.IsActive = true;
             }
-        }
 
-        private void CheckDraw()
-        {
-            if (this._turnCounter == 81)
-            {
-                this.BigGameArea.AreaState = States.Draw;
-            }
         }
-
         #endregion
     }
 }

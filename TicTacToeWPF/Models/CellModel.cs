@@ -1,4 +1,5 @@
-﻿using TicTacToeGame.BLL.NotifyBinding;
+﻿using TicTacToeGame.BLL.Interfaces;
+using TicTacToeGame.BLL.NotifyBinding;
 using TicTacToeGame.BLL.Structures;
 using XOGame3D.Enum;
 
@@ -7,7 +8,7 @@ namespace TicTacToeWPF.Models
     /// <summary>
     /// Ячейка, минимальная игровая единица
     /// </summary>
-    public class CellModel : NotifyPropertyChanged
+    public class CellModel : NotifyPropertyChanged, Cell
     {
         public string ParentAreaGuid { get; }
 

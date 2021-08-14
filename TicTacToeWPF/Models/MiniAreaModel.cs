@@ -11,7 +11,7 @@ namespace TicTacToeWPF.Models
     /// <summary>
     /// Мини-поле, состоит из ячеек
     /// </summary>
-    public class MiniAreaModel : NotifyPropertyChanged
+    public class MiniAreaModel : NotifyPropertyChanged, Area<Cell>
     {
         public string MiniAreaGuid { get; }
         public int Size                 { get; set; }

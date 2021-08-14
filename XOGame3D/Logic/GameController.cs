@@ -142,5 +142,10 @@ namespace XOGame3D.Logic
         {
             return _bigArea.Cells.Single(x => x == cell) as IArea;
         }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
