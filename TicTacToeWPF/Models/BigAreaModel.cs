@@ -32,7 +32,7 @@ namespace TicTacToeWPF.Models
 
         public BigAreaModel()
         {
-            this.AreaStates  = States.Empty;            
+            this.AreaState  = States.Empty;            
             this.CellsList  = new List<Cell>();
 
             for (int i = 0; i < Size; i++)
