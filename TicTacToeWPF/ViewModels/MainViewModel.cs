@@ -10,6 +10,7 @@ using TicTacToeWPF.Models;
 using XOGame3D.Logic;
 using AutoMapper;
 using XOGame3D.Interfaces;
+using TicTacToeWPF.Services;
 
 namespace TicTacToeWPF.ViewModels
 {
@@ -45,9 +46,10 @@ namespace TicTacToeWPF.ViewModels
         #endregion
 
         #region Конструктор
-        public MainViewModel(GameController gameController)
+        public MainViewModel()
         {
-            _gameController = gameController;
+            _mapper = WPFFactory.GetMapper();
+            _gameController = WPFFactory.GetGameController();
             LoadGame();
         }
         #endregion

@@ -11,11 +11,14 @@ namespace TicTacToeWPF.Models
     /// <summary>
     /// Мини-поле, состоит из ячеек
     /// </summary>
-    public class MiniAreaModel : NotifyPropertyChanged, Area<Cell>
+    public class MiniAreaModel : NotifyPropertyChanged, Area<Cell>, Cell
     {
         public string MiniAreaGuid { get; }
-        public int Size                 { get; set; }
-        public List<Cell> CellsList     { get; set; }
+
+        public int Size { get; set; }
+
+        public List<Cell> CellsList { get; set; }
+            =  new List<Cell>();
         
         public States AreaState { get; set; }
         
@@ -56,24 +59,37 @@ namespace TicTacToeWPF.Models
 
         public string ParentAreaGuid => throw new NotImplementedException();
 
-        public MiniAreaModel ( int x, int y, States areaState, int smallAreaSize )
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
+        public MiniAreaModel()
+        {
+
+        }
+
+        /// <summary>
+        /// Create coordinates, set states and size 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="areaState"></param>
+        /// <param name="smallAreaSize"></param>
+        public MiniAreaModel(int x, int y, States areaState, int smallAreaSize)
         {
             // Костыль, привести в порядок дубликаты полей
             this.MiniAreaGuid = Guid.NewGuid().ToString();
             this.AreaState = areaState;
-            this.Coordinates    = new Coordinates(x, y);
-            this.CellState      = areaState;
-            this.Size           = smallAreaSize;
-            this.CellsList      = new List<Cell>();
+            this.Coordinates = new Coordinates(x, y);
+            this.CellState = areaState;
+            this.Size = smallAreaSize;
 
             for (int i = 0; i < smallAreaSize; i++)
             {
                 for (int j = 0; j < smallAreaSize; j++)
                 {
-                   // this.CellsList.Add(new CellModel(i, j, States.Empty, this.MiniAreaGuid));
+                    // this.CellsList.Add(new CellModel(i, j, States.Empty, this.MiniAreaGuid));
                 }
             }
         }
-
     }
 }

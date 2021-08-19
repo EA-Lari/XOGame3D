@@ -2,8 +2,8 @@
 {
     public struct Coordinates
     {
-        public int CoordX { get; private set; }
-        public int CoordY { get; private set; }
+        public int CoordX { get; set; }
+        public int CoordY { get; set; }
 
         public Coordinates(int x, int y)
         {

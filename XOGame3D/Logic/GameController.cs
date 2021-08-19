@@ -145,7 +145,19 @@ namespace XOGame3D.Logic
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            _bigArea = BigArea.GetBigArea();
+            if (CurrenUser == User1)
+            { 
+                CurrenUser = User2;
+                User2.Fraction = States.X;
+                User1.Fraction = States.O;
+            }
+            else
+            {
+                CurrenUser = User1;
+                User1.Fraction = States.X;
+                User2.Fraction = States.O;
+            }
         }
     }
 }

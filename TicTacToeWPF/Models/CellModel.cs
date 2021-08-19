@@ -27,6 +27,21 @@ namespace TicTacToeWPF.Models
 
         public bool IsActive { get; set; }
 
+        /// <summary>
+        /// Empty Constructor
+        /// </summary>
+        public CellModel()
+        {
+
+        }
+
+        /// <summary>
+        /// Auto create Coordinates and set parentGuid
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="state"></param>
+        /// <param name="parentAreaGuid"></param>
         public CellModel(int x, int y, States state, string parentAreaGuid)
         {
             this.ParentAreaGuid = parentAreaGuid;
