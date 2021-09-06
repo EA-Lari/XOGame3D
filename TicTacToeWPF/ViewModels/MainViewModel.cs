@@ -16,12 +16,18 @@ namespace TicTacToeWPF.ViewModels
 {
     public class MainViewModel : NotifyPropertyChanged
     {
-        #region Поля        
+
+        #region  Private Fields
+
         private readonly GameController _gameController;
         private readonly IMapper _mapper;
         private bool _hasCurrentArea = false;
-
         private Area<Cell> _bigGameArea;
+        private States _turn;
+
+        #endregion
+
+        #region Public Properties
 
         public Area<Cell> BigGameArea
         {
@@ -29,32 +35,35 @@ namespace TicTacToeWPF.ViewModels
             set
             {
                 _bigGameArea = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(BigGameArea));
             }
         }
-
-        private States _turn;
+        
         public States Turn
         {
             get => _turn;
             set
             {
                 _turn = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Turn));
             }
         }
+
         #endregion
 
-        #region Конструктор
+        #region Constructor
+
         public MainViewModel()
         {
             _mapper = WPFFactory.GetMapper();
             _gameController = WPFFactory.GetGameController();
             LoadGame();
         }
+
         #endregion
 
-        #region Команды
+        #region Commands
+
         /// <summary>
         /// Команда начала новой игры
         /// </summary>
@@ -73,9 +82,11 @@ namespace TicTacToeWPF.ViewModels
         {
             PutFigureOnArea(parameter);
         });
+
         #endregion
 
-        #region Методы
+        #region Private Methods
+
         /// <summary>
         /// Метод начала новой игры, заполняет поле 3х3
         /// </summary>
@@ -110,7 +121,6 @@ namespace TicTacToeWPF.ViewModels
             BigGameArea.Winner = states;
         }
 
-
         /// <summary>
         /// Установка фигуры на игровое поле
         /// </summary>
@@ -144,6 +154,7 @@ namespace TicTacToeWPF.ViewModels
             }
 
         }
+        
         #endregion
     }
 }

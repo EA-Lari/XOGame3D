@@ -10,7 +10,7 @@ namespace XOGame3D.Logic
 {
     public class GameController
     {
-        BigArea _bigArea { get; set; }
+        BigArea BigArea { get; set; }
 
         public delegate void Winner(States states);
         public event Winner SetWinner;
@@ -25,7 +25,7 @@ namespace XOGame3D.Logic
 
         public GameController(IUser user1, IUser user2)
         {
-            _bigArea = BigArea.GetBigArea();
+            BigArea = BigArea.GetBigArea();
             User2 = user2;
             User1 = user1;
             User1.Fraction = States.X;
@@ -40,7 +40,7 @@ namespace XOGame3D.Logic
         /// <param name="column"></param>
         public void SetState(int row, int column)
         {
-            var area = _bigArea.CurrentCell as IArea;
+            var area = BigArea.CurrentCell as IArea;
             var cell = area.Cells.Single(x => x.Row == row && x.Column == column);
             SetState(cell);
         }
@@ -48,7 +48,7 @@ namespace XOGame3D.Logic
         private void SetState(ICell cell)
         {
             var state = CurrenUser.Fraction;
-            if (_bigArea.State != States.Empty)
+            if (BigArea.State != States.Empty)
                 throw new ApplicationException("Невозможно продолжить игру!" +
                     "\nИгра завершина.");
             if (cell.State != States.Empty)
@@ -59,8 +59,8 @@ namespace XOGame3D.Logic
             if (area.State == States.Empty) 
                 CheckStateInArea(area, cell.State);
             SetNextArea(cell);
-            if (_bigArea.State != States.Empty)
-                SetWinner?.Invoke(_bigArea.State);
+            if (BigArea.State != States.Empty)
+                SetWinner?.Invoke(BigArea.State);
             CurrenUser = CurrenUser == User1 ? User2 : User1;
         }
 
@@ -80,10 +80,10 @@ namespace XOGame3D.Logic
 
         private void FindedWinner(IArea area)
         {
-            if (area == _bigArea)
+            if (area == BigArea)
             {
-                SetWinnerUser(_bigArea.State);
-                SetWinner?.Invoke(_bigArea.State);
+                SetWinnerUser(BigArea.State);
+                SetWinner?.Invoke(BigArea.State);
             }
         }
 
@@ -95,17 +95,17 @@ namespace XOGame3D.Logic
 
         private void SetNextArea(ICell cell)
         {
-            var smallArea = _bigArea.Cells.Single(x => cell.Equals(x)) as SmallArea;
-            _bigArea.CurrentCell = smallArea;
+            var smallArea = BigArea.Cells.Single(x => cell.Equals(x)) as SmallArea;
+            BigArea.CurrentCell = smallArea;
             if (!smallArea.Cells.Any(x => x.State == States.Empty))
-                _bigArea.CurrentCell = null;
+                BigArea.CurrentCell = null;
         }
 
         /// <summary>
         /// Return current area for next turn player
         /// </summary>
         /// <returns></returns>
-        public IArea GetCurrentArea() => _bigArea.CurrentCell as IArea;
+        public IArea GetCurrentArea() => BigArea.CurrentCell as IArea;
 
         /// <summary>
         /// Set area for turn, allow if there is no current area
@@ -115,23 +115,23 @@ namespace XOGame3D.Logic
         
         public void SetCurrentArea(int row, int column)
         {
-            var cell = _bigArea.Cells
+            var cell = BigArea.Cells
                 .Single(x => x.Row == row && x.Column == column);
             SetCurrentArea(cell);
         }
 
         private void SetCurrentArea(ICell cell)
         {
-            if (_bigArea.CurrentCell != null)
+            if (BigArea.CurrentCell != null)
                 throw new Exception("Current Cell not empty");
-            _bigArea.CurrentCell = cell;
+            BigArea.CurrentCell = cell;
         }
 
         /// <summary>
         /// Get Main plaing area
         /// </summary>
         /// <returns></returns>
-        public IArea GetBigArea() => _bigArea as IArea;
+        public IArea GetBigArea() => BigArea as IArea;
 
         /// <summary>
         /// Convert cell to area(working for only small area)
@@ -140,12 +140,12 @@ namespace XOGame3D.Logic
         /// <returns></returns>
         public IArea GetAllSmallAreasByCell(ICell cell)
         {
-            return _bigArea.Cells.Single(x => x == cell) as IArea;
+            return BigArea.Cells.Single(x => x == cell) as IArea;
         }
 
         public void Reset()
         {
-            _bigArea = BigArea.GetBigArea();
+            BigArea = BigArea.GetBigArea();
             if (CurrenUser == User1)
             { 
                 CurrenUser = User2;

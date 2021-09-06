@@ -6,7 +6,7 @@ using XOGame3D.Interfaces;
 
 namespace XOGame3D.Models
 {
-    internal class BigArea : IArea
+    internal sealed class BigArea : IArea
     {
         States _state = States.Empty;
         protected static int _sizeArea = 3;
