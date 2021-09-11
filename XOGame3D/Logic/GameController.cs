@@ -10,31 +10,19 @@ namespace XOGame3D.Logic
 {
     public class GameController
     {
+        private States _currentState;
         BigArea BigArea { get; set; }
         
         public event EventHandler<States> SetWinner;
         public event EventHandler<IUser> ChangeCurrentUser;
 
-        public IUser User1 { get; set; }
+        public States CurrenState => _currentState;
 
-        public IUser User2 { get; set; }
+        public States WinnerState { get; set; }
 
-        public IUser CurrenUser { get; private set; }
-
-        public IUser WinnerUser { get; set; }
-
-        public GameController(IUser user1, IUser user2)
+        public GameController()
         {
-            BigArea = BigArea.GetBigArea();
-            User2 = user2;
-            User1 = user1;
-            if (user1.State == user2.State)
-                throw new ArgumentException("State Players must be different");
-            if (user1.State != States.O && user1.State != States.X)
-                throw new ArgumentException("State user1 isn't set");
-            if (user2.State != States.O && user2.State != States.X)
-                throw new ArgumentException("State user2 isn't set");
-            CurrenUser = User1;
+            Reset();
         }
 
         /// <summary>
@@ -51,13 +39,12 @@ namespace XOGame3D.Logic
 
         private void SetState(ICell cell)
         {
-            var state = CurrenUser.State;
             if (BigArea.State != States.Empty)
                 throw new ApplicationException("Невозможно продолжить игру!" +
                     "\nИгра завершина.");
             if (cell.State != States.Empty)
                 throw new ApplicationException("Невозможно изменить заполненное поле");
-            cell.State = state;
+            cell.State = _currentState;
             var area = cell.ParentArea;
             if (area == null) return;
             if (area.State == States.Empty) 
@@ -70,15 +57,10 @@ namespace XOGame3D.Logic
 
         private void ChangeCurrent()
         {
-            if (CurrenUser == User1)
-            {
-                CurrenUser = User2;
-            }
+            if (_currentState == States.X)
+                _currentState = States.O;
             else
-            {
-                CurrenUser = User1;
-            }
-            ChangeCurrentUser?.Invoke(this, CurrenUser);
+                _currentState = States.X;
         }
 
         private void CheckStateInArea(IArea area, States state)
@@ -106,8 +88,7 @@ namespace XOGame3D.Logic
 
         private void SetWinnerUser(States winnerState)
         {
-            if (User1.State == winnerState) WinnerUser = User1;
-            if (User2.State == winnerState) WinnerUser = User2;
+            WinnerState = winnerState;
         }
 
         private void SetNextArea(ICell cell)
@@ -141,6 +122,9 @@ namespace XOGame3D.Logic
         {
             if (BigArea.CurrentCell != null)
                 throw new Exception("Current Cell not empty");
+            var area = cell as IArea;
+            if (!area.Cells.Any(x => x.State == States.Empty))
+                throw new Exception("Area isn't contains empty cell");
             BigArea.CurrentCell = cell;
         }
 
@@ -163,18 +147,8 @@ namespace XOGame3D.Logic
         public void Reset()
         {
             BigArea = BigArea.GetBigArea();
-            if (CurrenUser == User1)
-            { 
-                CurrenUser = User2;
-                User2.State = States.X;
-                User1.State = States.O;
-            }
-            else
-            {
-                CurrenUser = User1;
-                User1.State = States.X;
-                User2.State = States.O;
-            }
+            _currentState = States.X;
+            WinnerState = States.Empty;
         }
     }
 }
