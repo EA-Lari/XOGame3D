@@ -17,6 +17,8 @@ namespace ConsoleUI
                 Console.WriteLine("Hello World!");
                 var player1 = GeneratePlayers();
                 var player2 = GeneratePlayers();
+                player1.Fraction = XOGame3D.Enum.States.X;
+                player2.Fraction = XOGame3D.Enum.States.O;
                 _controller = new GameController(player1, player2);
                 _controller.SetWinner += _controller_SetWinner;
                 Play();

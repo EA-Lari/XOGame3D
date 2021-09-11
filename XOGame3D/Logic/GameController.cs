@@ -28,8 +28,12 @@ namespace XOGame3D.Logic
             BigArea = BigArea.GetBigArea();
             User2 = user2;
             User1 = user1;
-            User1.Fraction = States.X;
-            User2.Fraction = States.O;
+            if (user1.Fraction == user2.Fraction)
+                throw new ArgumentException("Фракция игроков должна отличаться");
+            if (user1.Fraction != States.O && user1.Fraction != States.X)
+                throw new ArgumentException("Не установлена фракция у user1");
+            if (user2.Fraction != States.O && user2.Fraction != States.X)
+                throw new ArgumentException("Не установлена фракция у user2");
             CurrenUser = User1;
         }
 
@@ -61,7 +65,23 @@ namespace XOGame3D.Logic
             SetNextArea(cell);
             if (BigArea.State != States.Empty)
                 SetWinner?.Invoke(BigArea.State);
-            CurrenUser = CurrenUser == User1 ? User2 : User1;
+            ChangeCurrent();            
+        }
+
+        private void ChangeCurrent()
+        {
+            if (CurrenUser == User1)
+            {
+                CurrenUser = User2;
+                User1.IsCurrent = false;
+                User2.IsCurrent = true;
+            }
+            else
+            {
+                CurrenUser = User1;
+                User1.IsCurrent = true;
+                User2.IsCurrent = false;
+            }
         }
 
         private void CheckStateInArea(IArea area, States state)

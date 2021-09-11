@@ -14,6 +14,8 @@ namespace ConsoleUI.Models
 
         public bool IsWinner { get; set; }
 
+        public bool IsCurrent { get; set; }
+
         public Player(string name)
         {
             Name = name;

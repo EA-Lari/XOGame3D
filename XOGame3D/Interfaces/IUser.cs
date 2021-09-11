@@ -11,6 +11,8 @@ namespace XOGame3D.Interfaces
 
         States Fraction { get; set; }
 
+        bool IsCurrent { get; set; }
+
         bool IsWinner { get; set; }
     }
 }
