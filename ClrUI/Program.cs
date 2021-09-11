@@ -9,20 +9,17 @@ namespace ConsoleUI
 {
     class Program
     {
-        private static IUser _player1;
-        private static IUser _player2;
-
         static void Main(string[] args)
         {
             try
             {
                 Console.SetWindowSize(100,40);
                 Console.WriteLine("Hello World!");
-                _player1 = GeneratePlayers();
-                _player2 = GeneratePlayers();
-                _player1.Fraction = XOGame3D.Enum.States.X;
-                _player2.Fraction = XOGame3D.Enum.States.O;
-                _controller = new GameController();
+                var player1 = GeneratePlayers();
+                var player2 = GeneratePlayers();
+                player1.Fraction = XOGame3D.Enum.States.X;
+                player2.Fraction = XOGame3D.Enum.States.O;
+                _controller = new GameController(player1, player2);
                 _controller.SetWinner += _controller_SetWinner;
                 Play();
                 Console.WriteLine("Game Over!" +
@@ -44,16 +41,10 @@ namespace ConsoleUI
         private static void _controller_SetWinner(XOGame3D.Enum.States states)
         {
             GameOver = true;
-            if (_controller.WinnerState == XOGame3D.Enum.States.Empty)
+            if (_controller.WinnerUser == null)
                 Console.WriteLine("Draw");
             else
-            {
-                if(_player1.Fraction == _controller.WinnerState)
-                    Console.WriteLine($"{_player1.Name} winner!");
-
-                if (_player2.Fraction == _controller.WinnerState)
-                    Console.WriteLine($"{_player2.Name} winner!");
-            }
+                Console.WriteLine($"{_controller.WinnerUser.Name} winner!");
         }
 
         private static IUser GeneratePlayers()
@@ -71,17 +62,9 @@ namespace ConsoleUI
                 var artist = new PlayingAreaArtist(_controller);
                 artist.DrawArea();
                 Console.WriteLine();
-                var currentUser = GetCurrentPlayer();
-                Console.WriteLine($"Player '{currentUser.Name}' turn");
+                Console.WriteLine($"Player '{_controller.CurrenUser.Name}' turn");
                 MakeMove();
             }
-        }
-
-        private static IUser GetCurrentPlayer()
-        {
-            if (_controller.CurrenState == _player1.Fraction)
-                return _player1;
-            return _player2;
         }
 
         private static void MakeMove()
