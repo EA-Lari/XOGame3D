@@ -10,9 +10,9 @@ namespace AspNetTicTacToe.Signal
 {
     public class GameHub:Hub
     {
-        GameController _controller;
+        TicTacToeLoginc _controller;
 
-        public GameHub(GameController controller)
+        public GameHub(TicTacToeLoginc controller)
         {
             _controller = controller;
             _controller.SetWinner +=  _controller_SetWinner;

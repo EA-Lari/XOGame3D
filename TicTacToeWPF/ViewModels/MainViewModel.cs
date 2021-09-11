@@ -19,7 +19,7 @@ namespace TicTacToeWPF.ViewModels
 
         #region  Private Fields
 
-        private readonly GameController _gameController;
+        private readonly TicTacToeLoginc _gameController;
         private readonly IMapper _mapper;
         private bool _hasCurrentArea = false;
         private Area<Cell> _bigGameArea;

@@ -11,12 +11,12 @@ namespace XOGame3D.Robots
 {
     public class RandomeRobot
     {
-        private readonly GameController _game;
+        private readonly TicTacToeLoginc _game;
         private readonly IUser _myUser;
         private readonly Random _random;
         private bool _isCurrent;
 
-        public RandomeRobot(Random random, GameController game, IUser myUser)
+        public RandomeRobot(Random random, TicTacToeLoginc game, IUser myUser)
         {
             this._game = game;
             this._random = random;

@@ -8,7 +8,7 @@ using XOGame3D.Models;
 
 namespace XOGame3D.Logic
 {
-    public class GameController
+    public class TicTacToeLoginc
     {
         private States _currentState;
         BigArea BigArea { get; set; }
@@ -20,7 +20,7 @@ namespace XOGame3D.Logic
 
         public States WinnerState { get; set; }
 
-        public GameController()
+        public TicTacToeLoginc()
         {
             Reset();
         }
