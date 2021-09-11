@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TicTacToe.BLL.Wrapper\TicTacToe.BLL.Wrapper.csproj" />
     <ProjectReference Include="..\XOGame3D\XOGame3D.csproj" />
   </ItemGroup>
 
