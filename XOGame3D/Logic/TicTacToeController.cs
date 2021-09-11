@@ -10,11 +10,11 @@ namespace XOGame3D.Logic
 {
     public class TicTacToeController
     {
-        private readonly TicTacToeLoginc _logic;
+        private readonly TicTacToeLogic _logic;
         private readonly IUser _user1;
         private readonly IUser _user2;
 
-        public TicTacToeController(TicTacToeLoginc logic, IUser user1, IUser user2)
+        public TicTacToeController(TicTacToeLogic logic, IUser user1, IUser user2)
         {
             _logic = logic;
             _user1 = user1;

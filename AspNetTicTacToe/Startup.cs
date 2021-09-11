@@ -44,7 +44,7 @@ namespace AspNetTicTacToe
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<TicTacToeLoginc>();
+            builder.RegisterType<TicTacToeLogic>();
         }
     }
 }

@@ -10,11 +10,11 @@ namespace ConsoleUI
     internal class PlayingAreaArtist
     {
         private IArea _bigArea;
-        private TicTacToeLoginc _controller;
+        private TicTacToeLogic _controller;
         private int _sizeBigArea, _sizeSmallArea;
         private ConsoleColor _colorX, _colorO;
 
-        public PlayingAreaArtist(TicTacToeLoginc controller, 
+        public PlayingAreaArtist(TicTacToeLogic controller, 
             ConsoleColor colorX = ConsoleColor.Yellow,
             ConsoleColor colorO = ConsoleColor.Green)
         {

@@ -22,7 +22,7 @@ namespace ConsoleUI
                 _player2 = GeneratePlayers();
                 _player1.Fraction = XOGame3D.Enum.States.X;
                 _player2.Fraction = XOGame3D.Enum.States.O;
-                _controller = new TicTacToeLoginc();
+                _controller = new TicTacToeLogic();
                 _controller.SetWinner += _controller_SetWinner;
                 Play();
                 Console.WriteLine("Game Over!" +
@@ -37,7 +37,7 @@ namespace ConsoleUI
             }
         }
 
-        private static TicTacToeLoginc _controller;
+        private static TicTacToeLogic _controller;
 
         private static bool GameOver { get;set; }
 
