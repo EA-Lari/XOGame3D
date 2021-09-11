@@ -9,10 +9,6 @@ namespace XOGame3D.Interfaces
     {
         string Name { get; set; }
 
-        States Fraction { get; set; }
-
-        bool IsCurrent { get; set; }
-
-        bool IsWinner { get; set; }
+        States State { get; set; }
     }
 }

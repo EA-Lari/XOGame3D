@@ -10,9 +10,7 @@ namespace ConsoleUI.Models
     {
         public string Name { get; set; }
 
-        public States Fraction { get; set; }
-
-        public bool IsWinner { get; set; }
+        public States State { get; set; }
 
         public bool IsCurrent { get; set; }
 

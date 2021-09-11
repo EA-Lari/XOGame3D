@@ -116,7 +116,7 @@ namespace TicTacToeWPF.ViewModels
             //this.BigGameArea.CellsList.ForEach(x => x.CellState = States.Zero);            
         }
 
-        private void _gameController_SetWinner(States states)
+        private void _gameController_SetWinner(object sender, States states)
         {
             BigGameArea.Winner = states;
         }

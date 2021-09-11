@@ -15,7 +15,7 @@ namespace AspNetTicTacToe.Signal
         public GameHub(GameController controller)
         {
             _controller = controller;
-            _controller.SetWinner += _controller_SetWinner;
+            _controller.SetWinner +=  _controller_SetWinner;
         }
 
         public void SetState(States state, int row, int column)
@@ -25,7 +25,7 @@ namespace AspNetTicTacToe.Signal
             Clients.All.SendAsync("NextArea", _controller.GetCurrentArea());
         }
 
-        private void _controller_SetWinner(States states)
+        private void _controller_SetWinner(object sender, States states)
         {
             Clients.All.SendAsync("Winner", states);
         }

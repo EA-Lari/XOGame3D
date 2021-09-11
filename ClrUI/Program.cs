@@ -17,8 +17,8 @@ namespace ConsoleUI
                 Console.WriteLine("Hello World!");
                 var player1 = GeneratePlayers();
                 var player2 = GeneratePlayers();
-                player1.Fraction = XOGame3D.Enum.States.X;
-                player2.Fraction = XOGame3D.Enum.States.O;
+                player1.State = XOGame3D.Enum.States.X;
+                player2.State = XOGame3D.Enum.States.O;
                 _controller = new GameController(player1, player2);
                 _controller.SetWinner += _controller_SetWinner;
                 Play();
@@ -38,7 +38,7 @@ namespace ConsoleUI
 
         private static bool GameOver { get;set; }
 
-        private static void _controller_SetWinner(XOGame3D.Enum.States states)
+        private static void _controller_SetWinner(object sender, XOGame3D.Enum.States states)
         {
             GameOver = true;
             if (_controller.WinnerUser == null)
