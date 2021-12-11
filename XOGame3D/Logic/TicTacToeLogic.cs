@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using XOGame3D.Enum;
 using XOGame3D.Interfaces;
 using XOGame3D.Models;

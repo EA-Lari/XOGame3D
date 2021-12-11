@@ -15,11 +15,11 @@ namespace TicTacToeWPF.Services
         public static TicTacToeLogic GetGameController()
         {
             var user1 = new User { 
-                State = States.O,
+                Fraction = States.O,
                 Name = "Player1"
             };
             var user2 = new User{
-                State = States.X,
+                Fraction = States.X,
                 Name = "Player2"
             };
             return new GameController(user1, user2);
@@ -28,7 +28,7 @@ namespace TicTacToeWPF.Services
         private class User : IUser
         {
             public string Name { get; set; }
-            public States State { get; set; }
+            public States Fraction { get; set; }
             public bool IsWinner { get; set; }
         }
 

@@ -1,7 +1,5 @@
 ﻿using ConsoleUI.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using XOGame3D.Interfaces;
 using XOGame3D.Logic;
 

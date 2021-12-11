@@ -9,14 +9,14 @@ using XOGame3D.Logic;
 
 namespace XOGame3D.Robots
 {
-    public class RandomeRobot
+    public class RandomRobot
     {
         private readonly TicTacToeLogic _game;
         private readonly IUser _myUser;
         private readonly Random _random;
         private bool _isCurrent;
 
-        public RandomeRobot(Random random, TicTacToeLogic game, IUser myUser)
+        public RandomRobot(Random random, TicTacToeLogic game, IUser myUser)
         {
             this._game = game;
             this._random = random;
@@ -35,8 +35,8 @@ namespace XOGame3D.Robots
             try
             {
                 repid--;
-                var rowArea = GetIntRandome();
-                var columnArea = GetIntRandome();
+                var rowArea = GetIntRandom();
+                var columnArea = GetIntRandom();
                 _game.SetCurrentArea(rowArea, columnArea);
             }
             catch(Exception e)
@@ -52,8 +52,8 @@ namespace XOGame3D.Robots
             try
             {
                 repid--;
-                var rowArea = GetIntRandome();
-                var columnArea = GetIntRandome();
+                var rowArea = GetIntRandom();
+                var columnArea = GetIntRandom();
                 _game.SetState(rowArea, columnArea);
             }
             catch (Exception e)
@@ -64,7 +64,7 @@ namespace XOGame3D.Robots
             }
         }
 
-        private int GetIntRandome()
+        private int GetIntRandom()
             => _random.Next(0, 2);
     }
 }

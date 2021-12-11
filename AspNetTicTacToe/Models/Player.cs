@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 using XOGame3D.Enum;
 using XOGame3D.Interfaces;
 
-namespace ConsoleUI.Models
+namespace AspNetTicTacToe.Models
 {
-    class Player : IUser
+    public class Player : IUser
     {
         public string Name { get; set; }
-
         public States Fraction { get; set; }
-
-        public bool IsCurrent { get; set; }
-
-        public Player(string name)
-        {
-            Name = name;
-        }
     }
 }

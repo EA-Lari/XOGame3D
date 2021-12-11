@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using XOGame3D.Enum;
+﻿using XOGame3D.Enum;
 
 namespace XOGame3D.Interfaces
 {
@@ -9,6 +6,6 @@ namespace XOGame3D.Interfaces
     {
         string Name { get; set; }
 
-        States State { get; set; }
+        States Fraction { get; set; }
     }
 }
