@@ -2,6 +2,7 @@
 using System;
 using XOGame3D.Interfaces;
 using XOGame3D.Logic;
+using XOGame3D.Robots;
 
 namespace ConsoleUI
 {
@@ -16,8 +17,7 @@ namespace ConsoleUI
             {
                 Console.SetWindowSize(100,40);
                 Console.WriteLine("Hello World!");
-                _player1 = GeneratePlayers();
-                _player2 = GeneratePlayers();
+                ChooseGameMode();
                 _player1.Fraction = XOGame3D.Enum.States.X;
                 _player2.Fraction = XOGame3D.Enum.States.O;
                 _controller = new TicTacToeLogic();
@@ -39,6 +39,36 @@ namespace ConsoleUI
 
         private static bool GameOver { get;set; }
 
+        private static void ChooseGameMode()
+        {
+            var isChoose = false;
+            Console.WriteLine("Choose Game Mode:" +
+                "1 Player with Player" +
+                "2 Robot with Robot" +
+                "3 Player with Robot");
+            while (!isChoose)
+            {
+                var cki = Console.ReadKey();
+                switch (cki.Key)
+                {
+                    case ConsoleKey.D1:
+                        _player1 = GeneratePlayers();
+                        _player2 = GeneratePlayers();
+                        break;
+                    case ConsoleKey.D2:
+                        _player1 = GenerateRobot(1);
+                        _player2 = GenerateRobot(2);
+                        break;
+                    case ConsoleKey.D3:
+                        _player1 = GeneratePlayers();
+                        _player2 = GenerateRobot(2);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         private static void _controller_SetWinner(object sender, XOGame3D.Enum.States states)
         {
             GameOver = true;
@@ -59,6 +89,13 @@ namespace ConsoleUI
             Console.WriteLine("Enter name Player: ");
             var name = Console.ReadLine();
             var player = new Player(name);
+            return player;
+        }
+
+        private static IUser GenerateRobot(int num)
+        {
+            var player = new RandomRobot(new Random(), _controller)
+                { Name=$"Robot{num}"};
             return player;
         }
 

@@ -12,7 +12,7 @@ namespace XOGame3D.Logic
         BigArea BigArea { get; set; }
         
         public event EventHandler<States> SetWinner;
-        public event EventHandler<IUser> ChangeCurrentUser;
+        public event EventHandler<States> ChangeCurrentState;
 
         public States CurrenState => _currentState;
 
@@ -59,6 +59,7 @@ namespace XOGame3D.Logic
                 _currentState = States.O;
             else
                 _currentState = States.X;
+            ChangeCurrentState?.Invoke(this, _currentState);
         }
 
         private void CheckStateInArea(IArea area, States state)

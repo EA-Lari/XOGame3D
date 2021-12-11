@@ -1,26 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XOGame3D.Enum;
 using XOGame3D.Interfaces;
 using XOGame3D.Logic;
 
 namespace XOGame3D.Robots
 {
-    public class RandomRobot
+    public class RandomRobot : IUser
     {
         private readonly TicTacToeLogic _game;
-        private readonly IUser _myUser;
+        private readonly IRobotInteraction _interaction;
         private readonly Random _random;
-        private bool _isCurrent;
 
-        public RandomRobot(Random random, TicTacToeLogic game, IUser myUser)
+        public string Name { get; set; }
+        public States Fraction { get; set; }
+
+        public RandomRobot(Random random, TicTacToeLogic game, IRobotInteraction interaction = null)
         {
             this._game = game;
             this._random = random;
-            _myUser = myUser;
+            _interaction = interaction;
+            _game.ChangeCurrentState += _game_ChangeCurrentState;
+        }
+
+        private void _game_ChangeCurrentState(object sender, States e)
+        {
+            if (Fraction == e)
+                MakeMove();
         }
 
         private void MakeMove()
@@ -37,7 +42,10 @@ namespace XOGame3D.Robots
                 repid--;
                 var rowArea = GetIntRandom();
                 var columnArea = GetIntRandom();
-                _game.SetCurrentArea(rowArea, columnArea);
+                if (_interaction == null)
+                    _game.SetCurrentArea(rowArea, columnArea);
+                else
+                    _interaction.SetArea(rowArea, columnArea);
             }
             catch(Exception e)
             {
@@ -54,7 +62,10 @@ namespace XOGame3D.Robots
                 repid--;
                 var rowArea = GetIntRandom();
                 var columnArea = GetIntRandom();
-                _game.SetState(rowArea, columnArea);
+                if(_interaction == null)
+                    _game.SetState(rowArea, columnArea);
+                else
+                    _interaction.SetArea(rowArea, columnArea);
             }
             catch (Exception e)
             {
