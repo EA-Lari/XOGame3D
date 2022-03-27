@@ -12,7 +12,7 @@ namespace TicTacToeWPF.Services
 {
     public static class WPFFactory
     {
-        public static GameController GetGameController()
+        public static TicTacToeLogic GetGameController()
         {
             var user1 = new User { 
                 Fraction = States.O,

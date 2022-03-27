@@ -1,4 +1,5 @@
 using AspNetTicTacToe.Signal;
+using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XOGame3D.Logic;
 
 namespace AspNetTicTacToe
 {
@@ -38,6 +40,11 @@ namespace AspNetTicTacToe
                 });
                 endpoints.MapHub<GameHub>("Game");
             });
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<TicTacToeLogic>();
         }
     }
 }

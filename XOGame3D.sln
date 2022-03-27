@@ -7,13 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XOGame3D", "XOGame3D\XOGame
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ClrUI\ConsoleUI.csproj", "{24C92EBB-0323-42A3-90DA-69733C9002F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.BLL.Wrapper", "TicTacToe.BLL.Wrapper\TicTacToe.BLL.Wrapper.csproj", "{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeGame.MSTest", "TicTacToeGame.MSTest\TicTacToeGame.MSTest.csproj", "{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetTicTacToe", "AspNetTicTacToe\AspNetTicTacToe.csproj", "{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeWPF", "TicTacToeWPF\TicTacToeWPF.csproj", "{84A76975-14AE-468F-BA03-D54D897E4625}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeTests", "TicTacToeTests\TicTacToeTests.csproj", "{3FE2E71C-7E04-4327-979D-741CFEB3616B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +27,6 @@ Global
 		{24C92EBB-0323-42A3-90DA-69733C9002F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24C92EBB-0323-42A3-90DA-69733C9002F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24C92EBB-0323-42A3-90DA-69733C9002F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B346FAFB-DD6C-4247-BF66-4DB2CF75DC9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E283FEF0-77E8-4BC6-A556-FF09A2F273E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3F54596-36BE-4ED1-AFF8-FBEE6538F981}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +35,10 @@ Global
 		{84A76975-14AE-468F-BA03-D54D897E4625}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84A76975-14AE-468F-BA03-D54D897E4625}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84A76975-14AE-468F-BA03-D54D897E4625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FE2E71C-7E04-4327-979D-741CFEB3616B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FE2E71C-7E04-4327-979D-741CFEB3616B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FE2E71C-7E04-4327-979D-741CFEB3616B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FE2E71C-7E04-4327-979D-741CFEB3616B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

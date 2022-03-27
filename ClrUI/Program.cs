@@ -1,23 +1,28 @@
 ﻿using ConsoleUI.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using XOGame3D.Interfaces;
 using XOGame3D.Logic;
+using XOGame3D.Robots;
 
 namespace ConsoleUI
 {
     class Program
     {
+        private static IUser _player1;
+        private static IUser _player2;
+        private static TicTacToeController _controller;
+
         static void Main(string[] args)
         {
             try
             {
                 Console.SetWindowSize(100,40);
                 Console.WriteLine("Hello World!");
-                var player1 = GeneratePlayers();
-                var player2 = GeneratePlayers();
-                _controller = new GameController(player1, player2);
+                var logic = new TicTacToeLogic();                
+                ChooseGameMode();
+                _controller = new TicTacToeController(logic, _player1, _player2);
+                _player1.Fraction = XOGame3D.Enum.States.X;
+                _player2.Fraction = XOGame3D.Enum.States.O;
                 _controller.SetWinner += _controller_SetWinner;
                 Play();
                 Console.WriteLine("Game Over!" +
@@ -32,17 +37,54 @@ namespace ConsoleUI
             }
         }
 
-        private static GameController _controller;
-
         private static bool GameOver { get;set; }
 
-        private static void _controller_SetWinner(XOGame3D.Enum.States states)
+        private static void ChooseGameMode()
+        {
+            var isChoose = false;
+            Console.WriteLine("Choose Game Mode:" +
+                "\n1 Player with Player" +
+                "\n2 Robot with Robot" +
+                "\n3 Player with Robot");
+            while (!isChoose)
+            {
+                var cki = Console.ReadKey();
+                switch (cki.Key)
+                {
+                    case ConsoleKey.D1:
+                        _player1 = GeneratePlayers();
+                        _player2 = GeneratePlayers();
+                        isChoose = true;
+                        break;
+                    case ConsoleKey.D2:
+                        _player1 = GenerateRobot(1);
+                        _player2 = GenerateRobot(2);
+                        isChoose = true;
+                        break;
+                    case ConsoleKey.D3:
+                        _player1 = GeneratePlayers();
+                        _player2 = GenerateRobot(2);
+                        isChoose = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private static void _controller_SetWinner(object sender, XOGame3D.Enum.States states)
         {
             GameOver = true;
-            if (_controller.WinnerUser == null)
+            if (states == XOGame3D.Enum.States.Empty)
                 Console.WriteLine("Draw");
             else
-                Console.WriteLine($"{_controller.WinnerUser.Name} winner!");
+            {
+                if(_player1.Fraction == states)
+                    Console.WriteLine($"{_player1.Name} winner!");
+
+                if (_player2.Fraction == states)
+                    Console.WriteLine($"{_player2.Name} winner!");
+            }
         }
 
         private static IUser GeneratePlayers()
@@ -53,6 +95,13 @@ namespace ConsoleUI
             return player;
         }
 
+        private static IUser GenerateRobot(int num)
+        {
+            var player = new RandomRobot(new Random())
+                { Name=$"Robot_#{num}"};
+            return player;
+        }
+
         private static void Play()
         {
             while (!GameOver)
@@ -60,7 +109,8 @@ namespace ConsoleUI
                 var artist = new PlayingAreaArtist(_controller);
                 artist.DrawArea();
                 Console.WriteLine();
-                Console.WriteLine($"Player '{_controller.CurrenUser.Name}' turn");
+                var currentUser = _controller.GetCurrenUser();
+                Console.WriteLine($"Player '{currentUser.Name}' turn");
                 MakeMove();
             }
         }
@@ -69,21 +119,7 @@ namespace ConsoleUI
         {
             try
             {
-                var currentArea = _controller.GetCurrentArea();
-                if (currentArea == null)
-                {
-                    Console.WriteLine("Enter current area(column, row):");
-                    int rowCurrent, columnCurrent;
-                    EnterCoordinates(out columnCurrent, out rowCurrent);
-                    _controller.SetCurrentArea(rowCurrent, columnCurrent);
-                }
-                else
-                {
-                    Console.WriteLine("Enter cell (column, row):");
-                    int row, column;
-                    EnterCoordinates(out column, out row);
-                    _controller.SetState(row, column);
-                }
+                _controller.MakeMove();
             }
             catch(ApplicationException e)
             {
@@ -94,19 +130,6 @@ namespace ConsoleUI
                 if (key.Key == ConsoleKey.Escape)
                     GameOver = true;
             }
-        }
-
-        private static void EnterCoordinates(out int column, out int row)
-        {
-            var current = Console.ReadLine().Split(",");
-            if(current.Length != 2)
-                throw new ApplicationException("Coordinats must be Enter with ','." +
-                    "\nFirst value is column, second is row.");
-            column = Convert.ToInt32(current[0]) - 1;
-            row = Convert.ToInt32(current[1]) - 1;
-            if (!((column >= 0 && column <= 2)
-                || (row >= 0 && row <= 2)))
-                throw new ApplicationException("Coordinats must be from 1 to 3");
         }
 
         private static void PrintError(string message)

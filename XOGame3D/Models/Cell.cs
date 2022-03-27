@@ -6,10 +6,6 @@ namespace XOGame3D.Models
 {
     internal class Cell : ICell
     {
-        public int Row { get; set; }
-
-        public int Column { get; set; }
-
         private States _state = States.Empty;
 
         public States State { get => _state;
@@ -21,12 +17,12 @@ namespace XOGame3D.Models
         }
 
         public IArea ParentArea { get; set; }
+        public Coordinate Coordinate { get; set; }
 
         public override bool Equals(object obj)
         {
             return obj is ICell cell &&
-                   Row == cell.Row &&
-                   Column == cell.Column;
+                   cell.Coordinate.Equals(Coordinate);
         }
     }
 

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using XOGame3D.Enum;
+﻿using XOGame3D.Enum;
+using XOGame3D.Models;
 
 namespace XOGame3D.Interfaces
 {
@@ -11,6 +9,8 @@ namespace XOGame3D.Interfaces
 
         States Fraction { get; set; }
 
-        bool IsWinner { get; set; }
+        Coordinate ChooseCell();
+
+        Coordinate ChooseArea();
     }
 }

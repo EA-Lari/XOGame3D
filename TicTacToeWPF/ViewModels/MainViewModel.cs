@@ -19,7 +19,7 @@ namespace TicTacToeWPF.ViewModels
 
         #region  Private Fields
 
-        private readonly GameController _gameController;
+        private readonly TicTacToeLogic _gameController;
         private readonly IMapper _mapper;
         private bool _hasCurrentArea = false;
         private Area<Cell> _bigGameArea;
@@ -116,7 +116,7 @@ namespace TicTacToeWPF.ViewModels
             //this.BigGameArea.CellsList.ForEach(x => x.CellState = States.Zero);            
         }
 
-        private void _gameController_SetWinner(States states)
+        private void _gameController_SetWinner(object sender, States states)
         {
             BigGameArea.Winner = states;
         }
