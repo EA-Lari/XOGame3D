@@ -43,9 +43,9 @@ namespace ConsoleUI
         {
             var isChoose = false;
             Console.WriteLine("Choose Game Mode:" +
-                "1 Player with Player" +
-                "2 Robot with Robot" +
-                "3 Player with Robot");
+                "\n1 Player with Player" +
+                "\n2 Robot with Robot" +
+                "\n3 Player with Robot");
             while (!isChoose)
             {
                 var cki = Console.ReadKey();
