@@ -1,81 +1,47 @@
 ﻿using System;
 using XOGame3D.Enum;
 using XOGame3D.Interfaces;
-using XOGame3D.Logic;
+using XOGame3D.Models;
 
 namespace XOGame3D.Robots
 {
     public class RandomRobot : IUser
     {
-        private readonly TicTacToeLogic _game;
-        private readonly IRobotInteraction _interaction;
         private readonly Random _random;
+        private readonly int _repid = 100;
 
         public string Name { get; set; }
         public States Fraction { get; set; }
 
-        public RandomRobot(Random random, TicTacToeLogic game, IRobotInteraction interaction = null)
+        public RandomRobot(Random random)
         {
-            this._game = game;
             this._random = random;
-            _interaction = interaction;
-            _game.ChangeCurrentState += _game_ChangeCurrentState;
         }
 
-        private void _game_ChangeCurrentState(object sender, States e)
-        {
-            if (Fraction == e)
-                MakeMove();
-        }
+        public Coordinate ChooseCell()
+            => ChooseCoordinates(_repid);
 
-        private void MakeMove()
-        {
-            if (_game.GetCurrentArea() == null) 
-                ChooseArea();
-            ChooseCell();
-        }
+        public Coordinate ChooseArea()
+            => ChooseCoordinates(_repid);
 
-        private void ChooseArea(int repid = 100)
+        private Coordinate ChooseCoordinates(int repid)
         {
             try
             {
                 repid--;
                 var rowArea = GetIntRandom();
                 var columnArea = GetIntRandom();
-                if (_interaction == null)
-                    _game.SetCurrentArea(rowArea, columnArea);
-                else
-                    _interaction.SetArea(rowArea, columnArea);
+                return new Coordinate(rowArea, columnArea);
             }
             catch(Exception e)
             {
                 if (repid == 0)
-                    throw new Exception($"Robot can't choose next Area, because: {e.Message}");
-                ChooseArea(repid);
-            }
-        }
-
-        private void ChooseCell(int repid = 100)
-        {
-            try
-            {
-                repid--;
-                var rowArea = GetIntRandom();
-                var columnArea = GetIntRandom();
-                if(_interaction == null)
-                    _game.SetState(rowArea, columnArea);
-                else
-                    _interaction.SetArea(rowArea, columnArea);
-            }
-            catch (Exception e)
-            {
-                if (repid == 0)
-                    throw new Exception($"Robot can't choose Cell, because: {e.Message}");
-                ChooseArea(repid);
+                    throw new Exception($"Robot can't choose next Coordinates, because: {e.Message}");
+                return ChooseCoordinates(repid);
             }
         }
 
         private int GetIntRandom()
-            => _random.Next(0, 2);
+            => _random.Next(0, 3);
     }
 }

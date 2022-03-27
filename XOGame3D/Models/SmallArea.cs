@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using XOGame3D.Enum;
 using XOGame3D.Interfaces;
 
@@ -25,5 +23,6 @@ namespace XOGame3D.Models
         public int Size => _sizeArea;
 
         public States State { get; set; }
+        public Coordinate Coordinate { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace ConsoleUI
     {
         private static IUser _player1;
         private static IUser _player2;
+        private static TicTacToeController _controller;
 
         static void Main(string[] args)
         {
@@ -17,10 +18,11 @@ namespace ConsoleUI
             {
                 Console.SetWindowSize(100,40);
                 Console.WriteLine("Hello World!");
+                var logic = new TicTacToeLogic();                
                 ChooseGameMode();
+                _controller = new TicTacToeController(logic, _player1, _player2);
                 _player1.Fraction = XOGame3D.Enum.States.X;
                 _player2.Fraction = XOGame3D.Enum.States.O;
-                _controller = new TicTacToeLogic();
                 _controller.SetWinner += _controller_SetWinner;
                 Play();
                 Console.WriteLine("Game Over!" +
@@ -34,8 +36,6 @@ namespace ConsoleUI
                 Console.ReadKey();
             }
         }
-
-        private static TicTacToeLogic _controller;
 
         private static bool GameOver { get;set; }
 
@@ -54,14 +54,17 @@ namespace ConsoleUI
                     case ConsoleKey.D1:
                         _player1 = GeneratePlayers();
                         _player2 = GeneratePlayers();
+                        isChoose = true;
                         break;
                     case ConsoleKey.D2:
                         _player1 = GenerateRobot(1);
                         _player2 = GenerateRobot(2);
+                        isChoose = true;
                         break;
                     case ConsoleKey.D3:
                         _player1 = GeneratePlayers();
                         _player2 = GenerateRobot(2);
+                        isChoose = true;
                         break;
                     default:
                         break;
@@ -72,14 +75,14 @@ namespace ConsoleUI
         private static void _controller_SetWinner(object sender, XOGame3D.Enum.States states)
         {
             GameOver = true;
-            if (_controller.WinnerState == XOGame3D.Enum.States.Empty)
+            if (states == XOGame3D.Enum.States.Empty)
                 Console.WriteLine("Draw");
             else
             {
-                if(_player1.Fraction == _controller.WinnerState)
+                if(_player1.Fraction == states)
                     Console.WriteLine($"{_player1.Name} winner!");
 
-                if (_player2.Fraction == _controller.WinnerState)
+                if (_player2.Fraction == states)
                     Console.WriteLine($"{_player2.Name} winner!");
             }
         }
@@ -94,8 +97,8 @@ namespace ConsoleUI
 
         private static IUser GenerateRobot(int num)
         {
-            var player = new RandomRobot(new Random(), _controller)
-                { Name=$"Robot{num}"};
+            var player = new RandomRobot(new Random())
+                { Name=$"Robot_#{num}"};
             return player;
         }
 
@@ -106,38 +109,17 @@ namespace ConsoleUI
                 var artist = new PlayingAreaArtist(_controller);
                 artist.DrawArea();
                 Console.WriteLine();
-                var currentUser = GetCurrentPlayer();
+                var currentUser = _controller.GetCurrenUser();
                 Console.WriteLine($"Player '{currentUser.Name}' turn");
                 MakeMove();
             }
-        }
-
-        private static IUser GetCurrentPlayer()
-        {
-            if (_controller.CurrenState == _player1.Fraction)
-                return _player1;
-            return _player2;
         }
 
         private static void MakeMove()
         {
             try
             {
-                var currentArea = _controller.GetCurrentArea();
-                if (currentArea == null)
-                {
-                    Console.WriteLine("Enter current area(column, row):");
-                    int rowCurrent, columnCurrent;
-                    EnterCoordinates(out columnCurrent, out rowCurrent);
-                    _controller.SetCurrentArea(rowCurrent, columnCurrent);
-                }
-                else
-                {
-                    Console.WriteLine("Enter cell (column, row):");
-                    int row, column;
-                    EnterCoordinates(out column, out row);
-                    _controller.SetState(row, column);
-                }
+                _controller.MakeMove();
             }
             catch(ApplicationException e)
             {
@@ -148,19 +130,6 @@ namespace ConsoleUI
                 if (key.Key == ConsoleKey.Escape)
                     GameOver = true;
             }
-        }
-
-        private static void EnterCoordinates(out int column, out int row)
-        {
-            var current = Console.ReadLine().Split(",");
-            if(current.Length != 2)
-                throw new ApplicationException("Coordinats must be Enter with ','." +
-                    "\nFirst value is column, second is row.");
-            column = Convert.ToInt32(current[0]) - 1;
-            row = Convert.ToInt32(current[1]) - 1;
-            if (!((column >= 0 && column <= 2)
-                || (row >= 0 && row <= 2)))
-                throw new ApplicationException("Coordinats must be from 1 to 3");
         }
 
         private static void PrintError(string message)

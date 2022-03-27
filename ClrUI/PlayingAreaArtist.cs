@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using XOGame3D.Interfaces;
 using XOGame3D.Logic;
 
@@ -10,11 +8,11 @@ namespace ConsoleUI
     internal class PlayingAreaArtist
     {
         private IArea _bigArea;
-        private TicTacToeLogic _controller;
+        private TicTacToeController _controller;
         private int _sizeBigArea, _sizeSmallArea;
         private ConsoleColor _colorX, _colorO;
 
-        public PlayingAreaArtist(TicTacToeLogic controller, 
+        public PlayingAreaArtist(TicTacToeController controller, 
             ConsoleColor colorX = ConsoleColor.Yellow,
             ConsoleColor colorO = ConsoleColor.Green)
         {
@@ -67,7 +65,7 @@ namespace ConsoleUI
             for (int i = 0; i < _sizeBigArea; i++)
             {
                 var bigCell = _bigArea.Cells
-                   .Single(x => x.Column == i && x.Row == bigRow);
+                   .Single(x => x.Coordinate.Column == i && x.Coordinate.Row == bigRow);
                 var smallArea = bigCell as IArea;
                 if (smallArea == _controller.GetCurrentArea())
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -93,7 +91,7 @@ namespace ConsoleUI
             for (int i = 0; i < _sizeBigArea; i++)
             {
                 var bigCell = _bigArea.Cells
-                    .Single(x => x.Column == i && x.Row == bigRow);
+                    .Single(x => x.Coordinate.Column == i && x.Coordinate.Row == bigRow);
                 var smallArea = bigCell as IArea;
                 if(smallArea == _controller.GetCurrentArea())
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -109,7 +107,7 @@ namespace ConsoleUI
                     if(string.IsNullOrEmpty(columnSymbol))
                     {
                         var cell = smallArea.Cells
-                             .Single(x => x.Row == smallRow && x.Column == j);
+                             .Single(x => x.Coordinate.Row == smallRow && x.Coordinate.Column == j);
                         var state = " ";
                         if (cell.State != XOGame3D.Enum.States.Empty)
                             state = cell.State.ToString();

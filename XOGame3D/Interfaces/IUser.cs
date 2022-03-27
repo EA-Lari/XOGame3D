@@ -1,4 +1,5 @@
 ﻿using XOGame3D.Enum;
+using XOGame3D.Models;
 
 namespace XOGame3D.Interfaces
 {
@@ -7,5 +8,9 @@ namespace XOGame3D.Interfaces
         string Name { get; set; }
 
         States Fraction { get; set; }
+
+        Coordinate ChooseCell();
+
+        Coordinate ChooseArea();
     }
 }

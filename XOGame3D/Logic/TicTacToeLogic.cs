@@ -26,12 +26,11 @@ namespace XOGame3D.Logic
         /// <summary>
         /// Set the current state in cell by number row and column
         /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        public void SetState(int row, int column)
+        /// <param name="xy">Coordinate choose</param>
+        public void SetState(Coordinate xy)
         {
             var area = BigArea.CurrentCell as IArea;
-            var cell = area.Cells.Single(x => x.Row == row && x.Column == column);
+            var cell = area.Cells.Single(x => x.Coordinate == xy);
             SetState(cell);
         }
 
@@ -107,13 +106,11 @@ namespace XOGame3D.Logic
         /// <summary>
         /// Set area for turn, allow if there is no current area
         /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        
-        public void SetCurrentArea(int row, int column)
+        /// <param name="xy">Coordinate choose</param>
+        public void SetCurrentArea(Coordinate xy)
         {
             var cell = BigArea.Cells
-                .Single(x => x.Row == row && x.Column == column);
+                .Single(x => x.Coordinate == xy);
             SetCurrentArea(cell);
         }
 

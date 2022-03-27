@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using XOGame3D.Enum;
 using XOGame3D.Interfaces;
 
@@ -17,6 +18,12 @@ namespace XOGame3D.Logic
             _logic = logic;
             _user1 = user1;
             _user2 = user2;
+            logic.SetWinner += Logic_SetWinner;
+        }
+
+        private void Logic_SetWinner(object sender, States e)
+        {
+            SetWinner?.Invoke(sender, e);
         }
 
         public void ChooseUserFraction(IUser user, States state)
@@ -47,5 +54,25 @@ namespace XOGame3D.Logic
                 return _user2;
             throw new Exception("Unpossible  return user");
         }
+
+        public void MakeMove()
+        {
+            var currentUser = GetCurrenUser();
+            if(_logic.GetCurrentArea() == null)
+            {
+                var areaCoordinate = currentUser.ChooseArea();
+                _logic.SetCurrentArea(areaCoordinate);
+            }
+            var cellCoordinate = currentUser.ChooseCell();
+            _logic.SetState(cellCoordinate);
+        }
+
+        public IArea GetCurrentArea() => _logic.GetCurrentArea();
+
+        public IArea GetBigArea() => _logic.GetBigArea();
+
+        public IArea GetAllSmallAreasByCell(ICell cell) => _logic.GetAllSmallAreasByCell(cell);
+
+        public event EventHandler<States> SetWinner;
     }
 }
