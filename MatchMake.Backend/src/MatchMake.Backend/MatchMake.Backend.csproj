@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DomainProcesses\AddPlayerToRoom\" />
+    <Folder Include="DomainProcesses\RemovePlayerFromRoom\" />
+    <Folder Include="DomainProcesses\GetGameRooms\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Mapping\" />
+    <Folder Include="Persistance\Entities\" />
+    <Folder Include="Settings\" />
+  </ItemGroup>
+
+</Project>
