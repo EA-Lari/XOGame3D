@@ -1,3 +1,4 @@
+using MatchMake.Backend.Models;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace MatchMake.Backend.Tests
         [TestCase("Killer_1000", "Killer_1000")]
         [TestCase("Batman95", "Batman95")]
         [TestCase("Witch_87", "Witch_87")]
-        public void AddPlayerToRoom_Test(string testCaseUserName, string expectedResult)
+        public void AddPlayerToRoom(string testCaseUserName, string expectedResult)
         {
             // Arrange
             var fixtureClass = GetNewGameRoomInstance();
@@ -28,7 +29,7 @@ namespace MatchMake.Backend.Tests
         [TestCase("Killer_1000", "Killer_1000")]
         [TestCase("Batman95", "Batman95")]
         [TestCase("Witch_87", "Witch_87")]
-        public void RemovePlayerFromRoom_Test(string testCaseUserName, string expectedResult)
+        public void RemovePlayerFromRoom(string testCaseUserName, string expectedResult)
         {
             // Arrange
             var fixtureClass = GetNewGameRoomInstance();
@@ -41,7 +42,7 @@ namespace MatchMake.Backend.Tests
 
         [Test]
         [TestCase()]
-        public void ClearRoom_Test()
+        public void ClearRoom()
         {
             // Arrange
             var fixtureClass = GetNewGameRoomInstance();
@@ -52,7 +53,7 @@ namespace MatchMake.Backend.Tests
         }
 
         [Test]
-        public void GetAllPlayersInRoom_Test()
+        public void GetAllPlayersInRoom()
         {
             // Arrange
             var fixtureClass = GetNewGameRoomInstance();
@@ -74,7 +75,7 @@ namespace MatchMake.Backend.Tests
         #region Test Heplers
 
         private GameRoom GetNewGameRoomInstance()
-            => new GameRoom();
+            => new GameRoom(5);
 
         #endregion
 

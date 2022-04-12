@@ -8,9 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Processes\" />
+    <Folder Include="DomainProcesses\AddPlayerToRoom\" />
+    <Folder Include="DomainProcesses\RemovePlayerFromRoom\" />
+    <Folder Include="DomainProcesses\GetGameRooms\" />
     <Folder Include="DTOs\" />
     <Folder Include="Mapping\" />
+    <Folder Include="Persistance\Entities\" />
     <Folder Include="Settings\" />
   </ItemGroup>
 

@@ -18,4 +18,8 @@
     <Folder Include="Behaviour\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MatchMake.Backend\MatchMake.Backend.csproj" />
+  </ItemGroup>
+
 </Project>
