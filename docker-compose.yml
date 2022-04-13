@@ -8,10 +8,10 @@ services:
     depends_on:
       - postgres
       - rabbitmq
-    build:
-      context: .
-      dockerfile: MatchMake.Backend/src
-  
+    build: MatchMake.Backend
+    networks:
+      - xo_internal_net
+       
   postgres:
     image: postgres:alpine
     container_name: postgres
@@ -20,6 +20,8 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: match_back
+    networks:
+      - xo_internal_net
 
   postgres_adminer:
     image: adminer
@@ -27,6 +29,8 @@ services:
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - xo_internal_net
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -39,9 +43,16 @@ services:
       - "5672:5672"
     environment:
       - RABBITMQ_CONFIG_FILE=/etc/match_back/rabbitmq.conf
+    networks:
+      - xo_internal_net
 
 volumes:
   postgres_data:
     external: true    
   rabbitmq_data:
+    external: true
+
+networks:
+  xo_internal_net:
+    name: xo_internal_net
     external: true

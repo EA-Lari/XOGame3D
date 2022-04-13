@@ -1,18 +1,13 @@
-FROM mcr.microsoft.com/dotnet/runtime:6.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build-env
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["MatchMake.Backend.csproj", "."]
-RUN dotnet restore "MatchMake.Backend.csproj"
-COPY . .
-WORKDIR "/src"
-RUN dotnet build "MatchMake.Backend.csproj" -c Release -o /app/build
+COPY *.csproj ./
+RUN dotnet restore
 
-FROM build AS publish
-RUN dotnet publish "MatchMake.Backend.csproj" -c Release -o /app/publish
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
+FROM mcr.microsoft.com/dotnet/runtime:6.0-bullseye-slim
+COPY --from=build-env /app/out .
+
 ENTRYPOINT ["dotnet", "MatchMake.Backend.dll"]
