@@ -15,9 +15,11 @@ services:
   postgres:
     image: postgres:alpine
     container_name: postgres
+    ports:
+      - 5432:5433
+    restart: always
     volumes:
       - postgres_data:/var/opt/postgres
-    restart: always
     environment:
       POSTGRES_PASSWORD: match_back
     networks:
