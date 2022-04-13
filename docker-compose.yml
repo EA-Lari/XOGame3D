@@ -16,12 +16,13 @@ services:
     image: postgres:alpine
     container_name: postgres
     ports:
-      - 35000:5432
+      - 30000:5432
     restart: always
     volumes:
       - postgres_data:/var/opt/postgres
     environment:
-      POSTGRES_PASSWORD: match_back
+      POSTGRES_USER: xo_admin
+      POSTGRES_PASSWORD: xo_admin
     networks:
       - xo_internal_net
 
@@ -30,7 +31,7 @@ services:
     container_name: postgres_adminer
     restart: always
     ports:
-      - 30000:8080
+      - 30001:8080
     networks:
       - xo_internal_net
 
