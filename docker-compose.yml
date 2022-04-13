@@ -16,7 +16,7 @@ services:
     image: postgres:alpine
     container_name: postgres
     ports:
-      - 5432:5433
+      - 35000:5432
     restart: always
     volumes:
       - postgres_data:/var/opt/postgres
@@ -30,7 +30,7 @@ services:
     container_name: postgres_adminer
     restart: always
     ports:
-      - 8080:8080
+      - 30000:8080
     networks:
       - xo_internal_net
 
