@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MatchMake.Backend": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

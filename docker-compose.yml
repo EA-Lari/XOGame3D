@@ -1,0 +1,47 @@
+version: '3.4'
+
+services:
+
+  matchmake.backend:
+    image: ${DOCKER_REGISTRY-}matchmakebackend
+    container_name: matchmake_backend
+    depends_on:
+      - postgres
+      - rabbitmq
+    build:
+      context: .
+      dockerfile: MatchMake.Backend/src
+  
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/opt/postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: match_back
+
+  postgres_adminer:
+    image: adminer
+    container_name: postgres_adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - "./rabbitmq:/etc/match_back/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_CONFIG_FILE=/etc/match_back/rabbitmq.conf
+
+volumes:
+  postgres_data:
+    external: true    
+  rabbitmq_data:
+    external: true
