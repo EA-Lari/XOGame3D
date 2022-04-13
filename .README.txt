@@ -1,0 +1,6 @@
+Для успешного деплоя в Docker-Compose необходимо предварительно выполнить команды:
+docker volume create postgres_data
+docker volume create rabbitmq_data
+
+Запуск проекта:
+docker-compose up -d
