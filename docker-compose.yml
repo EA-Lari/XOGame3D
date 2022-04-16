@@ -36,8 +36,9 @@ services:
       - xo_internal_net
 
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:3.8-management-alpine
     container_name: rabbitmq
+    restart: "unless-stopped"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
       - "./rabbitmq:/etc/match_back/"
