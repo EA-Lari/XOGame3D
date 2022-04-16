@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,9 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Processes\AddPlayerToRoom\" />
-    <Folder Include="Domain\Processes\RemovePlayerFromRoom\" />
-    <Folder Include="Domain\Processes\GetGameRooms\" />
     <Folder Include="DTOs\" />
     <Folder Include="Mapping\" />
     <Folder Include="Storage\Entities\" />
@@ -20,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.7.28" />
+    <PackageReference Include="Hangfire.PostgreSql" Version="1.9.7" />
     <PackageReference Include="MassTransit" Version="8.0.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
@@ -27,8 +26,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
