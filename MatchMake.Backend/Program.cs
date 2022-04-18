@@ -41,10 +41,7 @@ var logger = app.Logger;
 var lifetime = app.Lifetime;
 var env = app.Environment;
 
-lifetime.ApplicationStarted.Register(() =>
-    logger.LogInformation(
-        $"The application {env.ApplicationName} is started.")
-);
+//var builder = WebApplication.CreateBuilder(args);
 
 app.Logger.LogInformation("Hi! The MatchMake.Backend is Running!");
 
