@@ -11,7 +11,7 @@ services:
     build: MatchMake.Backend
     networks:
       - xo_internal_net
-       
+
   postgres:
     image: postgres:alpine
     container_name: postgres
@@ -52,7 +52,7 @@ services:
 
 volumes:
   postgres_data:
-    external: true    
+    external: true
   rabbitmq_data:
     external: true
 

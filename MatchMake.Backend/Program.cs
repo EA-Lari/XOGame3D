@@ -1,16 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Serilog;
+using Microsoft.AspNetCore.Builder;
 
 Console.WriteLine("Hello, MatchMake.Backend!");
 
-//var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-//Configuration = new ConfigurationBuilder()
-//    .SetBasePath(Directory.GetCurrentDirectory())
-//    .AddJsonFile("appsettings.json")
-//    .AddJsonFile($"appsettings.{env.Name}.json")
-//    .AddJsonFile("secrets.json")    
-//    .AddEnvironmentVariables()
-//    .Build();
+var app = builder.Build();
 
 // Hangfire
 // https://www.youtube.com/watch?v=iilRdmNILC8
