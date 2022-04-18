@@ -2,16 +2,6 @@ version: '3.4'
 
 services:
 
-  matchmake.backend:
-    image: ${DOCKER_REGISTRY-}matchmakebackend
-    container_name: matchmake_backend
-    depends_on:
-      - postgres
-      - rabbitmq
-    build: MatchMake.Backend
-    networks:
-      - xo_internal_net
-
   postgres:
     image: postgres:alpine
     container_name: postgres
