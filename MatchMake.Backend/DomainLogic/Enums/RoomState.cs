@@ -4,7 +4,7 @@
     /// <summary>
     /// Перечисление представляет Статус игры
     /// </summary>
-    public enum GameState : int
+    public enum RoomState : int
     {
 
         /// <summary>
@@ -15,12 +15,12 @@
         /// <summary>
         /// В процессе игры
         /// </summary>
-        InProcess = 1,
+        GameInProcess = 1,
 
         /// <summary>
-        /// Игра отменена
+        /// Дисконнект
         /// </summary>
-        Canceled = 2
+        Disconnected = 2
 
     }
 }
