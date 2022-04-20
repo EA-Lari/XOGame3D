@@ -2,6 +2,7 @@
 
 namespace MatchMake.Backend.Storage.Contracts
 {
+
     public interface IAsyncRepository<T, TId>
     {
 

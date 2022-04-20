@@ -4,7 +4,7 @@
     /// <summary>
     /// Класс описывает Игрока
     /// </summary>
-    public class Player
+    public class PlayerData
     {
         public bool IsReadyForGame { get; private set; }
 
@@ -12,7 +12,7 @@
 
         public Guid PlayerGuid { get; }
 
-        public Player(string playerName)
+        public PlayerData(string playerName)
         {
             PlayerName = playerName;
             PlayerGuid = new Guid();            

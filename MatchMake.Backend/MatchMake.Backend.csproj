@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <Folder Include="DomainLogic\DTO\" />
+    <Folder Include="Automapper\" />
   </ItemGroup>
 
 </Project>

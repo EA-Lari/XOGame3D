@@ -13,5 +13,10 @@
         /// </summary>
         public int RoomState { get; set; }
 
+        /// <summary>
+        /// Дата/время создания комнаты
+        /// </summary>
+        public DateTime CreatedDt { get; set; }
+
     }
 }

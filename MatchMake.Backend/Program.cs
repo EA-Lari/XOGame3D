@@ -11,6 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using MatchMake.Backend.Setup;
 using Serilog;
 using Microsoft.EntityFrameworkCore;
+using static MatchMake.Backend.Storage.DbaseMapping.RoomMap;
+using MatchMake.Backend.DataStorage.MatchMake.Context;
+using MatchMake.Backend.DataStorage.MatchMakeDbase;
+using MatchMake.Backend.Storage.Contracts;
+using MatchMake.Backend.Processes;
+using MatchMake.Backend.Contracts;
 
 Console.WriteLine("Hello, MatchMake.Backend!");
 
@@ -69,23 +75,24 @@ static void ConfigureContainer(HostBuilderContext hostContext, ContainerBuilder 
     #region Database
 
     builder.Register(context =>
-                    new DbContextOptionsBuilder<MbeContext>()
+                    new DbContextOptionsBuilder<MatchMakeContext>()
                         .UseNpgsql(Config.ConnectionStrings.MatchMakeContext)
                         .Options)
-                .As<DbContextOptions<MbeContext>>().SingleInstance();
+                .As<DbContextOptions<MatchMakeContext>>().SingleInstance();
 
-    builder.Register(context => new DbContextOptionsBuilder<SomeExampleContext>()
-           .UseNpgsql(Config.ConnectionStrings.MatchMakeContext).Options)
-           .As<DbContextOptions<SomeExampleContext>>().SingleInstance();
-
-    builder.RegisterType<SomeExampleContext>()
+    builder.RegisterType<MatchMakeContext>()
            .InstancePerDependency();
 
-    //builder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IAsyncRepositoryWithTypedId<,>))
-    //       .InstancePerDependency();
+    builder.RegisterGeneric(typeof(AsyncRepositoryUnderMatchMakeDbase<,>)).As(typeof(IAsyncRepository<,>))
+           .InstancePerDependency();
 
-    // Add a custom scoped service
-    //services.AddScoped<ITodoRepository, TodoRepository>();
+    #endregion
+
+    #region Automapper Models
+
+    //builder.Register(ctx => new MapperConfiguration(cfg => { cfg.AddProfile(new Mobile.BackEcosystem.Automapper.MappingProfile(Convert.ToBoolean(Config.IsInstanceForMkb))); }
+    //));
+    //builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
 
     #endregion
 
@@ -93,9 +100,18 @@ static void ConfigureContainer(HostBuilderContext hostContext, ContainerBuilder 
 
     #endregion
 
-    #region Match Make Services
+    #region Match Make Domain Processes
 
-
+    // Create Auto Factory which register dependencies as function
+    builder.Register<Func<Type, IParallelProcess>>(x =>
+    {
+        var context = x.Resolve<IComponentContext>();
+        return y =>
+        {
+            return (IParallelProcess)context.Resolve(y);
+        };
+    })
+        .SingleInstance();
 
     #endregion
 }
