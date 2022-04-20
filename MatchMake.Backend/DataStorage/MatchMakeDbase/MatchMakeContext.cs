@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MatchMake.Backend.Storage.DbaseMapping;
+using MatchMake.Backend.DataStorage.MatchMakeDbase.Mapping;
 
 namespace MatchMake.Backend.DataStorage.MatchMake.Context
 {
@@ -10,8 +12,8 @@ namespace MatchMake.Backend.DataStorage.MatchMake.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration();
-            modelBuilder.ApplyConfiguration();
+            modelBuilder.ApplyConfiguration(new RoomMap());
+            modelBuilder.ApplyConfiguration(new PlayerMap());
         }
 
     }

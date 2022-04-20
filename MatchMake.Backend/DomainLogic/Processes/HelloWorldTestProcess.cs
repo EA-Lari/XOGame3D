@@ -8,6 +8,11 @@ namespace MatchMake.Backend.Processes
 
         private Timer _timer;
 
+        public HelloWorldTestProcess()
+        {
+
+        }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _timer = new Timer(HelloWorld, null, 0, 10000);

@@ -8,7 +8,7 @@ namespace MatchMake.Backend.Models
         /// <summary>
         /// Поле описывает Список игроков, попавших в Комнату Ожидания
         /// </summary>
-        private readonly List<Player> _playersList;
+        private readonly List<PlayerData> _playersList;
 
         /// <summary>
         /// Св-во описывает лимит игроков в комнате
@@ -32,7 +32,7 @@ namespace MatchMake.Backend.Models
         /// </summary>
         public GameRoom(int playersRoomLimit)
         {
-            _playersList = new List<Player>();
+            _playersList = new List<PlayerData>();
             PlayersRoomLimit = playersRoomLimit;
             RoomGuid = new Guid();
         }
@@ -48,7 +48,7 @@ namespace MatchMake.Backend.Models
                 throw new ArgumentOutOfRangeException($"Лимит игроков в комнате {RoomGuid} превысил {PlayersRoomLimit} ед.");
             }
 
-            var addedPlayer = new Player(userName);
+            var addedPlayer = new PlayerData(userName);
             _playersList.Add(addedPlayer);
 
             return addedPlayer.PlayerName;
@@ -98,4 +98,28 @@ namespace MatchMake.Backend.Models
         }
 
     }
+
+    /// <summary>
+    /// Перечисление представляет Статус игры
+    /// </summary>
+    public enum GameRoomState : int
+    {
+
+        /// <summary>
+        /// Ожидаются игроки
+        /// </summary>
+        WaitingPlayers = 0,
+
+        /// <summary>
+        /// В процессе игры
+        /// </summary>
+        GameInProcess = 1,
+
+        /// <summary>
+        /// Дисконнект
+        /// </summary>
+        Disconnected = 2
+
+    }
+
 }
