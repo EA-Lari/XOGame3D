@@ -19,7 +19,7 @@ services:
       - 25432:5432
     restart: always
     volumes:
-      - postgres_data:/var/opt/postgres
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: xo_admin
       POSTGRES_PASSWORD: xo_admin
@@ -28,21 +28,21 @@ services:
 
   postgres_dashboard:
     image: dpage/pgadmin4
-    container_name: pgadmin
+    container_name: postgres_dashboard
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-xogame@email.com}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-xo_admin@email.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-xo_admin}
     ports:
       - "${PGADMIN_PORT:-28080}:80"
     restart: always
     volumes:
-      - postgres_data:/var/lib/pgadmin
+      - postgre_dashboard_data:/var/lib/pgadmin
     networks:
       - xo_internal_net
 
   message_bus:
     image: rabbitmq:3.8-management-alpine
-    container_name: rabbitmq
+    container_name: message_bus
     hostname: xogame_rmq_broker
     restart: "unless-stopped"
     logging:
@@ -66,6 +66,8 @@ volumes:
   postgres_data:
     external: true
   rabbitmq_data:
+    external: true
+  postgre_dashboard_data:
     external: true
 
 networks:
