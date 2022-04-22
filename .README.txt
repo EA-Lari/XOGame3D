@@ -2,6 +2,7 @@
 # Создание томов для данных
 docker volume create postgres_data
 docker volume create rabbitmq_data
+docker volume create postgre_dashboard_data
 
 # Создание внутренней Docker-сети для проекта:
 docker network create xo_internal_net
