@@ -1,4 +1,5 @@
-﻿using MatchMake.Backend.Contracts;
+﻿using Hangfire;
+using MatchMake.Backend.Contracts;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -26,6 +27,7 @@ namespace MatchMake.Backend
         {
             try
             {
+
                 foreach (var process in _processesList)
                 {
                     Task.Run(() =>

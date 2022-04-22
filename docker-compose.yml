@@ -1,9 +1,9 @@
-version: '3.4'
+version: '3.7'
 
 services:
 
   matchmake.backend:
-    image: ${DOCKER_REGISTRY-}matchmakebackend
+    image: matchmakebackend1.0
     container_name: matchmake_backend
     depends_on:
       - postgres
@@ -16,7 +16,7 @@ services:
     image: postgres:alpine
     container_name: postgres
     ports:
-      - 30000:5432
+      - 25432:5432
     restart: always
     volumes:
       - postgres_data:/var/opt/postgres
@@ -26,19 +26,31 @@ services:
     networks:
       - xo_internal_net
 
-  postgres_adminer:
-    image: adminer
-    container_name: postgres_adminer
-    restart: always
+  postgres_dashboard:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-xogame@email.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-xo_admin}
     ports:
-      - 30001:8080
+      - "${PGADMIN_PORT:-28080}:80"
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/pgadmin
     networks:
       - xo_internal_net
 
-  rabbitmq:
+  message_bus:
     image: rabbitmq:3.8-management-alpine
     container_name: rabbitmq
+    hostname: xogame_rmq_broker
     restart: "unless-stopped"
+    logging:
+      # https://docs.docker.com/compose/compose-file/#loggin
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
       - "./rabbitmq:/etc/match_back/"

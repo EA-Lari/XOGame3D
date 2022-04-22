@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using MassTransit;
 using Autofac.Extensions.DependencyInjection;
 using MatchMake.Backend.ServiceBus.Consumers;
@@ -31,43 +32,98 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                             h.Username("xo_admin");
                             h.Password("xo_admin");
                         });
+=======
+﻿using Autofac.Extensions.DependencyInjection;
+using Hangfire;
+using Hangfire.PostgreSql;
+using MatchMake.Backend.Contracts;
+using MatchMake.Backend.Processes;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-static void ConfigureContainer(HostBuilderContext hostContext, ContainerBuilder builder)
-{
-    builder.RegisterType<StartHostProcessesService>().As<IHostedService>().SingleInstance();
+var builder = WebApplication.CreateBuilder(args);
 
-    var Config = new Settings();
-    SettingsExtensions.SetFromEnvironmentVariables(Config);
+//builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
-    #region Logger
+builder.Services.AddSingleton<IParallelProcess, HelloWorldTestProcess>();
 
-    var logger = Log.Logger;
-    logger = new LoggerConfiguration().CreateLogger();
-    
-    logger.Information("Стартуем логирование MatchMake.Backend!");
+builder.Services.AddHangfire(configuration =>
+                    {
+                        configuration.UsePostgreSqlStorage("Host=localhost;Port=30000;Database=xo_admin;User Id=xo_admin;Password=xo_admin;", new PostgreSqlStorageOptions() { SchemaName = "matchmake_jobs"});
+                    });
 
-    builder.Register(context => logger).As<ILogger>().SingleInstance();
+builder.Services.AddHangfireServer();
 
-    #endregion
+var app = builder.Build();
 
-    builder.Register(context => Config).As<Settings>().SingleInstance();
+IParallelProcess process = app.Services.GetRequiredService<IParallelProcess>();
+ILogger logger = app.Logger;
+IHostApplicationLifetime lifetime = app.Lifetime;
+IWebHostEnvironment env = app.Environment;
 
-    #region Database
+lifetime.ApplicationStarted.Register(() =>
+    logger.LogInformation(
+        $"The application {env.ApplicationName} started" +
+        $" with injected {process}")
+);
 
-    builder.Register(context =>
-                    new DbContextOptionsBuilder<MatchMakeContext>()
-                        .UseNpgsql(Config.ConnectionStrings.MatchMakeContext)
-                        .Options)
-                .As<DbContextOptions<MatchMakeContext>>().SingleInstance();
+app.Logger.LogInformation("Hi! The MatchMake.Backend is Running!");
+app.UseHangfireDashboard("/jobs");
 
-    builder.RegisterType<MatchMakeContext>()
-           .InstancePerDependency();
+app.Run();
 
-    builder.RegisterGeneric(typeof(AsyncRepositoryUnderMatchMakeDbase<,>)).As(typeof(IAsyncRepository<,>))
-           .InstancePerDependency();
+Task.Delay(5000);
 
-    #endregion
+BackgroundJob.Enqueue(
+                () => process.StartAsync(new CancellationToken())
+                );
 
+//CreateHostBuilder(args).Build().Run();
+>>>>>>> add pgAdmin to main compose file
+
+
+//static IHostBuilder CreateHostBuilder(string[] args) =>
+//            Host.CreateDefaultBuilder(args)
+//                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+//                .ConfigureContainer<ContainerBuilder>(ConfigureContainer)
+//                .ConfigureServices(services => services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true))
+//                .ConfigureServices((hostContext, services) =>
+//                {
+//                    //services.AddHostedService<StartHostProcessesService>();
+//                });
+
+//static void ConfigureContainer(HostBuilderContext hostContext, ContainerBuilder builder)
+//{
+//    builder.RegisterType<StartHostProcessesService>().As<IHostedService>().SingleInstance();
+
+//    var Config = new Settings();
+//    SettingsExtensions.SetFromEnvironmentVariables(Config);
+
+//    #region Logger
+
+//    var logger = Log.Logger;
+//    logger = new LoggerConfiguration().CreateLogger();
+
+//    logger.Information("Стартуем логирование MatchMake.Backend!");
+
+//    builder.Register(context => logger).As<ILogger>().SingleInstance();
+
+//    #endregion
+
+//    builder.Register(context => Config).As<Settings>().SingleInstance();
+
+//    #region Database
+
+//    builder.Register(context =>
+//                    new DbContextOptionsBuilder<MatchMakeContext>()
+//                        .UseNpgsql(Config.ConnectionStrings.MatchMakeContext)
+//                        .Options)
+//                .As<DbContextOptions<MatchMakeContext>>().SingleInstance();
+
+<<<<<<< HEAD
     #region Automapper Models
                         cfg.ReceiveEndpoint("order-queue", c =>
                         {
@@ -107,3 +163,26 @@ var env = app.Environment;
 app.Logger.LogInformation("Hi! The MatchMake.Backend is Running!");
 
 app.Run();
+=======
+//    builder.RegisterType<MatchMakeContext>()
+//           .InstancePerDependency();
+
+//    builder.RegisterGeneric(typeof(AsyncRepositoryUnderMatchMakeDbase<,>)).As(typeof(IAsyncRepository<,>))
+//           .InstancePerDependency();
+
+//    #endregion
+
+//    #region Automapper Models
+
+//    //builder.Register(ctx => new MapperConfiguration(cfg => { cfg.AddProfile(new Mobile.BackEcosystem.Automapper.MappingProfile(Convert.ToBoolean(Config.IsInstanceForMkb))); }
+//    //));
+//    //builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
+
+//    #endregion
+
+//    #region Message Broker
+
+//    #endregion
+
+//}
+>>>>>>> add pgAdmin to main compose file
