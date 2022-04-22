@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using MatchMake.Backend.Contracts;
+using Microsoft.Extensions.Logging;
 
 namespace MatchMake.Backend.Processes
 {
@@ -7,10 +8,11 @@ namespace MatchMake.Backend.Processes
     {
 
         private Timer _timer;
+        //private readonly ILogger _logger;
 
         public HelloWorldTestProcess()
         {
-
+            //_logger = logger;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -21,7 +23,7 @@ namespace MatchMake.Backend.Processes
 
         private void HelloWorld(object state)
         {
-            Debug.WriteLine("Hello World!");
+            Console.WriteLine("HelloWorldProcess awake!");
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
