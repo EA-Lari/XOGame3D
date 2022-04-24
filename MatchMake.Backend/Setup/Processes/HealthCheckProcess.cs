@@ -19,6 +19,10 @@ namespace MatchMake.Backend.Processes.Startup
             _tcpListener = new TcpListener(IPAddress.Any, port);
         }
 
+        public string SchedulingPeriod => "0/15 * * * * *";
+
+        public string ResolveKey => this.GetType().Name;
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _tcpListener.Start();

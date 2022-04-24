@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -13,18 +14,25 @@
     <Compile Remove="DTOs\**" />
     <Compile Remove="Mapping\**" />
     <Compile Remove="Settings\**" />
+    <Compile Remove="src\**" />
+    <Compile Remove="tests\**" />
     <EmbeddedResource Remove="DTOs\**" />
     <EmbeddedResource Remove="Mapping\**" />
     <EmbeddedResource Remove="Settings\**" />
+    <EmbeddedResource Remove="src\**" />
+    <EmbeddedResource Remove="tests\**" />
     <None Remove="DTOs\**" />
     <None Remove="Mapping\**" />
     <None Remove="Settings\**" />
+    <None Remove="src\**" />
+    <None Remove="tests\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.3.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
     <PackageReference Include="Hangfire" Version="1.7.28" />
+    <PackageReference Include="Hangfire.Autofac.Core" Version="1.0.1" />
     <PackageReference Include="Hangfire.Core" Version="1.7.28" />
     <PackageReference Include="Hangfire.PostgreSql" Version="1.9.7" />
     <PackageReference Include="MassTransit" Version="8.0.1" />

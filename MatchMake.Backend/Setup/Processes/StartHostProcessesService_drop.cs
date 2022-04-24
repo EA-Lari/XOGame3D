@@ -9,14 +9,14 @@ namespace MatchMake.Backend
     /// <summary>
     /// Служба для старта параллельных процессов внутри приложения
     /// </summary>
-    public class StartHostProcessesService : IHostedService
+    public class StartHostProcessesService_drop : IHostedService
     {
 
-        private readonly ILogger<StartHostProcessesService> _logger;
+        private readonly ILogger<StartHostProcessesService_drop> _logger;
         private readonly IEnumerable<IParallelProcess> _processesList;
         private readonly CancellationTokenSource _cts;
 
-        public StartHostProcessesService(ILogger<StartHostProcessesService> logger, IEnumerable<IParallelProcess> processesList)
+        public StartHostProcessesService_drop(ILogger<StartHostProcessesService_drop> logger, IEnumerable<IParallelProcess> processesList)
         {
             _logger = logger;
             _processesList = processesList;
