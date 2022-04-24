@@ -1,10 +1,29 @@
 ﻿using Hangfire;
+using MatchMake.Backend.Contracts;
 
 namespace MatchMake.Backend.Domain.Processes.UserNotification_TestHangfire
 {
-    public class NotificationProcess
+    public class NotificationProcess : IParallelProcess
     {
         
+        private const string everyFiftheenSecondsCron = "0/0.2 * * * * *";
+
+        public string SchedulingPeriod { get => everyFiftheenSecondsCron; }
+
+        public string ResolveKey => this.GetType().Name;
+
+        [DisableConcurrentExecution(10)]
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            Console.WriteLine($"{this.GetType().Name} is started in job!");
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
         public void FireAndForgetJobStart()
         {
             string jobId = BackgroundJob.Enqueue(
@@ -48,6 +67,6 @@ namespace MatchMake.Backend.Domain.Processes.UserNotification_TestHangfire
             );
 
         }
-
+        
     }
 }

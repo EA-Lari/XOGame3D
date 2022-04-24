@@ -43,7 +43,7 @@ services:
         max-file: "10"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-      - "./rabbitmq:/etc/match_back/"
+      - "./rabbitmq-local:/etc/match_back/"
     ports:
       - "15672:15672"
       - "5672:5672"

@@ -1,18 +1,18 @@
-﻿using MatchMake.Backend.Contracts;
+﻿using Hangfire;
+using MatchMake.Backend.Contracts;
 
 namespace MatchMake.Backend.Processes
 {
     public class HelloWorldTestProcess : IParallelProcess
     {
 
-        //private Timer _timer;
-        //private readonly ILogger _logger;
+        private const string everySecondCron = "0/5 * * * * *";
 
-        public HelloWorldTestProcess()
-        {
-            //_logger = logger;
-        }
+        public string SchedulingPeriod { get => everySecondCron; }
 
+        public string ResolveKey => this.GetType().Name;
+
+        [DisableConcurrentExecution(10)]
         public Task StartAsync(CancellationToken cancellationToken)
         {
             //_timer = new Timer(HelloWorld, null, 0, 10000);
