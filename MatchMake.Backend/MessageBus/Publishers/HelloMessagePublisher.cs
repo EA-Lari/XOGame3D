@@ -2,7 +2,7 @@
 using MatchMake.Backend.MessageBus.Contracts;
 using Microsoft.Extensions.Hosting;
 
-namespace MatchMake.Backend.MessageBus.Workers
+namespace MatchMake.Backend.MessageBus.Publishers
 {
 
     public class HelloMessagePublisher : BackgroundService
