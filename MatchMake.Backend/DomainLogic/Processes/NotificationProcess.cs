@@ -6,7 +6,7 @@ namespace MatchMake.Backend.Domain.Processes.UserNotification_TestHangfire
     public class NotificationProcess : IParallelProcess
     {
         
-        private const string everyFiftheenSecondsCron = "0/0.2 * * * * *";
+        private string everyFiftheenSecondsCron = "0/1 * * * * *";
 
         public string SchedulingPeriod { get => everyFiftheenSecondsCron; }
 
