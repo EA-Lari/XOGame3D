@@ -12,7 +12,7 @@ using MatchMake.Backend.Domain.Processes.UserNotification_TestHangfire;
 using MatchMake.Backend.Setup;
 using MassTransit;
 using System.Reflection;
-using MatchMake.Backend.MessageBus.Workers;
+using MatchMake.Backend.MessageBus.Publishers;
 
 var builder = WebApplication.CreateBuilder(args);
 
