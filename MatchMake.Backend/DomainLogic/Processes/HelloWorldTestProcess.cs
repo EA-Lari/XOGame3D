@@ -6,7 +6,7 @@ namespace MatchMake.Backend.Processes
     public class HelloWorldTestProcess : IParallelProcess
     {
 
-        private const string everySecondCron = "0/5 * * * * *";
+        private string everySecondCron = "0/5 * * * * *";
 
         public string SchedulingPeriod { get => everySecondCron; }
 
