@@ -1,5 +1,5 @@
 ﻿
-namespace Contracts.GameXO.Models
+namespace Contracts.TicTacToeGame
 {
     public class Coordinate
     {

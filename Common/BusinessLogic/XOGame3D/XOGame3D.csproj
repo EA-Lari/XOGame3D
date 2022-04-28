@@ -2,22 +2,28 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>XO_nuget.png</PackageIcon>
     <RepositoryUrl>https://github.com/MEAwork/XOGame3D/tree/master/BusinessLogic</RepositoryUrl>
     <PackageProjectUrl>https://github.com/MEAwork/XOGame3D</PackageProjectUrl>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
-    <None Include="..\..\Sources\Img\XO_nuget.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <Compile Remove="Execptions\**" />
+    <EmbeddedResource Remove="Execptions\**" />
+    <None Remove="Execptions\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Execptions\" />
+    <None Include="..\..\..\Sources\Img\XO_nuget.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

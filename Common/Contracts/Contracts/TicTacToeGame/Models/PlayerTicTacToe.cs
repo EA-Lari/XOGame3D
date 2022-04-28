@@ -1,10 +1,10 @@
 ﻿
-namespace Contracts.GameXO.Models
+namespace Contracts.TicTacToeGame
 {
     /// <summary>
     /// Игрок для игры крестики-нолики
     /// </summary>
-    public class PlayerXO
+    public class PlayerTicTacToe
     {
         /// <summary>
         /// Идентификатор игрока

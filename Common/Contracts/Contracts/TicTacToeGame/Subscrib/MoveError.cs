@@ -1,8 +1,4 @@
-﻿
-using Contracts.GameXO.Enums;
-using Contracts.GameXO.Models;
-
-namespace Contracts.GameXO.Sent
+﻿namespace Contracts.TicTacToeGame.Subscrib
 {
     /// <summary>
     /// Информация об ошибке при ходе

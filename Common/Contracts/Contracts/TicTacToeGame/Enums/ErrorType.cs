@@ -1,5 +1,5 @@
 ﻿
-namespace Contracts.GameXO.Enums
+namespace Contracts.TicTacToeGame
 {
     public enum ErrorType
     {
