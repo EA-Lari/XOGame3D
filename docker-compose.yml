@@ -2,9 +2,25 @@ version: '3.7'
 
 services:
 
-  matchmake.backend:
+  # Frontend
+  tictactoe.web.client:
+    image: tictactoewebclient1.0
+    container_name: tictactoe_web_client
+    networks:
+      - xo_internal_net
+
+  # Backend
+  game.streamer.backend:
+    image: gamestreamerbackend1.0
+    container_name: game_streamer_backend
+    depends_on:
+      - rabbitmq
+    networks:
+      - xo_internal_net
+
+  match.make.backend:
     image: matchmakebackend1.0
-    container_name: matchmake_backend
+    container_name: match_make_backend
     depends_on:
       - postgres
       - rabbitmq
@@ -12,6 +28,7 @@ services:
     networks:
       - xo_internal_net
 
+  # Storage
   postgres:
     image: postgres:alpine
     container_name: postgres
@@ -26,20 +43,7 @@ services:
     networks:
       - xo_internal_net
 
-  postgres_dashboard:
-    image: dpage/pgadmin4
-    container_name: postgres_dashboard
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-xo_admin@email.com}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-xo_admin}
-    ports:
-      - "${PGADMIN_PORT:-28080}:80"
-    restart: always
-    volumes:
-      - postgre_dashboard_data:/var/lib/pgadmin
-    networks:
-      - xo_internal_net
-
+  # Bus
   message_bus:
     image: rabbitmq:3.8-management-alpine
     container_name: message_bus
@@ -59,6 +63,21 @@ services:
       - "5672:5672"
     environment:
       - RABBITMQ_CONFIG_FILE=/etc/match_back/rabbitmq.conf
+    networks:
+      - xo_internal_net
+
+  # Dashboards
+  postgres_dashboard:
+    image: dpage/pgadmin4
+    container_name: postgres_dashboard
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-xo_admin@email.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-xo_admin}
+    ports:
+      - "${PGADMIN_PORT:-28080}:80"
+    restart: always
+    volumes:
+      - postgre_dashboard_data:/var/lib/pgadmin
     networks:
       - xo_internal_net
 
