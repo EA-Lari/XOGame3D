@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStreamer.Backend", "GameStreamer.Backend.csproj", "{EECC6A9F-C859-4D85-8358-1716E98ECB25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStreamer.Backend", "GameStreamer.Backend.csproj", "{EECC6A9F-C859-4D85-8358-1716E98ECB25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStreamer.Client", "..\Sources\Exampels\GameStreamer.Client\GameStreamer.Client.csproj", "{449F0005-54A0-4716-8B5B-2BA5DC472F83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EECC6A9F-C859-4D85-8358-1716E98ECB25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EECC6A9F-C859-4D85-8358-1716E98ECB25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EECC6A9F-C859-4D85-8358-1716E98ECB25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{449F0005-54A0-4716-8B5B-2BA5DC472F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{449F0005-54A0-4716-8B5B-2BA5DC472F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{449F0005-54A0-4716-8B5B-2BA5DC472F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{449F0005-54A0-4716-8B5B-2BA5DC472F83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
