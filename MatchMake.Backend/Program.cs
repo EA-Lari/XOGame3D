@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:MatchMake.Backend/Program.cs
 ﻿using Autofac;
 using Hangfire;
 using Hangfire.PostgreSql;
@@ -110,5 +111,17 @@ var starter = app.Services.GetRequiredService<IProcessStarter>();
 starter.ScheduleAllProcesses();
 
 #endregion
+=======
+﻿using GameStreamer.Backend.Hubs;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
+
+var app = builder.Build();
+
+app.MapHub<RoomsHub>("/xo-rooms");
+app.MapHub<GamesHub>("/xo-games");
+>>>>>>> Stashed changes:GameStreamer.Backend/Program.cs
 
 app.Run();
