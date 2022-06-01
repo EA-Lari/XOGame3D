@@ -1,1 +1,28 @@
-<p>chat works!</p>
+<section class="chat">
+	<div class="form-wrapper">
+		<div class="wrapper state-wrapper">
+			<p>State:</p>
+			<p id="conState">Disconnected</p>
+			<button id="connectButton" type="button" onclick="connect()">Connect</button>
+		</div>
+		<div class="wrapper login-wrapper">
+			<label for="name">Name</label>
+			<input id="name" type="text" placeholder="Anonymous">
+			<div class="btn-wrapper">
+				<button type="button" onclick="getMyName()">Get</button>
+				<button type="button" onclick="setMyName()">Set</button>
+			</div>
+		</div>
+		<div class="wrapper message-wrapper">
+			<label for="wrapper message">Text</label>
+			<textarea id="message"></textarea>
+			<button type="button" onclick="sendMessage()">Send</button>
+		</div>
+	</div>
+	<div class="messages-wrapper">
+		<div id="messages-content">
+
+		</div>
+	</div>
+
+</section>

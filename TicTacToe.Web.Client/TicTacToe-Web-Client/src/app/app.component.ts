@@ -1,19 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { RealTimeService } from './services/realtime.service';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 	title = 'TicTacToe-Web-Client';
-
-	constructor(public realTimeService: RealTimeService, private webClient: HttpClient) { }
-
-	ngOnInit(): void {
-		this.realTimeService.startConnection();
-	}
-
 }

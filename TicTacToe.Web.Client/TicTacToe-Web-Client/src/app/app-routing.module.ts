@@ -4,16 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { GameComponent } from './components/game/game.component';
 
 const routes: Routes = [
-	{ path: 'heroes', component: GameComponent }
- ];
+	{ path: 'game', component: GameComponent }
+];
 
 @NgModule({
-	
-  declarations: [],
-  imports: [
-    CommonModule,
-	 RouterModule.forRoot(routes)
-  ],
-  exports: [ RouterModule ]
+
+	declarations: [],
+	imports: [
+		CommonModule,
+		RouterModule.forRoot(routes)
+	],
+	exports: [RouterModule]
 })
 export class AppRoutingModule { }

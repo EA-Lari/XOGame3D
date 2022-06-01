@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import * as signalR from "@microsoft/signalr"
+import * as signalR from "@microsoft/signalr";
+import { IMessage } from '../components/chat/chat.component';
 
 @Injectable({
 	providedIn: 'root'
@@ -10,6 +11,13 @@ export class RealTimeService {
 	private hubConnection: signalR.HubConnection;
 	private realtimeServerUrl: string = 'https://localhost:5001/messages';
 
+	constructor() {
+		this.hubConnection = this.hubConnection = new signalR.HubConnectionBuilder()
+			.withUrl(this.realtimeServerUrl)
+			.withAutomaticReconnect()
+			.build();
+	}
+
 	public startConnection = () => {
 
 		this.hubConnection
@@ -18,14 +26,12 @@ export class RealTimeService {
 			.catch(err => console.log('Error while starting connection: ' + err))
 	}
 
-	constructor() {
-		this.hubConnection = this.hubConnection = new signalR.HubConnectionBuilder()
-			.withUrl(this.realtimeServerUrl)
-			.build();
-	}
-}
+	//#region Chat Server Listeners
 
-export interface IMessage {
-	userName: string,
-	message: string
+	public addSendMessageListener = (newMessageHandler: (msg: IMessage) => void) => {
+		this.hubConnection.on('Send', (message) => newMessageHandler(message));
+	}
+
+	//#endregion
+
 }
