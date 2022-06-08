@@ -6,24 +6,44 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Http
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 // Components
 import { AppComponent } from './app.component';
 import { GameComponent } from './components/game/game.component';
-import { ChatComponent } from './components/chat/chat.component';
+// Elements, shared between Components
+import { SharedModule } from './shared/shared.module';
+import { ChatNewModule } from './chat-new/chat-new.module';
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { MatMenuModule } from '@angular/material/menu';
+
+export function HttpLoaderFactory(http: HttpClient) {
+	return new TranslateHttpLoader(http);
+}
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		GameComponent,
-		ChatComponent
+		GameComponent
 	],
 	imports: [
 		BrowserModule,
-		AppRoutingModule,
 		BrowserAnimationsModule,
+		AppRoutingModule,
 		MatButtonModule,
-		HttpClientModule
+		MatMenuModule,
+		HttpClientModule,
+		SharedModule,
+		ChatNewModule,
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient]
+			}
+		})
 	],
 	providers: [],
 	bootstrap: [AppComponent]
