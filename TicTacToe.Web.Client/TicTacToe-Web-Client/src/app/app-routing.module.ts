@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { GameComponent } from './components/game/game.component';
-import { ChatNewComponent } from './chat-new/chat-new.component';
+// import { ChatNewComponent } from './chat-new/chat-new.component';
 
 const routes: Routes = [
-	{ path: '', component: ChatNewComponent }
+	{ path: '', component: GameComponent }
 ];
 
 @NgModule({

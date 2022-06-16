@@ -12,12 +12,13 @@ import { AppComponent } from './app.component';
 import { GameComponent } from './components/game/game.component';
 // Elements, shared between Components
 import { SharedModule } from './shared/shared.module';
-import { ChatNewModule } from './chat-new/chat-new.module';
+// import { ChatNewModule } from './chat-new/chat-new.module';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MatMenuModule } from '@angular/material/menu';
+import { ChatComponentComponent } from './components/chat/chat-component/chat-component.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http);
@@ -26,7 +27,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
 	declarations: [
 		AppComponent,
-		GameComponent
+		GameComponent,
+  ChatComponentComponent
 	],
 	imports: [
 		BrowserModule,
@@ -36,7 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		MatMenuModule,
 		HttpClientModule,
 		SharedModule,
-		ChatNewModule,
+		// ChatNewModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,
