@@ -14,6 +14,16 @@
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Persistance\GameStreamerDbase\Mapping\" />
+    <Folder Include="Persistance\GameStreamerDbase\Entities\" />
+    <Folder Include="BusinessLogic\" />
+    <Folder Include="business-process-schemas\" />
+    <Folder Include="Persistance\Migrations\Scripts\" />
+    <Folder Include="DTO\" />
   </ItemGroup>
 
 </Project>

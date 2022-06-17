@@ -1,0 +1,61 @@
+﻿docs/ - Находятся диаграммы БД, инструкции и т.д.
+Migrations/ - Миграции, разбитые по контекстам, если нужен например контекст MbeContext, он находится в папке Migrations/MbeContextMigrations
+Scripts/ - Находятся SQL скрипты, которые передаем devops для наката на БД в проде, просьба поддерживать актуальными (!)
+
+При изменении структуры сущностей Контекстов БД необходимо:
+
+1) Создаем миграцию
+Add-Migration AddAutoGenerateId -Context MbeContext -OutputDir Migrations/MbeContextMigrations
+
+2) Обновляем БД из миграции
+Update-Database -Context MbeContext
+
+3) Формируем SQL скрипт, кладем в папку
+Script-Migration -Context MbeContext -Output Migrations/Scripts/final_version_script.sql
+
+------------------------------------
+EF_CORE_Commands:
+1) Enable-Migrations
+2) Create Migration
+Add-Migration YourMigrationName -Context YourContextName -OutputDir Migrations/YourFolder
+(Example)
+Add-Migration Initial -Context MbeContext -OutputDir Migrations/MbeContextMigrations
+
+3) Confirm Migration on DataBase
+Update-Database -Context YourContextName
+(Example)
+Update-Database -Context MbeContext
+
+Full SQL Script Of All Changes:
+Script-Migration -Context YourContextName
+
+Get SQL Script Concrete Changes:
+(Example)
+Script-Migration -Context MbeContext -From 20220511163438_AddDashboardEntities -To 20220511164936_FixDashboardEntities -Output Migrations/Scripts/final_version_script.sql
+------------------------------------
+Откат миграции:
+(!) Если вы создали миграцию, но еще не применили ее на БД (Update-Database), просто удаляете последний файл миграции с датой (пример 20220512145516_AddAutoGenerateId.cs)
+Иначе:
+1) Update-Database -Context YourContextName TargetMigration: "<the migration applied before it>"
+Пример:
+Update-Database -Context MbeContext 20220513114826_AddClientsReportColumn
+2) Удаляем последний файл миграции с датой (пример 20220512145516_AddAutoGenerateId.cs)
+
+------------------------------------
+(Проблема!)
+Если мы уже создали несколько миграций на контекст и их накопилось слишком много, нужно их почистить, но сохранить текущее состояние полей в коде,
+данные в таблицах не нужны
+
+(Решение!)
+1) Вручную удалить таблицы вместе с таблицей __MigrationHistory
+	drop table dashboard."ClientsQuarterReports";
+	drop table dashboard."ContractsQuarterReports";
+	drop table dashboard."QuarterReports";
+	drop table public."__EFMigrationsHistory";
+
+2) Удалить из папки Migrations все файлы с датами и обязательно MbeContextModelSnapshot.cs
+3) Перестроить проект, содержащий миграции
+4) Выполнить команду:
+Add-Migration Initial -Context YourContextName -OutputDir Migrations/YourFolder
+5) Выполнить команду:
+Update-Database -Context YourContextName
