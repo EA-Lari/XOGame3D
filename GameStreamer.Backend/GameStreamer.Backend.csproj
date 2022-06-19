@@ -23,11 +23,11 @@
 
   <ItemGroup>
     <Folder Include="Persistance\GameStreamerDbase\Mapping\" />
-    <Folder Include="Persistance\GameStreamerDbase\Entities\" />
     <Folder Include="BusinessLogic\" />
     <Folder Include="business-process-schemas\" />
     <Folder Include="Persistance\Migrations\Scripts\" />
     <Folder Include="DTO\" />
+    <Folder Include="docs\" />
   </ItemGroup>
 
 </Project>
