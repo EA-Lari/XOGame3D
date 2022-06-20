@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BusinessLogic\**" />
+    <Content Remove="BusinessLogic\**" />
+    <EmbeddedResource Remove="BusinessLogic\**" />
+    <None Remove="BusinessLogic\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.4.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="MassTransit" Version="8.0.3" />
@@ -23,10 +30,8 @@
 
   <ItemGroup>
     <Folder Include="Persistance\GameStreamerDbase\Mapping\" />
-    <Folder Include="BusinessLogic\" />
     <Folder Include="business-process-schemas\" />
     <Folder Include="Persistance\Migrations\Scripts\" />
-    <Folder Include="DTO\" />
     <Folder Include="docs\" />
   </ItemGroup>
 
