@@ -37,4 +37,10 @@
     <Folder Include="docs\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Contracts">
+      <HintPath>..\Common\Contracts\Contracts\bin\Debug\net6.0\Contracts.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

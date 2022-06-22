@@ -1,8 +1,5 @@
-﻿using Autofac;
-using MassTransit;
-using System.Reflection;
+﻿using MassTransit;
 using Autofac.Extensions.DependencyInjection;
-using GameStreamer.Backend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,9 +23,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                     });
 
                 });
-
-                //services.AddMassTransitHostedService();
-
 
             });
 
