@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MatchMake\" />
+    <Compile Remove="MatchMake\**" />
+    <EmbeddedResource Remove="MatchMake\**" />
+    <None Remove="MatchMake\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ServiceBus\Commands\" />
+    <Folder Include="ServiceBus\Events\" />
   </ItemGroup>
 
 </Project>

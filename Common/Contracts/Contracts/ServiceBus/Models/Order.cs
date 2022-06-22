@@ -1,4 +1,4 @@
-﻿namespace GameStreamer.Backend.Models
+﻿namespace Contracts.ServiceBus.Models
 {
     public class Order
     {
