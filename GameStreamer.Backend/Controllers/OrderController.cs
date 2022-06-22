@@ -1,4 +1,5 @@
-﻿using GameStreamer.Backend.Models;
+﻿using Contracts.ServiceBus.Models;
+using GameStreamer.Backend.Models;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 

@@ -24,6 +24,9 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
                 });
 
+                services.AddControllers();
+                
+
             });
 
 //static void ConfigueGameStreamerHost(ContainerBuilder builder)
@@ -32,6 +35,13 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 //}
 
 var app = builder.Build();
+app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
 var logger = app.Logger;
 var lifetime = app.Lifetime;
