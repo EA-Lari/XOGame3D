@@ -33,7 +33,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
                     x.UsingRabbitMq((rmqContext, cfg) =>
                     {
-                        cfg.Host("localhost", "/", h =>
+                        cfg.Host("localhost", "xo_game", h =>
                         {
                             h.Username("xo_admin");
                             h.Password("xo_admin");
@@ -42,41 +42,13 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
                     });
 
-                    //x.UsingInMemory((context, cfg) =>
-                    //{
-                    //    cfg.ConfigureEndpoints(context);
-                    //});
-
                 });
-
-                //services.AddHostedService<HelloMessagePublisher>();
-
-                //services.AddLogging(logging => logging.AddConsole()).BuildServiceProvider();
 
             });
 
 static void ConfigueMatchMakerHost(ContainerBuilder builder)
 {
 
-    #region Message Bus
-
-    //IConnectionFactory connection = new ConnectionFactory()
-    //{
-    //    HostName = Config.RMQSettings.Host,
-    //    Port = Config.RMQSettings.Port,
-    //    UserName = Config.RMQSettings.UserName,
-    //    Password = Config.RMQSettings.Password,
-    //    VirtualHost = Config.RMQConnectionConfigurations.ConfigurationMapp.Mq.VirtualHost
-    //};
-
-    //builder.Register(context => connection);
-
-    #endregion
-
-    //builder.RegisterType<HelloWorldTestProcess>().As<IParallelProcess>();
-    //builder.RegisterType<NotificationProcess>().As<IParallelProcess>();
-
-    //builder.RegisterType<ProcessStarter>().As<IProcessStarter>();
 }
 
 var app = builder.Build();
