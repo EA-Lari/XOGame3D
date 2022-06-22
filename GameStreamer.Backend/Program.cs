@@ -2,35 +2,18 @@
 using MassTransit;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
+using GameStreamer.Backend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
-            .ConfigureContainer<ContainerBuilder>(ConfigueMatchMakerHost)
+            //.ConfigureContainer<ContainerBuilder>(ConfigueGameStreamerHost)
             .ConfigureServices((hostContext, services) => {
 
                 services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
 
-                //services.AddHangfire(configuration =>
-                //{
-                //    configuration.UsePostgreSqlStorage("Host=localhost;Port=25432;Database=xo_admin;User Id=xo_admin;Password=xo_admin;", new PostgreSqlStorageOptions() { SchemaName = "matchmake_jobs" });
-                //});
-
-                //services.AddHangfireServer();
-
                 services.AddMassTransit(x =>
                 {
-                    x.SetKebabCaseEndpointNameFormatter();
-
-                    x.SetInMemorySagaRepositoryProvider();
-
-                    var entryAssembly = Assembly.GetEntryAssembly();
-
-                    x.AddConsumers(entryAssembly);
-                    x.AddSagaStateMachines(entryAssembly);
-                    x.AddSagas(entryAssembly);
-                    x.AddActivities(entryAssembly);
-
                     x.UsingRabbitMq((rmqContext, cfg) =>
                     {
                         cfg.Host("localhost", "xo_game", h =>
@@ -44,12 +27,15 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
                 });
 
+                //services.AddMassTransitHostedService();
+
+
             });
 
-static void ConfigueMatchMakerHost(ContainerBuilder builder)
-{
+//static void ConfigueGameStreamerHost(ContainerBuilder builder)
+//{
 
-}
+//}
 
 var app = builder.Build();
 
@@ -62,15 +48,6 @@ lifetime.ApplicationStarted.Register(() =>
         $"The application {env.ApplicationName} is started.")
 );
 
-app.Logger.LogInformation("Hi! The MatchMake.Backend is Running!");
-
-//app.UseHangfireDashboard("/jobs");
-
-#region Config All Scheduling Jobs
-
-//var starter = app.Services.GetRequiredService<IProcessStarter>();
-//starter.ScheduleAllProcesses();
-
-#endregion
+app.Logger.LogInformation("Hi! The GameStreamer.Backend is Running!");
 
 app.Run();

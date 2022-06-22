@@ -1,5 +1,6 @@
 ﻿using GameStreamer.Backend.Models;
 using Microsoft.AspNetCore.SignalR;
+using System.Diagnostics;
 
 namespace GameStreamer.Backend.Hubs
 {
@@ -17,13 +18,13 @@ namespace GameStreamer.Backend.Hubs
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
-            var disconnectMessage = new NewMessage
-            {
-                Sender = "Anonymous",
-                Text = $"client disconnected: {Context.ConnectionId}"
-            };
+            //var disconnectMessage = new NewMessage
+            //{
+            //    Sender = "Anonymous",
+            //    Text = $"client disconnected: {Context.ConnectionId}"
+            //};
 
-            Clients.Others.Send(disconnectMessage);
+            //Clients.Others.Send(disconnectMessage);
 
             return base.OnDisconnectedAsync(exception);
         }
