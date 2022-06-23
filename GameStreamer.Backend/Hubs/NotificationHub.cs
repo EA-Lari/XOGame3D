@@ -1,6 +1,7 @@
-﻿using GameStreamer.Backend.Models;
+﻿using System.Diagnostics;
+using GameStreamer.Backend.Models;
+using GameStreamer.Backend.Persistance.GameStreamerDbase.Entities;
 using Microsoft.AspNetCore.SignalR;
-using System.Diagnostics;
 
 namespace GameStreamer.Backend.Hubs
 {
@@ -11,6 +12,15 @@ namespace GameStreamer.Backend.Hubs
         {
             var newConnectMessage = NewPlayer.Create(Context.ConnectionId, string.Empty);
 
+            var newConnectedPlayer = new ConnectedPlayerEntity
+            {
+                ConnectionId = Context.ConnectionId,
+                ClientType = TypeOfConnectedClient.Unknown,
+                RoomGuid = Guid.Empty,
+                IsActive = true,
+                NickName = "Anonimous"
+            };
+
             //Clients.Others.Send(newConnectMessage);
 
             return base.OnConnectedAsync();
@@ -18,6 +28,16 @@ namespace GameStreamer.Backend.Hubs
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
+
+            var newConnectedPlayer = new ConnectedPlayerEntity
+            {
+                ConnectionId = Context.ConnectionId,
+                ClientType = TypeOfConnectedClient.Unknown,
+                RoomGuid = Guid.Empty,
+                IsActive = false,
+                NickName = string.Empty
+            };
+
             //var disconnectMessage = new NewMessage
             //{
             //    Sender = "Anonymous",

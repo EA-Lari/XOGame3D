@@ -1,10 +1,13 @@
-﻿using MassTransit;
+﻿using Autofac;
+using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using Autofac.Extensions.DependencyInjection;
+using GameStreamer.Backend.Persistance.GameStreamerDbase;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
-            //.ConfigureContainer<ContainerBuilder>(ConfigueGameStreamerHost)
+            .ConfigureContainer<ContainerBuilder>(ConfigueGameStreamerHost)
             .ConfigureServices((hostContext, services) => {
 
                 services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
@@ -29,11 +32,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
             });
 
-//static void ConfigueGameStreamerHost(ContainerBuilder builder)
-//{
-
-//}
-
 var app = builder.Build();
 app.UseRouting();
 app.UseEndpoints(endpoints =>
@@ -54,4 +52,33 @@ lifetime.ApplicationStarted.Register(() =>
 
 app.Logger.LogInformation("Hi! The GameStreamer.Backend is Running!");
 
+InitializeDatabase(app);
+
 app.Run();
+
+
+void ConfigueGameStreamerHost(HostBuilderContext builderContext, ContainerBuilder containerBuilder)//, IServiceCollection services)
+{
+
+    //containerBuilder.Populate(services);
+
+    #region Persistance Setup
+
+    containerBuilder.Register(context =>
+                    new DbContextOptionsBuilder<GameStreamerContext>()
+                        .UseNpgsql("Host=localhost;Database=xo_game_gamestreamerservice;User Id=local;Password=local")
+                        .Options)
+                .As<DbContextOptions<GameStreamerContext>>().SingleInstance();
+
+    containerBuilder.RegisterType<GameStreamerContext>().InstancePerDependency();
+
+    #endregion
+}
+
+void InitializeDatabase(IApplicationBuilder application)
+{
+    using (var scope = application.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+    {
+        scope.ServiceProvider.GetRequiredService<GameStreamerContext>().Database.Migrate();
+    }
+}
