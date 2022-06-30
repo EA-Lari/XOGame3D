@@ -36,8 +36,8 @@
 
   <ItemGroup>
     <Folder Include="business-process-schemas\" />
+    <Folder Include="DTO\" />
     <Folder Include="Persistance\Migrations\Scripts\" />
-    <Folder Include="docs\" />
   </ItemGroup>
 
   <ItemGroup>
