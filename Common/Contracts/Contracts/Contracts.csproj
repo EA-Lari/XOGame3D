@@ -12,9 +12,4 @@
     <None Remove="MatchMake\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ServiceBus\Commands\" />
-    <Folder Include="ServiceBus\Events\" />
-  </ItemGroup>
-
 </Project>
