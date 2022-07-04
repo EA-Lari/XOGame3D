@@ -17,6 +17,11 @@
         public string ConnectionId { get; set; }
 
         /// <summary>
+        /// Id клиента, для хранения Id без привязки к SignalR
+        /// </summary>
+        public string ConnectionGuid { get; set; }
+
+        /// <summary>
         /// Тип подключенного клиента
         /// </summary>
         public TypeOfConnectedClient ClientType { get; set; }

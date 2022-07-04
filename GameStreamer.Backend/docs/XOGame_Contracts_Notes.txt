@@ -7,6 +7,11 @@
 Публикует команду PlayerMakesMoveCommand { PlayerId , RoomId, AreaCoordinates }
 4) игра завершается при появлении события
 Ожидает событие GameOverEvent {RoomId, WhoIsWin}
+Методы SignalR хаба JoinMatchHub :
+
+Методы SignalR хаба GameProcessHub :
+
+Методы SignalR хаба ChatHub :
 
 Что происходит у MatchMaker-а:
 1) Ожидает команду PlayerJoinMatchCommand и формирует событие PlayerAddedToRoomEvent { PlayerId , RoomId }
