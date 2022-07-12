@@ -12,7 +12,10 @@ namespace MatchMake.Backend.MessageBus.Consumers
     {
 
         private readonly ILogger<HelloMessageConsumer> _logger;
-        
+
+        public HelloMessageConsumer()
+        {   }
+
         public HelloMessageConsumer(ILogger<HelloMessageConsumer> logger)
         {
             _logger = logger;
