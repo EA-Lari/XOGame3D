@@ -5,7 +5,7 @@ using XOGame3D.Models;
 
 namespace XOGame3D.Robots
 {
-    public class RandomRobot : IUser
+    public class RandomRobot : IUserBasic
     {
         private readonly Random _random;
         private readonly int _repid = 100;

@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using XOGame3D.Enum;
 using XOGame3D.Interfaces;
 
 namespace XOGame3D.Logic
 {
-    public class TicTacToeController
+    /// <summary>
+    /// Basic controller for control mathod users game
+    /// </summary>
+    public class TicTacToeBasicController
     {
         private readonly TicTacToeLogic _logic;
-        private readonly IUser _user1;
-        private readonly IUser _user2;
+        private readonly IUserBasic _user1;
+        private readonly IUserBasic _user2;
 
         public TicTacToeLogic Play => _logic;
 
-        public TicTacToeController(TicTacToeLogic logic, IUser user1, IUser user2)
+        public TicTacToeBasicController(TicTacToeLogic logic, IUserBasic user1, IUserBasic user2)
         {
             _logic = logic;
             _user1 = user1;
@@ -26,7 +28,7 @@ namespace XOGame3D.Logic
             SetWinner?.Invoke(sender, e);
         }
 
-        public void ChooseUserFraction(IUser user, States state)
+        public void ChooseUserFraction(IUserBasic user, States state)
         {
             if (_user1.Fraction != States.Empty || _user2.Fraction != States.Empty)
                 throw new Exception("User state was choose");
@@ -42,7 +44,7 @@ namespace XOGame3D.Logic
             }
         }
 
-        public IUser GetCurrenUser()
+        public IUserBasic GetCurrenUser()
         {
             if (_user1 == null || _user2 == null)
                 throw new Exception("Not set user");

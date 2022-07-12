@@ -1,0 +1,25 @@
+Что происходит у GameStreamer-а:
+1) подключение к серверу, ввод никнейма, нажатие на кнопку игра
+Публикует команду PlayerJoinMatchCommand { PlayerId, RoomId?, IsMatchRandom }
+2) игрок подключается к комнате, нажимает кнопку Ready
+Публикует команду PlayerReadyToPlayCommand { PlayerId }
+3) игра начинается, игрок делает ход
+Публикует команду PlayerMakesMoveCommand { PlayerId , RoomId, AreaCoordinates }
+4) игра завершается при появлении события
+Ожидает событие GameOverEvent {RoomId, WhoIsWin}
+Методы SignalR хаба JoinMatchHub :
+
+Методы SignalR хаба GameProcessHub :
+
+Методы SignalR хаба ChatHub :
+
+Что происходит у MatchMaker-а:
+1) Ожидает команду PlayerJoinMatchCommand и формирует событие PlayerAddedToRoomEvent { PlayerId , RoomId }
+2) Ожидает пустую команду PleaseGiveActualGameRoomsCommand {  }
+3) Публикует событие HereIsActualGameRoomsEvent {ListOf ActualGameRooms}
+4) Ожидает событие GameOverEvent чтобы почистить список комнат
+5) Ожидает событие PlayerLeaveRoomEvent { PlayerId , RoomId }
+
+Что происходит у Algoritm-а:
+1) Публикует событие GameOverEvent, когда есть победитель или ничья
+2) Ожидает событие PlayerLeaveRoomEvent, чтобы прекратить игру или засейвить ее
