@@ -1,6 +1,6 @@
 ﻿using MassTransit;
-using MatchMake.Backend.MessageBus.Contracts;
 using Microsoft.Extensions.Logging;
+using MatchMake.Backend.MessageBus.Contracts;
 
 namespace MatchMake.Backend.MessageBus.Consumers
 {

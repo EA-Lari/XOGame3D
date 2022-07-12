@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream:MatchMake.Backend/Program.cs
 ﻿using Autofac;
 using Hangfire;
 using Hangfire.PostgreSql;
@@ -25,7 +24,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 
                 services.AddHangfire(configuration =>
                 {
-                    configuration.UsePostgreSqlStorage("Host=localhost;Port=25432;Database=xo_admin;User Id=xo_admin;Password=xo_admin;", new PostgreSqlStorageOptions() { SchemaName = "matchmake_jobs" });
+                    configuration.UsePostgreSqlStorage("Host=localhost;Port=5432;Database=xo_game_matchmakeservice;User Id=local;Password=local;", new PostgreSqlStorageOptions() { SchemaName = "matchmake_jobs" });
                 });
 
                 services.AddHangfireServer();
@@ -45,7 +44,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
                     x.UsingRabbitMq((rmqContext, cfg) =>
                     {
-                        cfg.Host("localhost", "/", h =>
+                        cfg.Host("localhost", "xo_game", h =>
                         {
                             h.Username("xo_admin");
                             h.Password("xo_admin");
@@ -53,12 +52,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                         cfg.ConfigureEndpoints(rmqContext);
 
                     });
-
-                    //x.UsingInMemory((context, cfg) =>
-                    //{
-                    //    cfg.ConfigureEndpoints(context);
-                    //});
-
                 });
 
                 services.AddHostedService<HelloMessagePublisher>();
@@ -111,17 +104,5 @@ var starter = app.Services.GetRequiredService<IProcessStarter>();
 starter.ScheduleAllProcesses();
 
 #endregion
-=======
-﻿using GameStreamer.Backend.Hubs;
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddSignalR();
-
-var app = builder.Build();
-
-app.MapHub<RoomsHub>("/xo-rooms");
-app.MapHub<GamesHub>("/xo-games");
->>>>>>> Stashed changes:GameStreamer.Backend/Program.cs
 
 app.Run();
