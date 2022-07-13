@@ -13,9 +13,6 @@ namespace MatchMake.Backend.MessageBus.Consumers
 
         private readonly ILogger<HelloMessageConsumer> _logger;
 
-        public HelloMessageConsumer()
-        {   }
-
         public HelloMessageConsumer(ILogger<HelloMessageConsumer> logger)
         {
             _logger = logger;
@@ -23,8 +20,11 @@ namespace MatchMake.Backend.MessageBus.Consumers
 
         public Task Consume(ConsumeContext<HelloMessage> context)
         {
+
             _logger.LogInformation("Hello {Name}", context.Message.Name);
-            
+
+            context.Publish(new HelloMessageConsumedEvent { Status = "Message Consumed" });
+
             return Task.CompletedTask;
         }
     }
