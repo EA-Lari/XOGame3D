@@ -28,4 +28,5 @@ namespace MatchMake.Backend.MessageBus.Consumers
             return Task.CompletedTask;
         }
     }
+
 }
