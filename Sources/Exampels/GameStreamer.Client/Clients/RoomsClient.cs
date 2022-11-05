@@ -15,7 +15,7 @@ namespace GameStreamer.Client.Clients
 
             await connection.StartAsync();
 
-            await foreach (var date in connection.StreamAsync<DateTime>("Streaming"))
+            await foreach (var date in connection.StreamAsync<DateTime>("StreamCurrentDate"))
             {
                 Console.WriteLine(date);
             }
