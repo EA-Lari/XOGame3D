@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using GameStreamer.Backend.Persistance.GameStreamerDbase.Entities;
+using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 
-namespace GameStreamer.Backend.Persistance.GameStreamerDbase.Mapping
+namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
 {
     public class ConnectedPlayerEntityMap : IEntityTypeConfiguration<ConnectedPlayerEntity>
     {

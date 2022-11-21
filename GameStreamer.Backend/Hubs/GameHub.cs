@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using GameStreamer.Backend.Interfaces;
+using Microsoft.AspNetCore.SignalR;
 
 namespace GameStreamer.Backend.Hubs
 {
-    public class GameHub : Hub
+    public class GameHub : Hub<IGameHub>
     {
+        //public async Task TestPublish()
+        //{
+        //    await Clients.All.TestBroadcastPublish("You are pidrila!");
+        //}
+
         /// <summary>
         /// Метод добавляет клиентское соединение в группу
         /// </summary>

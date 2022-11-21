@@ -1,6 +1,5 @@
 // Create live collections
-let socketMessagesItems = document.querySelector(".socket-messages-list");
-let streamMessagesItems = document.querySelector(".stream-messages-list");
+let messagesItems = document.querySelector(".messages-list");
 let messageTemplate = document.getElementById("chat-message-template");
 
 // connection.onclose(async () => {
@@ -9,12 +8,12 @@ let messageTemplate = document.getElementById("chat-message-template");
 
 let connection;
 
-const startStreamButton = document.getElementById('startStream');
-const watchStreamButton = document.getElementById('watchStream');
+// const startStreamButton = document.getElementById('startStream');
+// const watchStreamButton = document.getElementById('watchStream');
 
 async function startAsync() {
     connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:5001/test_rooms")
+        .withUrl("https://localhost:5001/game")
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
@@ -33,50 +32,59 @@ async function startAsync() {
         subject.complete();
     });
 
-    connection.on("ReceiveHelloWorld", (message) => {
+    // connection.on("ReceiveHelloWorld", (message) => {
+    //     let newMessage = messageTemplate.content.cloneNode(true);
+    //     let msgHeader = newMessage.querySelector(".item-header");
+    //     msgHeader.textContent = message;
+
+    //     socketMessagesItems.append(newMessage);
+    // });
+
+    connection.on("TestBroadcastPublish", (message) => {
         let newMessage = messageTemplate.content.cloneNode(true);
         let msgHeader = newMessage.querySelector(".item-header");
         msgHeader.textContent = message;
 
-        socketMessagesItems.append(newMessage);
+        messagesItems.append(newMessage);
+        console.log(message + ' Waiting for 5 sec...');
     });
 
 };
 
-startStreamButton.onclick = async function () {
+// startStreamButton.onclick = async function () {
 
-    subject = new signalR.Subject();
+//     subject = new signalR.Subject();
 
-    await connection.send("StartStream", "Gavno", subject);
+//     await connection.send("StartStream", "Gavno", subject);
 
-}
+// }
 
-watchStreamButton.onclick = function () { watchStreamAsync("Gavno"); };
+// watchStreamButton.onclick = function () { watchStreamAsync("Gavno"); };
 
 
 
-async function watchStreamAsync(streamName) {
-    const ISub = connection.stream("WatchStream", streamName).subscribe({
-        next: (date) => {
-            let newMessage = messageTemplate.content.cloneNode(true);
-            let msgHeader = newMessage.querySelector(".item-header");
-            msgHeader.textContent = date;
-            streamMessagesItems.append(newMessage);
-        },
-        complete: () => {
-            let newMessage = messageTemplate.content.cloneNode(true);
-            newMessage.classList.add("message-danger");
-            let msgHeader = newMessage.querySelector(".item-header");
+// async function watchStreamAsync(streamName) {
+//     const ISub = connection.stream("WatchStream", streamName).subscribe({
+//         next: (date) => {
+//             let newMessage = messageTemplate.content.cloneNode(true);
+//             let msgHeader = newMessage.querySelector(".item-header");
+//             msgHeader.textContent = date;
+//             streamMessagesItems.append(newMessage);
+//         },
+//         complete: () => {
+//             let newMessage = messageTemplate.content.cloneNode(true);
+//             newMessage.classList.add("message-danger");
+//             let msgHeader = newMessage.querySelector(".item-header");
 
-            msgHeader.textContent = "Все, ебать, стриму конец!";
-            streamMessagesItems.append(newMessage);
-        },
-        error: (err) => {
-            console.log(err.message);
-        },
-    });
+//             msgHeader.textContent = "Все, ебать, стриму конец!";
+//             streamMessagesItems.append(newMessage);
+//         },
+//         error: (err) => {
+//             console.log(err.message);
+//         },
+//     });
 
-};
+// };
 
 startAsync();
 

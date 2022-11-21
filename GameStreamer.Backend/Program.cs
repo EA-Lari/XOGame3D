@@ -1,10 +1,6 @@
 ﻿using Autofac;
-using MassTransit;
-using Autofac.Extensions.DependencyInjection;
-using GameStreamer.Backend.Persistance.GameStreamerDbase;
-using Microsoft.EntityFrameworkCore;
 using GameStreamer.Backend.Hubs;
-using Microsoft.AspNetCore.Builder;
+using Autofac.Extensions.DependencyInjection;
 using GameStreamer.Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +26,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                         });
                 });
 
-                services.AddSingleton<StreamManager>();
+                services.AddHostedService<TestScheduleService>();
 
                 //services.AddMassTransit(x =>
                 //{
@@ -52,7 +48,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 var app = builder.Build();
 
 app.UseCors();
-app.MapHub<RoomsHub>("/test_rooms");
+app.MapHub<RoomsHub>("/game_rooms");
+app.MapHub<GameHub>("/game");
 
 var logger = app.Logger;
 var lifetime = app.Lifetime;
@@ -63,7 +60,7 @@ lifetime.ApplicationStarted.Register(() =>
         $"The application {env.ApplicationName} is started.")
 );
 
-app.Logger.LogInformation("Hi! The GameStreamer.Backend is Running!");
+app.Logger.LogInformation("GameStreamer is Running!");
 
 InitializeDatabase(app);
 

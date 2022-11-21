@@ -1,4 +1,4 @@
-﻿namespace GameStreamer.Backend.Persistance.GameStreamerDbase.Entities
+﻿namespace GameStreamer.Backend.Storage.GameStreamerDbase.Entities
 {
 
     /// <summary>
