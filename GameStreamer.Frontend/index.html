@@ -1,20 +1,228 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html class="page" lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameStreamer_Frontend</title>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
     <header class="page-header">
 
     </header>
+
     <main class="page-main">
-        <section class=""></section>
+
+
+        <!-- Send from Front:
+
+        TurnRequest:
+            {
+            Area: 1,
+            Cell: 1,
+            PlayerSide: "CROSS" (or "ZERO"),
+            PlayerNickname: "Some"
+            }
+        
+        
+        Receive From Back:
+        
+        TurnResponse:
+            {
+            ActiveArea: 9,
+            ActiveSide: "CROSS" (or "ZERO"),
+            CurrentScore:
+                Cross: 2,
+                Zero: 1
+            } -->
+
+        <h1 class="main-header">Ultimate TicTacToe (with SignalR)</h1>
+
+        <section class="current-turn">
+            <h2 class="visually-hidden">Очередность ходов</h2>
+
+            <div class="current-turn-container">
+                <ul class="player-side-list">
+                    <li class="player-side-item cross-hold active-area"><span class="visually-hidden">X</span></li>
+                    <li class="player-side-item zero-hold"><span class="visually-hidden">O</span></li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section class="playground">
+            <h2 class="visually-hidden">Игровое поле</h2>
+
+            <div class="field-large">
+
+                <div class="field-small active-area cross-hold">
+                    <div class="cell cross-hold"></div>
+                    <div class="cell zero-hold"></div>
+                    <div class="cell draw-hold"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+
+                <div class="field-small inactive-area zero-hold">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+
+                <div class="field-small inactive-area draw-hold">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+
+                <div class="field-small inactive-area">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+
+                <div class="field-small draw-hold">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+
+                <div class="field-small">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+
+                <div class="field-small">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+
+                <div class="field-small">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+
+                <div class="field-small">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="messenger">
+
+            <h2 class="visually-hidden">Список сообщений</h2>
+
+            <div class="messages-container">
+
+                <ul class="messages-list">
+                    <li class="message-item">
+                        <h2 class="message-author">(Pidor 1):</h2>
+                        <p class="message-content">
+                            123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd
+                        </p>
+                    </li>
+                    <li class="message-item">
+                        <h2 class="message-author">(Pidor 2):</h2>
+                        <p class="message-content">
+                            123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd
+                        </p>
+                    </li>
+                    <li class="message-item">
+                        <h2 class="message-author">(Pidor 3):</h2>
+                        <p class="message-content">
+                            123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd123dfsdgsfdhdfhgdhdhfdhdfffffffffffffffffffffffffffffddfdfdfdfdffdfd
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <form action="#">
+                <fieldset>
+                    <input type="text" name="message-input">
+                    <input type="submit" name="send-message-button" value="Send Message">
+                </fieldset>
+            </form>
+
+        </section>
+
+        <section class="lobbies">
+            <h2 class="visually-hidden">Лобби</h2>
+        </section>
+
     </main>
+
     <footer class="page-footer">
 
     </footer>
+
+    <template id="chat-message-template">
+        <li class="message-item">
+            <h2 class="item-header"></h2>
+        </li>
+    </template>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.10/signalr.js"></script>
+    <script src="/js/signalr-test-connector.js"></script>
 </body>
+
 </html>

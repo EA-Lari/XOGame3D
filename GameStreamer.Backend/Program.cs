@@ -3,6 +3,9 @@ using MassTransit;
 using Autofac.Extensions.DependencyInjection;
 using GameStreamer.Backend.Persistance.GameStreamerDbase;
 using Microsoft.EntityFrameworkCore;
+using GameStreamer.Backend.Hubs;
+using Microsoft.AspNetCore.Builder;
+using GameStreamer.Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,22 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
             {
 
                 services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
+
+                services.AddSignalR();
+
+                services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(
+                        builder =>
+                        {
+                            builder.WithOrigins("http://127.0.0.1:5500")
+                                .AllowAnyHeader()
+                                .WithMethods("GET", "POST")
+                                .AllowCredentials();
+                        });
+                });
+
+                services.AddSingleton<StreamManager>();
 
                 //services.AddMassTransit(x =>
                 //{
@@ -31,6 +50,9 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
             });
 
 var app = builder.Build();
+
+app.UseCors();
+app.MapHub<RoomsHub>("/test_rooms");
 
 var logger = app.Logger;
 var lifetime = app.Lifetime;
