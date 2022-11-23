@@ -171,9 +171,9 @@
 
         <section class="messenger">
 
-            <h2 class="visually-hidden">Список сообщений</h2>
+            <div class="messenger-container">
 
-            <div class="messages-container">
+                <h2 class="visually-hidden" hidden>Список сообщений</h2>
 
                 <ul class="messages-list">
                     <li class="message-item">
@@ -195,14 +195,14 @@
                         </p>
                     </li>
                 </ul>
-            </div>
-            <form action="#">
-                <fieldset>
-                    <input type="text" name="message-input">
-                    <input type="submit" name="send-message-button" value="Send Message">
-                </fieldset>
-            </form>
 
+                <form class="message-form" action="#">
+                    <fieldset>
+                        <input type="text" name="message-input">
+                        <input type="submit" name="send-message-button" value="Send Message">
+                    </fieldset>
+                </form>
+            </div>
         </section>
 
         <section class="lobbies">

@@ -120,16 +120,23 @@ ul {
 
 /* Messenger */
 
-.messages-container {
-    width: 450px;
-    height: 500px;
+.messenger-container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 600px;
 
     border: 3px solid red;
-    border-radius: 8%;
+    border-radius: 5%;
+}
+
+.message-form {
+    width: 400px;
+    margin: auto auto 0 auto;
 }
 
 .messages-list {
-    display: flex;
+    display: inherit;
     flex-direction: column;
 }
 
@@ -137,7 +144,7 @@ ul {
     width: auto;
     height: auto;
     
-    display: flex;
+    display: inherit;
     justify-content: flex-start;
     align-items: center;
     padding: 10px;

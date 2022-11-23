@@ -5,10 +5,6 @@ namespace GameStreamer.Backend.Hubs
 {
     public class GameHub : Hub<IGameHub>
     {
-        //public async Task TestPublish()
-        //{
-        //    await Clients.All.TestBroadcastPublish("You are pidrila!");
-        //}
 
         /// <summary>
         /// Метод добавляет клиентское соединение в группу

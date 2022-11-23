@@ -48,7 +48,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 var app = builder.Build();
 
 app.UseCors();
-app.MapHub<RoomsHub>("/game_rooms");
+app.MapHub<RoomsHub>("/lobbies");
 app.MapHub<GameHub>("/game");
 
 var logger = app.Logger;

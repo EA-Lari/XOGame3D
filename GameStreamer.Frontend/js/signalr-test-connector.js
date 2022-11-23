@@ -1,112 +1,56 @@
+const GAME_STREAMER_URL = "https://localhost:5001";
+const GAME_HUB = "/game";
+const LOBBY_HUB = "/lobbies";
+
 // Create live collections
-let messagesItems = document.querySelector(".messages-list");
-let messageTemplate = document.getElementById("chat-message-template");
+const messagesItems = document.querySelector(".messages-list");
+const messageTemplate = document.getElementById("chat-message-template");
 
-// connection.onclose(async () => {
-//     await start();
-// });
-
-let connection;
-
-// const startStreamButton = document.getElementById('startStream');
-// const watchStreamButton = document.getElementById('watchStream');
-
-async function startAsync() {
-    connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:5001/game")
+function createHubConnection(hubUrl) {
+    let connection = new signalR.HubConnectionBuilder()
+        .withUrl(GAME_STREAMER_URL + hubUrl)
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
-    let subject;
+    return connection;
+};
 
-    try {
-        await connection.start();
-        console.log("SignalR Connected.");
-    }
-    catch (err) {
-        console.log(err);
-        setTimeout(start, 5000);
-    }
+function setupGameConnection(gameConnection) {
+    gameConnection.on("TestBroadcastPublish", (message) => {
+        // let newMessage = messageTemplate.content.cloneNode(true);
+        // let msgHeader = newMessage.querySelector(".item-header");
+        // msgHeader.textContent = message;
 
-    connection.onclose(function (err) {
-        subject.complete();
-    });
-
-    // connection.on("ReceiveHelloWorld", (message) => {
-    //     let newMessage = messageTemplate.content.cloneNode(true);
-    //     let msgHeader = newMessage.querySelector(".item-header");
-    //     msgHeader.textContent = message;
-
-    //     socketMessagesItems.append(newMessage);
-    // });
-
-    connection.on("TestBroadcastPublish", (message) => {
-        let newMessage = messageTemplate.content.cloneNode(true);
-        let msgHeader = newMessage.querySelector(".item-header");
-        msgHeader.textContent = message;
-
-        messagesItems.append(newMessage);
+        // messagesItems.append(newMessage);
         console.log(message + ' Waiting for 5 sec...');
     });
 
+    gameConnection.onclose(async () => {
+        await startHubAsync(gameConnection, 3000);
+    });
 };
 
-// startStreamButton.onclick = async function () {
+function setupLobbyConnection(lobbyConnection) {
+    lobbyConnection.onclose(async () => {
+        await startHubAsync(lobbyConnection, 3000);
+    });
+};
 
-//     subject = new signalR.Subject();
+async function startHubAsync(hubConnection) {
+    try {
+        await hubConnection.start();
+        console.log("Client " + hubConnection.connection.connectionId + " was connected to hub: " + hubConnection.connection.baseUrl);
+    }
+    catch (err) {
+        console.log(err);
+    }
+};
 
-//     await connection.send("StartStream", "Gavno", subject);
+var gameHubConection = createHubConnection(GAME_HUB);
+var lobbyHubConnection = createHubConnection(LOBBY_HUB);
 
-// }
+setupGameConnection(gameHubConection);
+setupLobbyConnection(lobbyHubConnection);
 
-// watchStreamButton.onclick = function () { watchStreamAsync("Gavno"); };
-
-
-
-// async function watchStreamAsync(streamName) {
-//     const ISub = connection.stream("WatchStream", streamName).subscribe({
-//         next: (date) => {
-//             let newMessage = messageTemplate.content.cloneNode(true);
-//             let msgHeader = newMessage.querySelector(".item-header");
-//             msgHeader.textContent = date;
-//             streamMessagesItems.append(newMessage);
-//         },
-//         complete: () => {
-//             let newMessage = messageTemplate.content.cloneNode(true);
-//             newMessage.classList.add("message-danger");
-//             let msgHeader = newMessage.querySelector(".item-header");
-
-//             msgHeader.textContent = "Все, ебать, стриму конец!";
-//             streamMessagesItems.append(newMessage);
-//         },
-//         error: (err) => {
-//             console.log(err.message);
-//         },
-//     });
-
-// };
-
-startAsync();
-
-// connection.stream("StreamCurrentDate", 3, 3000)
-//     .subscribe({
-//         next: (date) => {
-//             let newMessage = messageTemplate.content.cloneNode(true);
-//             let msgHeader = newMessage.querySelector(".item-header");
-//             msgHeader.textContent = date;
-//             streamMessagesItems.append(newMessage);
-//         },
-//         complete: () => {
-//             let newMessage = messageTemplate.content.cloneNode(true);
-//             newMessage.classList.add("message-danger");
-//             let msgHeader = newMessage.querySelector(".item-header");
-
-//             msgHeader.textContent = "Все, ебать, стриму конец!";
-//             streamMessagesItems.append(newMessage);
-//         },
-//         error: (err) => {
-//             console.log(err.message);
-//         },
-// });
-
-// Start the connection.
+startHubAsync(gameHubConection, 3000);
+startHubAsync(lobbyHubConnection, 3000);
