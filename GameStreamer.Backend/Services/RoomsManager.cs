@@ -1,4 +1,6 @@
 ﻿using GameStreamer.Backend.DTOs;
+using GameStreamer.Backend.Models;
+using System.Collections.Concurrent;
 
 namespace GameStreamer.Backend.Services
 {
@@ -6,6 +8,13 @@ namespace GameStreamer.Backend.Services
     {
 
         private readonly Random _random = new Random();
+        private readonly ConcurrentBag<Player> _playersConcurrList = new ConcurrentBag<Player>();
+
+        public bool AddPlayerToServer(string connectionId, string nickName)
+        {
+            _playersConcurrList.Add(new Player(connectionId, nickName));
+            return true;
+        }
 
         public PlayerNickNameResponseDTO GetRandomPlayer()
         {

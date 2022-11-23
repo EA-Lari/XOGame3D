@@ -16,8 +16,7 @@ namespace GameStreamer.Backend.Hubs
 
         public Task PlayerAddedLogin(string playerLogin)
         {
-            var connId = Context.ConnectionId;
-            Console.WriteLine(playerLogin);
+            _roomsManager.AddPlayerToServer(Context.ConnectionId, playerLogin);
             return Task.CompletedTask;
         }
 

@@ -25,6 +25,9 @@ const nicknameInput = document.querySelector(".player-nickname-input");
 
 nicknameButton.onclick = function() {
     lobbyHubConnection.invoke("PlayerAddedLogin", nicknameInput.value);
+    nicknameButton.disabled = true;
+    nicknameInput.value = "";
+    nicknameInput.disabled = true;
 };
 
 /** Functions */
@@ -65,7 +68,7 @@ function setupLobbyConnection(lobbyConnection) {
 async function startHubAsync(hubConnection) {
     try {
         await hubConnection.start();
-        // console.log("Client " + hubConnection.connection.connectionId + " was connected to hub: " + hubConnection.connection.baseUrl);
+        console.log("Client " + hubConnection.connection.connectionId + " was connected to hub: " + hubConnection.connection.baseUrl);
     }
     catch (err) {
         console.log(err);

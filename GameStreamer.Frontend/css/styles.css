@@ -65,6 +65,19 @@ ul {
     box-sizing: border-box;
   }
 
+.button:disabled,
+  .button[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+  }
+
+  .input:disabled,
+  .input[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+  }
 /* Current turn */
 
 .current-turn-container {

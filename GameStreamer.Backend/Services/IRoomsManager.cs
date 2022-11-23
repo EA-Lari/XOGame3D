@@ -9,6 +9,7 @@ namespace GameStreamer.Backend.Services
     public interface IRoomsManager
     {
 
+        public bool AddPlayerToServer(string connectionId, string nickName);
         public bool RemovePlayer();
 
         public bool RemoveRoom();
