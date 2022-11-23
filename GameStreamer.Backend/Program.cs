@@ -19,7 +19,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                     options.AddDefaultPolicy(
                         builder =>
                         {
-                            builder.WithOrigins("http://127.0.0.1:5500")
+                            builder.WithOrigins("http://localhost:5500")
                                 .AllowAnyHeader()
                                 .WithMethods("GET", "POST")
                                 .AllowCredentials();
@@ -27,6 +27,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 });
 
                 services.AddHostedService<TestScheduleService>();
+
+                services.AddSingleton<IRoomsManager>(new RoomsManager());
 
                 //services.AddMassTransit(x =>
                 //{
