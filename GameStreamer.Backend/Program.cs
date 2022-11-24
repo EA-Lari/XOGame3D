@@ -2,6 +2,7 @@
 using GameStreamer.Backend.Hubs;
 using Autofac.Extensions.DependencyInjection;
 using GameStreamer.Backend.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +20,9 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                     options.AddDefaultPolicy(
                         builder =>
                         {
-                            builder.WithOrigins("http://localhost:5500")
+                            builder.WithOrigins("http://localhost:5500", "http://127.0.0.1:5500")
                                 .AllowAnyHeader()
-                                .WithMethods("GET", "POST")
+                                .AllowAnyMethod()
                                 .AllowCredentials();
                         });
                 });
@@ -51,6 +52,7 @@ var app = builder.Build();
 
 app.UseCors();
 app.MapHub<RoomsHub>("/lobbies");
+
 app.MapHub<GameHub>("/game");
 
 var logger = app.Logger;

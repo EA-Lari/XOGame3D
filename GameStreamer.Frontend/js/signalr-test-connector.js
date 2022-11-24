@@ -26,7 +26,6 @@ const nicknameInput = document.querySelector(".player-nickname-input");
 nicknameButton.onclick = function() {
     lobbyHubConnection.invoke("PlayerAddedLogin", nicknameInput.value);
     nicknameButton.disabled = true;
-    nicknameInput.value = "";
     nicknameInput.disabled = true;
 };
 
