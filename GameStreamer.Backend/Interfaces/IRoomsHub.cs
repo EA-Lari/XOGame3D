@@ -7,9 +7,16 @@ namespace GameStreamer.Backend.Interfaces
 
         #region Channels For Only Data Streaming
 
-        Task NewPlayerJoined(PlayerNickNameResponseDTO playerResponseDto);
+        Task NewPlayerJoined(PlayerDataResponseDTO playerResponseDto);
 
         Task NewRoomAdded(GameRoomResponseDTO gameRoomResponseDto);
+
+        /// <summary>
+        /// Игрок покинул сервер
+        /// </summary>
+        /// <param name="playerResponseDto">Модель ответной DTO игрока</param>
+        /// <returns></returns>
+        Task PlayerLeavedServer(PlayerDataResponseDTO playerResponseDto);
 
         #endregion
     }

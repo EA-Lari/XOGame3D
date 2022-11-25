@@ -15,8 +15,8 @@ var lobbyHubConnection = createHubConnection(LOBBY_HUB);
 setupGameConnection(gameHubConection);
 setupLobbyConnection(lobbyHubConnection);
 
-startHubAsync(gameHubConection, 3000);
-startHubAsync(lobbyHubConnection, 3000);
+startHubAsync(gameHubConection);
+startHubAsync(lobbyHubConnection);
 
 /** Add Click Events To Buttons */
 
@@ -41,26 +41,26 @@ function createHubConnection(hubUrl) {
 
 function setupGameConnection(gameConnection) {
     gameConnection.on("TestBroadcastPublish", (message) => {
-        // let newMessage = messageTemplate.content.cloneNode(true);
-        // let msgHeader = newMessage.querySelector(".item-header");
-        // msgHeader.textContent = message;
-
-        // messagesItems.append(newMessage);
         console.log(message);
     });
 
     gameConnection.onclose(async () => {
-        await startHubAsync(gameConnection, 3000);
+        setTimeout(await startHubAsync(gameConnection), 5000);
     });
 };
 
 function setupLobbyConnection(lobbyConnection) {
     lobbyConnection.on("NewPlayerJoined", (playerDto) => {
-        console.log(playerDto.nickName + " joined To The Game!");
+        console.log(playerDto.nickName + " with conn id: " + playerDto.connectionId + " joined To The Game Server!");
+    });
+
+    lobbyConnection.on("PlayerLeavedServer", (playerDto) => {
+        
     });
 
     lobbyConnection.onclose(async () => {
-        await startHubAsync(lobbyConnection, 3000);
+        // await startHubAsync(lobbyConnection);
+        setTimeout(await startHubAsync(lobbyConnection), 5000);
     });
 };
 

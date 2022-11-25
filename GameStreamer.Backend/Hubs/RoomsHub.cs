@@ -1,4 +1,5 @@
-﻿using GameStreamer.Backend.Interfaces;
+﻿using GameStreamer.Backend.DTOs;
+using GameStreamer.Backend.Interfaces;
 using GameStreamer.Backend.Services;
 using Microsoft.AspNetCore.SignalR;
 
@@ -22,8 +23,12 @@ namespace GameStreamer.Backend.Hubs
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
+            var leavedPlayerData = _roomsManager.GetPlayerDataBy(Context.ConnectionId);
+
+            Clients.All.PlayerLeavedServer(leavedPlayerData);
+            
             _roomsManager.RemovePlayer();
-            _roomsManager.RemoveRoom();
+
             return base.OnDisconnectedAsync(exception);
         }
 

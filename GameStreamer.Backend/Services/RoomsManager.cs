@@ -16,9 +16,14 @@ namespace GameStreamer.Backend.Services
             return true;
         }
 
-        public PlayerNickNameResponseDTO GetRandomPlayer()
+        public PlayerDataResponseDTO GetPlayerDataBy(string connectionId)
         {
-            return new PlayerNickNameResponseDTO { NickName = $"Player_{_random.Next(1, 999)}" };
+            return GetRandomPlayer();
+        }
+
+        public PlayerDataResponseDTO GetRandomPlayer()
+        {
+            return new PlayerDataResponseDTO { NickName = $"Player_{_random.Next(1, 999)}", ConnectionId = $"id_{_random.Next(3000, 9000)}" };
         }
 
         public GameRoomResponseDTO GetRandomRoom()
@@ -26,9 +31,9 @@ namespace GameStreamer.Backend.Services
             return new GameRoomResponseDTO
             {
                 RoomName = $"TestRoom_{_random.Next(1000, 1999)}",
-                PlayersList = new List<PlayerNickNameResponseDTO> {
-                        new PlayerNickNameResponseDTO { NickName = $"Player_{_random.Next(2000, 2999)}" },
-                        new PlayerNickNameResponseDTO { NickName = $"Player_{_random.Next(3000, 3999)}" },
+                PlayersList = new List<PlayerDataResponseDTO> {
+                        new PlayerDataResponseDTO { NickName = $"Player_{_random.Next(2000, 2999)}" },
+                        new PlayerDataResponseDTO { NickName = $"Player_{_random.Next(3000, 3999)}" },
                     }
             };
         }
@@ -40,20 +45,20 @@ namespace GameStreamer.Backend.Services
                 new GameRoomResponseDTO
                 { 
                     RoomName = "TestRoom_1",
-                    PlayersList = new List<PlayerNickNameResponseDTO> { 
-                        new PlayerNickNameResponseDTO { NickName = "Player_1" },
-                        new PlayerNickNameResponseDTO { NickName = "Player_2" },
+                    PlayersList = new List<PlayerDataResponseDTO> { 
+                        new PlayerDataResponseDTO { NickName = "Player_1" },
+                        new PlayerDataResponseDTO { NickName = "Player_2" },
                     }
                 },
             };
         }
 
-        public List<PlayerNickNameResponseDTO> GetAllPlayers()
+        public List<PlayerDataResponseDTO> GetAllPlayers()
         {
-            return new List<PlayerNickNameResponseDTO>
+            return new List<PlayerDataResponseDTO>
             {
-                new PlayerNickNameResponseDTO { NickName = "Player_1" },
-                new PlayerNickNameResponseDTO { NickName = "Player_2" },
+                new PlayerDataResponseDTO { NickName = "Player_1" },
+                new PlayerDataResponseDTO { NickName = "Player_2" },
             };
         }
 
