@@ -232,25 +232,20 @@
 
         <section class="lobbies">
             <h2 class="visually-hidden">Лобби</h2>
-            
-            <h3 class="visually-hidden">Список игроков на сервере:</h3>
-            <ul class="player-list list">
-                <li class="player-item">
-                    <p class="player-nickname">Pidor_123</p>
-                </li>
-            </ul>
+
+            <h3 class="visually-hidden">Форма удаления комнаты</h3>
+            <form class="drop-room-form" action="#">
+                <fieldset class="fieldset"> Room name for delete:
+                    <input class="room-name-input input" type="text" name="room-name-input">
+                    <input class="drop-room-button button" type="button" name="drop-room-button" value="Drop">
+                </fieldset>
+            </form>
+
+            <h3 class="visually-hidden">Список игроков ожидающих комнату на сервере:</h3>
+            <ul class="player-list list"></ul>
 
             <h3 class="visually-hidden">Список комнат на сервере:</h3>
-            <ul class="room-list list">
-                <li class="room-item">
-                    <p class="room-header">Пидорская</p>
-                    <ul class="player-list list">
-                        <li class="player-item">
-                            <p class="player-nickname">Pidor_123</p>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <ul class="room-list list"></ul>
         </section>
 
     </main>
@@ -259,14 +254,33 @@
 
     </footer>
 
+    <!-- Templates -->
+
     <template id="chat-message-template">
-        <li class="message-item">
+        <li class="message-item" data-author="default">
             <h2 class="item-header"></h2>
         </li>
     </template>
 
+    <template id="game-room-template">
+        <li class="room-item">
+            <p class="room-header"></p>
+            <ul class="player-list list">
+            </ul>
+        </li>
+    </template>
+
+    <template id="player-item-template">
+        <li class="player-item" data-playerId="default">
+            <p class="player-nickname"></p>
+        </li>
+    </template>
+
+    <!-- Scripts -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.10/signalr.js"></script>
     <script src="/js/signalr-test-connector.js"></script>
+
 </body>
 
 </html>
