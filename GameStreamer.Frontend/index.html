@@ -39,215 +39,233 @@
                 Zero: 1
             } -->
 
-        <h1 class="main-header">Ultimate TicTacToe (with SignalR)</h1>
+        <div class="sections-container">
+            <h1 class="main-header">Ultimate TicTacToe (with SignalR)</h1>
+            
+            <section class="current-turn">
+                <h2 class="visually-hidden">Turn order</h2>
 
-        <section class="current-turn">
-            <h2 class="visually-hidden">Очередность ходов</h2>
-
-            <div class="current-turn-container">
-                <ul class="player-side-list list">
-                    <li class="player-side-item cross-hold active-area"><span class="visually-hidden" hidden>X</span>
-                    </li>
-                    <li class="player-side-item zero-hold"><span class="visually-hidden" hidden>O</span></li>
-                </ul>
-            </div>
-
-        </section>
-
-        <section class="playground">
-            <h2 class="visually-hidden">Игровое поле</h2>
-
-            <div class="field-large">
-
-                <div class="field-small active-area cross-hold">
-                    <div class="cell cross-hold"></div>
-                    <div class="cell zero-hold"></div>
-                    <div class="cell draw-hold"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
+                <div class="current-turn-container">
+                    <ul class="player-side-list list">
+                        <li class="player-side-item cross-hold active-area"><span class="visually-hidden"
+                                hidden>X</span>
+                        </li>
+                        <li class="player-side-item zero-hold"><span class="visually-hidden" hidden>O</span></li>
+                    </ul>
                 </div>
 
-                <div class="field-small inactive-area zero-hold">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
+            </section>
+
+            <section class="playground">
+                <h2 class="visually-hidden">Playground</h2>
+
+                <div class="field-large">
+
+                    <div class="field-small active-area cross-hold">
+                        <div class="cell cross-hold"></div>
+                        <div class="cell zero-hold"></div>
+                        <div class="cell draw-hold"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
+
+                    <div class="field-small inactive-area zero-hold">
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
+
+                    <div class="field-small inactive-area draw-hold">
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
+
+                    <div class="field-small inactive-area">
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
+
+                    <div class="field-small draw-hold">
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
+
+                    <div class="field-small">
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
+
+                    <div class="field-small">
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
+
+                    <div class="field-small">
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
+
+                    <div class="field-small">
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                        <div class="cell"></div>
+                    </div>
                 </div>
 
-                <div class="field-small inactive-area draw-hold">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                </div>
+            </section>
+        </div>
 
-                <div class="field-small inactive-area">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                </div>
+        <div class="sections-container">
 
-                <div class="field-small draw-hold">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                </div>
-
-                <div class="field-small">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                </div>
-
-                <div class="field-small">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                </div>
-
-                <div class="field-small">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                </div>
-
-                <div class="field-small">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                    <div class="cell"></div>
-                </div>
-            </div>
-
-        </section>
-
-        <section class="player-settings">
-            <h2 class="visually-hidden">Настройки игрока</h2>
-            <form class="login-form" action="#">
-                <fieldset class="fieldset"> Current login:
-                    <input class="player-nickname-input input" type="text" name="login-input">
-                    <input class="player-nickname-button button" type="button" name="send-login-button" value="Change">
-                </fieldset>
-            </form>
-        </section>
-
-        <section class="messenger">
-            <h2 class="visually-hidden">Игровой мессенджер</h2>
-
-            <div class="messenger-container">
-                <ul class="messages-list list">
-                    <li class="message-item">
-                        <h2 class="message-author">(Pidor 1):</h2>
-                        <p class="message-content">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit laborum fugit velit
-                            magnam corrupti eaque nihil! Reiciendis natus assumenda officia commodi maxime. Fugiat fuga
-                            et, ipsa autem porro molestiae sint cum velit rerum ipsum. Sapiente iusto eos vitae velit
-                            quisquam aperiam, aspernatur, ea officiis cumque rerum sunt, rem provident magni? Mollitia
-                            aliquid necessitatibus unde odit aspernatur recusandae ut culpa facilis accusamus debitis
-                            natus sed sunt illo officiis, dignissimos architecto? Nobis repellat consequuntur labore.
-                            Consequuntur, nihil fugiat culpa nemo recusandae, dolorum omnis assumenda asperiores
-                            repellat, vel facilis iste? Minima dignissimos quaerat natus quis quasi quas ratione,
-                            reprehenderit at. Minus architecto, voluptatum consequatur ipsa dolor suscipit tempore sunt
-                            id iusto aspernatur assumenda quidem exercitationem necessitatibus quos laborum voluptate
-                            totam quisquam quasi quo nam tenetur ipsum ducimus. Nisi asperiores aut dolore.
-                        </p>
-                        <time>14:25</time>
-                    </li>
-                    <li class="message-item">
-                        <h2 class="message-author">(Pidor 2):</h2>
-                        <p class="message-content">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae atque possimus quidem
-                            quibusdam incidunt ab porro laborum voluptate! Quidem fuga aliquam tempore pariatur eligendi
-                            sint!
-                        </p>
-                        <time>7:25</time>
-                    </li>
-                    <li class="message-item">
-                        <h2 class="message-author">(Pidor 3):</h2>
-                        <p class="message-content">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero fugit ipsam exercitationem
-                            est ipsum libero doloribus quod, illo omnis magnam dolor, totam dolore, enim dignissimos.
-                        </p>
-                        <time>9:25</time>
-                    </li>
-                </ul>
-
-                <form class="message-form" action="#">
-                    <fieldset class="fieldset">
-                        <input class="input" type="text" name="message-input">
-                        <input class="button" type="submit" name="send-message-button" value="Send Message">
+            <section class="player-settings">
+                <h2 class="visually-hidden">Player settings</h2>
+                <form class="login-form" action="#">
+                    <fieldset class="fieldset"> Current login:
+                        <input class="player-nickname-input input" type="text" name="login-input">
+                        <input class="player-nickname-button button" type="button" name="send-login-button"
+                            value="Change">
                     </fieldset>
                 </form>
-            </div>
-        </section>
+            </section>
 
-        <section class="lobbies">
-            <h2 class="visually-hidden">Лобби</h2>
+            <section class="messenger">
+                <h2 class="visually-hidden">Game chat</h2>
 
-            <h3 class="visually-hidden">Форма удаления комнаты</h3>
-            <form class="drop-room-form" action="#">
-                <fieldset class="fieldset"> Room name for delete:
-                    <input class="room-name-input input" type="text" name="room-name-input">
-                    <input class="drop-room-button button" type="button" name="drop-room-button" value="Drop">
-                </fieldset>
-            </form>
+                <div class="messenger-container">
+                    <ul class="messages-list list">
+                        <li class="message-item">
+                            <h2 class="message-author">(Player 1):</h2>
+                            <p class="message-content">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit laborum fugit
+                                velit
+                                magnam corrupti eaque nihil! Reiciendis natus assumenda officia commodi maxime. Fugiat
+                                fuga
+                                et, ipsa autem porro molestiae sint cum velit rerum ipsum. Sapiente iusto eos vitae
+                                velit
+                                quisquam aperiam, aspernatur, ea officiis cumque rerum sunt, rem provident magni?
+                                Mollitia
+                                aliquid necessitatibus unde odit aspernatur recusandae ut culpa facilis accusamus
+                                debitis
+                                natus sed sunt illo officiis, dignissimos architecto? Nobis repellat consequuntur
+                                labore.
+                                Consequuntur, nihil fugiat culpa nemo recusandae, dolorum omnis assumenda asperiores
+                                repellat, vel facilis iste? Minima dignissimos quaerat natus quis quasi quas ratione,
+                                reprehenderit at. Minus architecto, voluptatum consequatur ipsa dolor suscipit tempore
+                                sunt
+                                id iusto aspernatur assumenda quidem exercitationem necessitatibus quos laborum
+                                voluptate
+                                totam quisquam quasi quo nam tenetur ipsum ducimus. Nisi asperiores aut dolore.
+                            </p>
+                            <time>14:25</time>
+                        </li>
+                        <li class="message-item">
+                            <h2 class="message-author">(Player 2):</h2>
+                            <p class="message-content">
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae atque possimus
+                                quidem
+                                quibusdam incidunt ab porro laborum voluptate! Quidem fuga aliquam tempore pariatur
+                                eligendi
+                                sint!
+                            </p>
+                            <time>7:25</time>
+                        </li>
+                        <li class="message-item">
+                            <h2 class="message-author">(Player 3):</h2>
+                            <p class="message-content">
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero fugit ipsam
+                                exercitationem
+                                est ipsum libero doloribus quod, illo omnis magnam dolor, totam dolore, enim
+                                dignissimos.
+                            </p>
+                            <time>9:25</time>
+                        </li>
+                    </ul>
 
-            <h3 class="visually-hidden">Список игроков ожидающих комнату на сервере:</h3>
-            <ul class="player-list list"></ul>
+                    <form class="message-form" action="#">
+                        <fieldset class="fieldset">
+                            <input class="input" type="text" name="message-input">
+                            <input class="button" type="submit" name="send-message-button" value="Send Message">
+                        </fieldset>
+                    </form>
+                </div>
+            </section>
 
-            <h3 class="visually-hidden">Список комнат на сервере:</h3>
-            <ul class="room-list list"></ul>
-        </section>
+            <section class="lobbies">
+                <h2 class="visually-hidden">Lobby</h2>
 
+                <h3 class="visually-hidden">Drop room form</h3>
+                <form class="drop-room-form" action="#">
+                    <fieldset class="fieldset"> Room name for delete:
+                        <input class="room-name-input input" type="text" name="room-name-input">
+                        <input class="drop-room-button button" type="button" name="drop-room-button" value="Drop">
+                    </fieldset>
+                </form>
+
+                <h3 class="visually-hidden">List of players waiting for room on server:</h3>
+                <ul class="player-list list"></ul>
+
+                <h3 class="visually-hidden">List of server's rooms:</h3>
+                <ul class="room-list list"></ul>
+            </section>
+        </div>
     </main>
 
     <footer class="page-footer">

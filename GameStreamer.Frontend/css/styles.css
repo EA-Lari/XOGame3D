@@ -25,6 +25,11 @@
     border: 1px solid yellow;
 }
 
+.page-main {
+    display: flex;
+    justify-content: space-around;
+}
+
 .list {
     list-style: none;
     margin: 0;
