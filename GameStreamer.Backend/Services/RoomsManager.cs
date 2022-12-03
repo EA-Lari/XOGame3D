@@ -1,7 +1,6 @@
 ﻿using GameStreamer.Backend.DTOs;
 using GameStreamer.Backend.Models;
 using System.Collections.Concurrent;
-using System.Linq;
 
 namespace GameStreamer.Backend.Services
 {
@@ -9,13 +8,17 @@ namespace GameStreamer.Backend.Services
     {
 
         private readonly Random _random = new Random();
-        private readonly ConcurrentBag<Player> _playersConcurrList = new ConcurrentBag<Player>();
+        private readonly ConcurrentDictionary<string,Player> _playersConcurrDict = new ConcurrentDictionary<string, Player>();
         private readonly ConcurrentDictionary<string, Room> _roomsConcurrDict = new ConcurrentDictionary<string, Room>();
 
-        public bool AddPlayerToServer(string connectionId, string nickName)
+        #region Players
+
+        public PlayerDataResponseDTO AddPlayerToServer(string connectionId, string nickName)
         {
-            _playersConcurrList.Add(new Player(connectionId, nickName));
-            return true;
+            var playerForAdd = new Player(connectionId, nickName);
+            _playersConcurrDict.TryAdd(connectionId, playerForAdd);
+
+            return new PlayerDataResponseDTO { ConnectionId = playerForAdd.ConnectionId, NickName = playerForAdd.NickName };
         }
 
         public PlayerDataResponseDTO GetPlayerDataBy(string connectionId)
@@ -27,6 +30,23 @@ namespace GameStreamer.Backend.Services
         {
             return new PlayerDataResponseDTO { NickName = $"Player_{_random.Next(1, 999)}", ConnectionId = $"id_{_random.Next(3000, 9000)}" };
         }
+
+        public List<PlayerDataResponseDTO> GetAllPlayersWithoutRoom()
+        {
+            return _playersConcurrDict.Select(x => new PlayerDataResponseDTO { ConnectionId = x.Key, NickName = x.Value.NickName }).ToList();
+        }
+
+        public PlayerDataResponseDTO RemovePlayer(string connectionId)
+        {
+            Player removedPlayer;
+            _playersConcurrDict.TryRemove(connectionId, out removedPlayer);
+
+            return new PlayerDataResponseDTO() { ConnectionId = removedPlayer.ConnectionId, NickName = removedPlayer.NickName };
+        }
+
+        #endregion
+
+        #region Rooms
 
         public GameRoomResponseDTO GetRandomRoom()
         {
@@ -45,9 +65,9 @@ namespace GameStreamer.Backend.Services
             return new List<GameRoomResponseDTO>
             {
                 new GameRoomResponseDTO
-                { 
+                {
                     RoomName = "TestRoom_1",
-                    PlayersList = new List<PlayerDataResponseDTO> { 
+                    PlayersList = new List<PlayerDataResponseDTO> {
                         new PlayerDataResponseDTO { NickName = "Player_1" },
                         new PlayerDataResponseDTO { NickName = "Player_2" },
                     }
@@ -55,31 +75,29 @@ namespace GameStreamer.Backend.Services
             };
         }
 
-        public List<PlayerDataResponseDTO> GetAllPlayers()
-        {
-
-            var players = _playersConcurrList.ToList();
-            //return new List<PlayerDataResponseDTO>
-            //{
-            //    new PlayerDataResponseDTO { NickName = "Player_1" },
-            //    new PlayerDataResponseDTO { NickName = "Player_2" },
-            //};
-        }
-
-        public bool RemovePlayer()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("RoomsManager пока не умеет удалять игроков :(");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            return false;
-        }
-
-        public bool RemoveRoom()
+        public GameRoomResponseDTO RemoveRoom(string roomName)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("RoomsManager пока не умеет удалять комнаты :(");
             Console.ForegroundColor = ConsoleColor.Gray;
-            return false;
+            return new GameRoomResponseDTO();
         }
+
+        public GameRoomResponseDTO AddRoom(string roomName)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("RoomsManager пока не умеет добавлять комнаты :(");
+            Console.ForegroundColor = ConsoleColor.Gray;
+
+            throw new NotImplementedException();
+        }
+
+        public PlayerDataResponseDTO ChangePlayerNickName(string connectionId, string nickName)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
     }
 }

@@ -9,20 +9,31 @@ namespace GameStreamer.Backend.Services
     public interface IRoomsManager
     {
 
-        public PlayerDataResponseDTO GetPlayerDataBy(string connectionId);
+        #region Rooms
 
-        public bool AddPlayerToServer(string connectionId, string nickName);
-        
-        public bool RemovePlayer();
+        public GameRoomResponseDTO RemoveRoom(string roomName);
 
-        public bool RemoveRoom();
-
-        public PlayerDataResponseDTO GetRandomPlayer();
+        public GameRoomResponseDTO AddRoom(string roomName);
 
         public GameRoomResponseDTO GetRandomRoom();
 
         public List<GameRoomResponseDTO> GetAllGameRooms();
 
-        public List<PlayerDataResponseDTO> GetAllPlayers();
+        #endregion
+
+        #region Players
+
+        public PlayerDataResponseDTO ChangePlayerNickName(string connectionId, string nickName);
+
+        public PlayerDataResponseDTO AddPlayerToServer(string connectionId, string nickName);
+
+        public PlayerDataResponseDTO RemovePlayer(string connectionId);
+
+        public PlayerDataResponseDTO GetRandomPlayer();
+
+        public List<PlayerDataResponseDTO> GetAllPlayersWithoutRoom();
+
+        #endregion
+        
     }
 }

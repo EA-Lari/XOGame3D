@@ -33,12 +33,6 @@ setupLobbyConnection(lobbyHubConnection);
 startHubAsync(gameHubConnection);
 startHubAsync(lobbyHubConnection);
 
-lobbyClientId = lobbyHubConnection.connection.connectionId;
-gameClientId = gameHubConnection.connection.connectionId;
-console.log("Client was connected with IDs:");
-console.log(lobbyClientId);
-console.log(gameClientId);
-
 /** Add Click Events To Buttons */
 const nicknameButton = document.querySelector(".player-nickname-button");
 const nicknameInput = document.querySelector(".player-nickname-input");
@@ -94,6 +88,14 @@ function setupLobbyConnection(lobbyConnection) {
         
         var newPlayerElement = renderNewPlayerElement(playerDto);
         playersItems.appendChild(newPlayerElement);
+    });
+
+    lobbyConnection.on("UpdatePlayersWithoutRooms", (playersWithoutRoomsList) => {
+        
+        playersWithoutRoomsList.forEach((playerWithoutRooms) => {
+            var newPlayerElement = renderNewPlayerElement(playerWithoutRooms);
+            playersItems.appendChild(newPlayerElement);
+            });
     });
 
     lobbyConnection.on("PlayerLeavedServer", (playerDto) => {

@@ -18,6 +18,8 @@ namespace GameStreamer.Backend.Interfaces
         /// <returns></returns>
         Task PlayerLeavedServer(PlayerDataResponseDTO playerResponseDto);
 
+        Task UpdatePlayersWithoutRooms(List<PlayerDataResponseDTO> playersWithoutRoomsList);
+
         #endregion
     }
 }

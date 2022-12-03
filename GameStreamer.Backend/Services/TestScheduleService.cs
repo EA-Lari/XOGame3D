@@ -11,12 +11,13 @@ namespace GameStreamer.Backend.Services
         private readonly IHubContext<GameHub, IGameHub> _gameHub;
         private readonly IHubContext<RoomsHub, IRoomsHub> _roomsHub;
         private readonly Random _random = new Random();
-
-
-        public TestScheduleService(IHubContext<GameHub, IGameHub> gameHub, IHubContext<RoomsHub, IRoomsHub> roomsHub)
+        private readonly IRoomsManager _roomsManager;
+        
+        public TestScheduleService(IHubContext<GameHub, IGameHub> gameHub, IHubContext<RoomsHub, IRoomsHub> roomsHub, IRoomsManager roomsManager)
         {
             _gameHub = gameHub;
             _roomsHub = roomsHub;
+            _roomsManager = roomsManager;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -26,7 +27,7 @@ namespace GameStreamer.Backend.Services
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
                 Console.WriteLine("TestScheduleService have got next tick! Waiting for 5 sec...");
-                
+
                 await _roomsHub.Clients.All.NewRoomAdded(
                     new GameRoomResponseDTO { 
                         RoomName = $"Room_{_random.Next(8000, 15000)}",
