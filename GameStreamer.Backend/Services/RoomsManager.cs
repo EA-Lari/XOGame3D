@@ -1,6 +1,7 @@
 ﻿using GameStreamer.Backend.DTOs;
 using GameStreamer.Backend.Models;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace GameStreamer.Backend.Services
 {
@@ -9,6 +10,7 @@ namespace GameStreamer.Backend.Services
 
         private readonly Random _random = new Random();
         private readonly ConcurrentBag<Player> _playersConcurrList = new ConcurrentBag<Player>();
+        private readonly ConcurrentDictionary<string, Room> _roomsConcurrDict = new ConcurrentDictionary<string, Room>();
 
         public bool AddPlayerToServer(string connectionId, string nickName)
         {
@@ -55,11 +57,13 @@ namespace GameStreamer.Backend.Services
 
         public List<PlayerDataResponseDTO> GetAllPlayers()
         {
-            return new List<PlayerDataResponseDTO>
-            {
-                new PlayerDataResponseDTO { NickName = "Player_1" },
-                new PlayerDataResponseDTO { NickName = "Player_2" },
-            };
+
+            var players = _playersConcurrList.ToList();
+            //return new List<PlayerDataResponseDTO>
+            //{
+            //    new PlayerDataResponseDTO { NickName = "Player_1" },
+            //    new PlayerDataResponseDTO { NickName = "Player_2" },
+            //};
         }
 
         public bool RemovePlayer()

@@ -227,7 +227,7 @@
 }
 
 .player-list {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     border-radius: 10px;
     max-width: 955px;
 
@@ -254,7 +254,7 @@
 }
 
 .room-list {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     border-radius: 10px;
     max-width: 955px;
     min-height: 50px;
