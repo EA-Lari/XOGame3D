@@ -6,6 +6,9 @@ const LOBBY_HUB = "/lobbies";
 /** Const Functions */
 const varNameToString = varObj => Object.keys(varObj)[0];
 
+/** Common Variables */
+var currentClientNickName = "";
+
 /** Live collections */
 const messagesItems = document.querySelector(".messages-list");
 const roomsItems = document.querySelector(".room-list");
@@ -34,16 +37,15 @@ startHubAsync(gameHubConnection);
 startHubAsync(lobbyHubConnection);
 
 /** Add Click Events To Buttons */
+
 const nicknameButton = document.querySelector(".player-nickname-button");
 const nicknameInput = document.querySelector(".player-nickname-input");
 
 nicknameButton.onclick = function () {
     lobbyHubConnection.invoke("PlayerAddedLogin", nicknameInput.value);
-    nicknameButton.disabled = true;
-    nicknameInput.disabled = true;
-    
-    /** Test Drop later! */
-    // console.log(connectionIdDict);
+    currentClientNickName = nicknameInput.value;
+    // nicknameButton.disabled = true;
+    // nicknameInput.disabled = true;
 };
 
 const dropRoomButton = document.querySelector(".drop-room-button");
@@ -51,17 +53,12 @@ const roomNameInput = document.querySelector(".room-name-input");
 
 dropRoomButton.onclick = function () {
     if (roomNameInput.value) {
-        deleteElementByAttr("data-roomId", roomNameInput.value);
+        var element = findElementByAttr("data-roomId", roomNameInput.value);
+        deleteNode(element);
     }
 };
 
 /** Functions */
-function deleteElementByAttr(attributeName, value) {
-    const elementForDelete = document.querySelector("["+ attributeName +"*="+ value +"]");
-        if (elementForDelete) {
-            elementForDelete.parentElement.removeChild(elementForDelete);
-        }
-};
 
 function createHubConnection(hubUrl) {
     let connection = new signalR.HubConnectionBuilder()
@@ -90,18 +87,31 @@ function setupLobbyConnection(lobbyConnection) {
         playersItems.appendChild(newPlayerElement);
     });
 
+    lobbyConnection.on("PlayerChangedNickName", (changedPlayerDataDto) => {
+        if (currentClientNickName === changedPlayerDataDto.nickName) {
+            console.log("Логины совпадают! Клиент который сменил логин найден!");
+        }
+        var playerNode = findElementByAttr("data-playerId", changedPlayerDataDto.nickName);        
+        // const playerNode = newPlayerItem.querySelector('.player-item');
+        const playerName = newPlayerItem.querySelector('.player-nickname');
+        playerName.textContent = changedPlayerDataDto.nickName;
+        playerNode.data = "";
+        playerNode.setAttribute('', newPlayerDto.nickName);
+    });
+
     lobbyConnection.on("UpdatePlayersWithoutRooms", (playersWithoutRoomsList) => {
         
         playersWithoutRoomsList.forEach((playerWithoutRooms) => {
             var newPlayerElement = renderNewPlayerElement(playerWithoutRooms);
-            playersItems.appendChild(newPlayerElement);
+                playersItems.appendChild(newPlayerElement);
             });
     });
 
     lobbyConnection.on("PlayerLeavedServer", (playerDto) => {
         console.log(playerDto.nickName + " with conn id: " + playerDto.connectionId + " left from The Game Server!");
 
-        deleteElementByAttr("data-playerId", playerDto.nickName);
+        var element = findElementByAttr("data-playerId", playerDto.nickName);
+        deleteNode(element);
     });
 
     lobbyConnection.on("NewRoomAdded", (newRoomDto) => {
@@ -114,6 +124,17 @@ function setupLobbyConnection(lobbyConnection) {
     lobbyConnection.onclose(async () => {
         setTimeout(await startHubAsync(lobbyConnection), 5000);
     });
+};
+
+function findElementByAttr(attributeName, value) {
+    const elementForSearch = document.querySelector("["+ attributeName +"*="+ value +"]");
+    return elementForSearch;
+};
+
+function deleteNode(node) {
+    if (node) {
+        node.parentElement.removeChild(node);
+    }
 };
 
 function renderNewRoomElement(newGameRoomDto) {
@@ -149,7 +170,6 @@ function renderNewPlayerElement(newPlayerDto) {
 async function startHubAsync(hubConnection) {
     try {
         await hubConnection.start();
-        // connectionIdDict.set(varNameToString({hubConnection}), hubConnection.connection.connectionId);
         console.log("Client " + hubConnection.connection.connectionId + " was connected to hub: " + hubConnection.connection.baseUrl);
     }
     catch (err) {

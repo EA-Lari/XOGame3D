@@ -20,6 +20,8 @@ namespace GameStreamer.Backend.Interfaces
 
         Task UpdatePlayersWithoutRooms(List<PlayerDataResponseDTO> playersWithoutRoomsList);
 
+        Task PlayerChangedNickName(PlayerDataResponseDTO playerResponseDto);
+
         #endregion
     }
 }

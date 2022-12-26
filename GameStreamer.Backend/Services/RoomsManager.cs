@@ -78,7 +78,7 @@ namespace GameStreamer.Backend.Services
         public GameRoomResponseDTO RemoveRoom(string roomName)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("RoomsManager пока не умеет удалять комнаты :(");
+            Console.WriteLine("Сорян, RoomsManager пока не умеет удалять комнаты :(");
             Console.ForegroundColor = ConsoleColor.Gray;
             return new GameRoomResponseDTO();
         }
@@ -86,7 +86,7 @@ namespace GameStreamer.Backend.Services
         public GameRoomResponseDTO AddRoom(string roomName)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("RoomsManager пока не умеет добавлять комнаты :(");
+            Console.WriteLine("Сорян, RoomsManager пока не умеет добавлять комнаты :(");
             Console.ForegroundColor = ConsoleColor.Gray;
 
             throw new NotImplementedException();
@@ -94,7 +94,12 @@ namespace GameStreamer.Backend.Services
 
         public PlayerDataResponseDTO ChangePlayerNickName(string connectionId, string nickName)
         {
-            throw new NotImplementedException();
+            Player changedPlayer;
+            _playersConcurrDict.TryGetValue(connectionId, out changedPlayer);
+            changedPlayer?.SetNewNickName(nickName);
+            _playersConcurrDict.TryUpdate(connectionId, changedPlayer, changedPlayer);
+
+            return new PlayerDataResponseDTO { ConnectionId = changedPlayer.ConnectionId, NickName = changedPlayer.NickName };
         }
 
         #endregion

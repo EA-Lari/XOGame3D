@@ -1,5 +1,4 @@
-﻿using GameStreamer.Backend.DTOs;
-using GameStreamer.Backend.Interfaces;
+﻿using GameStreamer.Backend.Interfaces;
 using GameStreamer.Backend.Services;
 using Microsoft.AspNetCore.SignalR;
 
@@ -17,7 +16,8 @@ namespace GameStreamer.Backend.Hubs
 
         public Task PlayerAddedLogin(string playerLogin)
         {
-            _roomsManager.ChangePlayerNickName(Context.ConnectionId, playerLogin);
+            var changedPlayerDataDto = _roomsManager.ChangePlayerNickName(Context.ConnectionId, playerLogin);
+            Clients.All.PlayerChangedNickName(changedPlayerDataDto);
             return Task.CompletedTask;
         }
 

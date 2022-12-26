@@ -19,10 +19,16 @@
 .page {
     color: whitesmoke;
     background-color: #434a56;
-    font-family: "PT Sans", sans-serif;
+    /* font-family: "PT Sans", sans-serif; */
+    font-family: "Lato", sans-serif;
     font-size: 22px;
     margin: 0;
-    border: 1px solid yellow;
+    
+}
+
+.page-header {
+    border-top: 10px solid #ff3c40;
+    padding: 20px 0;
 }
 
 .page-main {

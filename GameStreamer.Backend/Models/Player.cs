@@ -13,7 +13,10 @@
         }
 
         public string ConnectionId { get; }
-        public string NickName { get; }
+
+        public string NickName { get; private set; }
+
+        public void SetNewNickName(string nickName) => this.NickName = nickName;
 
     }
 }
