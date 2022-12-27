@@ -2,7 +2,6 @@
 using GameStreamer.Backend.Hubs;
 using Autofac.Extensions.DependencyInjection;
 using GameStreamer.Backend.Services;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using GameStreamer.Backend.Storage.GameStreamerDbase;
 using Microsoft.EntityFrameworkCore;
 
