@@ -6,6 +6,12 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase
 {
     public class GameStreamerContext : DbContext
     {
+
+        static GameStreamerContext()
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
+
         public GameStreamerContext(DbContextOptions<GameStreamerContext> options) : base(options)
         { }
 

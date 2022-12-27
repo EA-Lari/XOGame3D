@@ -4,6 +4,7 @@ using Autofac.Extensions.DependencyInjection;
 using GameStreamer.Backend.Services;
 using GameStreamer.Backend.Storage.GameStreamerDbase;
 using Microsoft.EntityFrameworkCore;
+using GameStreamer.Backend.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
                 services.AddHostedService<TestScheduleService>();
 
-                services.AddSingleton<IRoomsManager>(new RoomsManager());
+                services.AddSingleton<IRoomsManager, RoomsManager>();
+                services.AddSingleton<IRoomRepository, RoomRepository>();
 
                 //services.AddMassTransit(x =>
                 //{

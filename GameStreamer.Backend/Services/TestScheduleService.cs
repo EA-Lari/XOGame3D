@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.SignalR;
 using GameStreamer.Backend.Interfaces;
 using GameStreamer.Backend.DTOs;
+using GameStreamer.Backend.Storage;
+using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 
 namespace GameStreamer.Backend.Services
 {
@@ -12,21 +14,34 @@ namespace GameStreamer.Backend.Services
         private readonly IHubContext<RoomsHub, IRoomsHub> _roomsHub;
         private readonly Random _random = new Random();
         private readonly IRoomsManager _roomsManager;
-        
-        public TestScheduleService(IHubContext<GameHub, IGameHub> gameHub, IHubContext<RoomsHub, IRoomsHub> roomsHub, IRoomsManager roomsManager)
+        private readonly IRoomRepository _roomRepository;
+
+        public TestScheduleService(IHubContext<GameHub, IGameHub> gameHub, IHubContext<RoomsHub, IRoomsHub> roomsHub, IRoomsManager roomsManager, IRoomRepository roomRepository)
         {
             _gameHub = gameHub;
             _roomsHub = roomsHub;
             _roomsManager = roomsManager;
+            _roomRepository = roomRepository;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(20));
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
 
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
                 Console.WriteLine("TestScheduleService have got next tick! Waiting for 5 sec...");
+
+                var testRoom = new RoomEntity { CreatedAt = DateTime.Now, HubGroupId = "12345", RoomGuid = Guid.NewGuid() };
+
+                var testPlayer1 = new PlayerEntity { Nickname = "Noob1", ChatHubId = "111aaa", GameHubId = "222aaa", RoomHubId = "333aaa", CreatedAt = DateTime.Now, PlayerGuid = Guid.NewGuid() };
+                var testPlayer2 = new PlayerEntity { Nickname = "Noob2", ChatHubId = "111bbb", GameHubId = "222bbb", RoomHubId = "333bbb", CreatedAt = DateTime.Now, PlayerGuid = Guid.NewGuid() };
+
+                testRoom.JoinedPlayers.Add(testPlayer1);
+                testRoom.JoinedPlayers.Add(testPlayer2);
+
+                _roomRepository.InsertRoom(testRoom);
+                _roomRepository.Save();
 
                 await _roomsHub.Clients.All.NewRoomAdded(
                     new GameRoomResponseDTO { 
