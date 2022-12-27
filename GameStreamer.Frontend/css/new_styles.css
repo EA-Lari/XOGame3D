@@ -5,12 +5,6 @@
     text-align: center;
 }
 
-/* Fonts */
-/* --cp-font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
-    --cp-font-family-header: 'Telefon Black', Sans-Serif;
-    --cp-font-family-header-alt: 'Telefon', Sans-Serif;
-    --cp-font-family-monospace: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; */
-
 .width-wrapper {
     width: 100%;
     max-width: 1200px;
@@ -54,3 +48,44 @@ a {
     box-sizing: border-box;
     border-radius: 2px;
   }
+
+  /* Messenger */
+
+.messenger-wrapper {
+  font-size: 16px;
+  margin: 0 auto;
+  max-width: 300px;
+  padding: 0 20px;
+}
+
+.message-item {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.message-item img {
+  float: left;
+  max-width: 50px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.message-item::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.message-time {
+  float: right;
+  color: #aaa;
+}

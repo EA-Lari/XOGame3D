@@ -7,26 +7,23 @@ const LOBBY_HUB = "/lobbies";
 const varNameToString = varObj => Object.keys(varObj)[0];
 
 /** Common Variables */
-var currentClientNickName = "";
+var currentClientNickName = "Anon" + Math.floor(Math.random() * 100000);;
 
 /** Live collections */
 const messagesItems = document.querySelector(".messages-list");
 const roomsItems = document.querySelector(".room-list");
 const playersItems = document.querySelector(".player-list");
 
-// const roomsLiveCollection = new Map();
-// const playersLiveCollection = new Map();
-
-/** Connection id collection */
-// const connectionIdDict = new Map();
+/** Data Inputs */
+const changeNickButton = document.querySelector(".player-nickname-button");
+const nicknameInput = document.querySelector(".player-nickname-input");
+nicknameInput.value = currentClientNickName;
 
 /** Templates */
-// const chatMessageTemplate = document.getElementById("chat-message-template");
 const gameRoomTemplate = document.getElementById("game-room-template").content;
 const playerTemplate = document.getElementById("player-item-template").content;
 
 /** App EntryPoint */
-
 var gameHubConnection = createHubConnection(GAME_HUB);
 var lobbyHubConnection = createHubConnection(LOBBY_HUB);
 
@@ -38,14 +35,9 @@ startHubAsync(lobbyHubConnection);
 
 /** Add Click Events To Buttons */
 
-const nicknameButton = document.querySelector(".player-nickname-button");
-const nicknameInput = document.querySelector(".player-nickname-input");
-
-nicknameButton.onclick = function () {
+changeNickButton.onclick = function () {
     lobbyHubConnection.invoke("PlayerAddedLogin", nicknameInput.value);
     currentClientNickName = nicknameInput.value;
-    // nicknameButton.disabled = true;
-    // nicknameInput.disabled = true;
 };
 
 const dropRoomButton = document.querySelector(".drop-room-button");
@@ -91,8 +83,7 @@ function setupLobbyConnection(lobbyConnection) {
         if (currentClientNickName === changedPlayerDataDto.nickName) {
             console.log("Логины совпадают! Клиент который сменил логин найден!");
         }
-        var playerNode = findElementByAttr("data-playerId", changedPlayerDataDto.nickName);        
-        // const playerNode = newPlayerItem.querySelector('.player-item');
+        var playerNode = findElementByAttr("data-playerId", changedPlayerDataDto.nickName);
         const playerName = newPlayerItem.querySelector('.player-nickname');
         playerName.textContent = changedPlayerDataDto.nickName;
         playerNode.data = "";

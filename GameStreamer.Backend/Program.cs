@@ -3,6 +3,8 @@ using GameStreamer.Backend.Hubs;
 using Autofac.Extensions.DependencyInjection;
 using GameStreamer.Backend.Services;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using GameStreamer.Backend.Storage.GameStreamerDbase;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,13 +78,13 @@ void ConfigueGameStreamerHost(HostBuilderContext builderContext, ContainerBuilde
 
     //#region Persistance Setup
 
-    //containerBuilder.Register(context =>
-    //                new DbContextOptionsBuilder<GameStreamerContext>()
-    //                    .UseNpgsql("Host=localhost;Database=xo_game_gamestreamerservice;User Id=local;Password=local")
-    //                    .Options)
-    //            .As<DbContextOptions<GameStreamerContext>>().SingleInstance();
+    containerBuilder.Register(context =>
+                    new DbContextOptionsBuilder<GameStreamerContext>()
+                        .UseNpgsql("Host=localhost;Database=xo_game_gamestreamerservice;User Id=local;Password=local")
+                        .Options)
+                .As<DbContextOptions<GameStreamerContext>>().SingleInstance();
 
-    //containerBuilder.RegisterType<GameStreamerContext>().InstancePerDependency();
+    containerBuilder.RegisterType<GameStreamerContext>().InstancePerDependency();
 
     //#endregion
 }

@@ -5,33 +5,35 @@ Scripts/ - Находятся SQL скрипты, которые передае�
 При изменении структуры сущностей Контекстов БД необходимо:
 
 1) Создаем миграцию
-Add-Migration Initial -Context GameStreamerContext -OutputDir Migrations/GameStreamerContextMigrations
+Add-Migration AddAutoGenerateId -Context MbeContext -OutputDir Migrations/MbeContextMigrations
 
 2) Обновляем БД из миграции
-Update-Database -Context GameStreamerContext
+Update-Database -Context MbeContext
 
 3) Формируем SQL скрипт, кладем в папку
-Script-Migration -Context GameStreamerContext -Output Migrations/Scripts/final_version_script.sql
-
+Script-Migration -Context MbeContext -Output src/DataAccess/Migrations/Scripts/actual_script.sql
+------------------------------------
+Изменение БД по конкретной миграции
+Update-Database -Context MbeContext -Migration ClientPassport
 ------------------------------------
 EF_CORE_Commands:
 1) Enable-Migrations
 2) Create Migration
 Add-Migration YourMigrationName -Context YourContextName -OutputDir Migrations/YourFolder
 (Example)
-Add-Migration Initial -Context GameStreamerContext -OutputDir Migrations/GameStreamerContextMigrations
+Add-Migration Initial -Context MbeContext -OutputDir Migrations/MbeContextMigrations
 
 3) Confirm Migration on DataBase
 Update-Database -Context YourContextName
 (Example)
-Update-Database -Context GameStreamerContext 
+Update-Database -Context MbeContext
 
 Full SQL Script Of All Changes:
 Script-Migration -Context YourContextName
 
 Get SQL Script Concrete Changes:
 (Example)
-Script-Migration -Context GameStreamerContext -From 20220511163438_SomeText -To 20220511164936_SomeText -Output Migrations/Scripts/final_version_script.sql
+Script-Migration -Context MbeContext -From 20220511163438_AddDashboardEntities -To 20220511164936_FixDashboardEntities -Output Migrations/Scripts/final_version_script.sql
 ------------------------------------
 Откат миграции:
 (!) Если вы создали миграцию, но еще не применили ее на БД (Update-Database), просто удаляете последний файл миграции с датой (пример 20220512145516_AddAutoGenerateId.cs)
@@ -48,9 +50,12 @@ Update-Database -Context MbeContext 20220513114826_AddClientsReportColumn
 
 (Решение!)
 1) Вручную удалить таблицы вместе с таблицей __MigrationHistory
-	drop table dashboard."ClientsQuarterReports";
-	drop table dashboard."ContractsQuarterReports";
-	drop table dashboard."QuarterReports";
+	drop table dashboard."daily_clients_report";
+	drop table dashboard."daily_contracts_report";
+	drop table dashboard."daily_report";
+	drop table dashboard."quarter_clients_report";
+	drop table dashboard."quarter_contracts_report";
+	drop table dashboard."quarter_report";
 	drop table public."__EFMigrationsHistory";
 
 2) Удалить из папки Migrations все файлы с датами и обязательно MbeContextModelSnapshot.cs
