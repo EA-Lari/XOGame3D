@@ -5,6 +5,10 @@ using GameStreamer.Backend.Services;
 using GameStreamer.Backend.Storage.GameStreamerDbase;
 using Microsoft.EntityFrameworkCore;
 using GameStreamer.Backend.Storage;
+using Hangfire;
+using Hangfire.PostgreSql;
+using MassTransit;
+using GameStreamer.Backend.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,20 +38,26 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 services.AddSingleton<IRoomsManager, RoomsManager>();
                 services.AddSingleton<IRoomRepository, RoomRepository>();
 
-                //services.AddMassTransit(x =>
-                //{
-                //    x.UsingRabbitMq((rmqContext, cfg) =>
-                //    {
-                //        cfg.Host("localhost", "xo_game", h =>
-                //        {
-                //            h.Username("xo_admin");
-                //            h.Password("xo_admin");
-                //        });
-                //        cfg.ConfigureEndpoints(rmqContext);
+                services.AddScoped<ICustomJobService, CustomJobService>();
 
-                //    });
+                services.AddHangfire(config =>
+                    config.UsePostgreSqlStorage("Host=localhost;Database=xo_game_gamestreamerservice;User Id=local;Password=local"));
 
-                //});
+                services.AddHangfireServer();
+
+                services.AddMassTransit(x =>
+                {
+                    x.UsingRabbitMq((rmqContext, cfg) =>
+                    {
+                        cfg.Host("localhost", "xo_game", h =>
+                        {
+                            h.Username("xo_admin");
+                            h.Password("xo_admin");
+                        });
+                        cfg.ConfigureEndpoints(rmqContext);
+                    });
+
+                });
 
             });
 
@@ -57,6 +67,8 @@ app.UseCors();
 app.MapHub<RoomsHub>("/lobbies");
 
 app.MapHub<GameHub>("/game");
+
+app.UseHangfireDashboard();
 
 var logger = app.Logger;
 var lifetime = app.Lifetime;
@@ -73,6 +85,7 @@ InitializeDatabase(app);
 
 app.Run();
 
+StartRecurringJobs(app);
 
 void ConfigueGameStreamerHost(HostBuilderContext builderContext, ContainerBuilder containerBuilder)
 {
@@ -96,4 +109,20 @@ void InitializeDatabase(IApplicationBuilder application)
     //{
     //    scope.ServiceProvider.GetRequiredService<GameStreamerContext>().Database.Migrate();
     //}
+}
+
+void StartRecurringJobs(IApplicationBuilder application)
+{
+
+    using (var scope = application.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+    {
+        var customJobService = scope.ServiceProvider.GetRequiredService<ICustomJobService>();
+        var backgroundJobClient = scope.ServiceProvider.GetRequiredService<IBackgroundJobClient>();
+        var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+
+        backgroundJobClient.Enqueue(() => customJobService.FireAndForgetJob());
+        recurringJobManager.AddOrUpdate("clearUnactiveRoomsAndPlayersData", () => customJobService.ReccuringJob(), Cron.HourInterval(3));
+
+    }
+    
 }

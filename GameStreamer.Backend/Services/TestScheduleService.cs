@@ -4,6 +4,8 @@ using GameStreamer.Backend.Interfaces;
 using GameStreamer.Backend.DTOs;
 using GameStreamer.Backend.Storage;
 using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
+using Hangfire;
+using GameStreamer.Backend.Jobs;
 
 namespace GameStreamer.Backend.Services
 {
@@ -15,6 +17,9 @@ namespace GameStreamer.Backend.Services
         private readonly Random _random = new Random();
         private readonly IRoomsManager _roomsManager;
         private readonly IRoomRepository _roomRepository;
+
+        private readonly ICustomJobService _jobTestService;
+        private readonly IBackgroundJobClient _backgroundJobClient;
 
         public TestScheduleService(IHubContext<GameHub, IGameHub> gameHub, IHubContext<RoomsHub, IRoomsHub> roomsHub, IRoomsManager roomsManager, IRoomRepository roomRepository)
         {
