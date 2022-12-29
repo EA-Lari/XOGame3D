@@ -18,20 +18,46 @@ namespace GameStreamer.Backend.Services
         private readonly IRoomsManager _roomsManager;
         private readonly IRoomRepository _roomRepository;
 
-        private readonly ICustomJobService _jobTestService;
+        private readonly ICustomJobService _customJobService;
         private readonly IBackgroundJobClient _backgroundJobClient;
+        private readonly IRecurringJobManager _recurringJobManager;
+        //void StartRecurringJobs(WebApplication application)
+        //{
+        //    using (application.Services.CreateScope())
+        //    {
+        //        var customJobService = application.Services.GetService<ICustomJobService>();
+        //        var backgroundJobClient = application.Services.GetService<IBackgroundJobClient>();
+        //        var recurringJobManager = application.Services.GetService<IRecurringJobManager>();
 
-        public TestScheduleService(IHubContext<GameHub, IGameHub> gameHub, IHubContext<RoomsHub, IRoomsHub> roomsHub, IRoomsManager roomsManager, IRoomRepository roomRepository)
+        //        
+        //    }    
+        //}
+        public TestScheduleService(
+            IHubContext<GameHub,
+            IGameHub> gameHub,
+            IHubContext<RoomsHub,
+            IRoomsHub> roomsHub,
+            IRoomsManager roomsManager,
+            IRoomRepository roomRepository,
+            
+            ICustomJobService customJobService,
+            IBackgroundJobClient backgroundJobClient,
+            IRecurringJobManager recurringJobManager)
         {
             _gameHub = gameHub;
             _roomsHub = roomsHub;
             _roomsManager = roomsManager;
             _roomRepository = roomRepository;
+            _customJobService = customJobService;
+            _backgroundJobClient = backgroundJobClient;
+            _recurringJobManager = recurringJobManager;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
+
+            _recurringJobManager.AddOrUpdate("clearUnactiveRoomsAndPlayersData", () => _customJobService.ReccuringJob(), Cron.HourInterval(3));
 
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
@@ -45,8 +71,8 @@ namespace GameStreamer.Backend.Services
                 testRoom.JoinedPlayers.Add(testPlayer1);
                 testRoom.JoinedPlayers.Add(testPlayer2);
 
-                _roomRepository.InsertRoom(testRoom);
-                _roomRepository.Save();
+                //_roomRepository.InsertRoom(testRoom);
+                //_roomRepository.Save();
 
                 await _roomsHub.Clients.All.NewRoomAdded(
                     new GameRoomResponseDTO { 
@@ -57,8 +83,8 @@ namespace GameStreamer.Backend.Services
                         }
                     });
 
-                //await _gameHub.Clients.All.TestBroadcastPublish("You are pidrila!");
-                
+                _backgroundJobClient.Enqueue(() => _customJobService.FireAndForgetJob());
+
             }
         }
     }

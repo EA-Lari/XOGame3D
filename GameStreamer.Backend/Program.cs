@@ -85,8 +85,6 @@ InitializeDatabase(app);
 
 app.Run();
 
-StartRecurringJobs(app);
-
 void ConfigueGameStreamerHost(HostBuilderContext builderContext, ContainerBuilder containerBuilder)
 {
 
@@ -109,20 +107,4 @@ void InitializeDatabase(IApplicationBuilder application)
     //{
     //    scope.ServiceProvider.GetRequiredService<GameStreamerContext>().Database.Migrate();
     //}
-}
-
-void StartRecurringJobs(IApplicationBuilder application)
-{
-
-    using (var scope = application.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-    {
-        var customJobService = scope.ServiceProvider.GetRequiredService<ICustomJobService>();
-        var backgroundJobClient = scope.ServiceProvider.GetRequiredService<IBackgroundJobClient>();
-        var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
-
-        backgroundJobClient.Enqueue(() => customJobService.FireAndForgetJob());
-        recurringJobManager.AddOrUpdate("clearUnactiveRoomsAndPlayersData", () => customJobService.ReccuringJob(), Cron.HourInterval(3));
-
-    }
-    
 }
