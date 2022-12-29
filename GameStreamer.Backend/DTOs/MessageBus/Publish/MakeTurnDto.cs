@@ -2,6 +2,29 @@
 {
     public class MakeTurnDto
     {
-        public int Id { get; set; }
+        public Guid RoomGuid { get; set; }
+
+        public Guid PlayerGuid { get; set; }
+
+        public Coordinate BigAreaCoordinates { get; set; }
+
+        public Coordinate SmallAreaCoordinates { get; set; }
+
+        public GameFraction GameFraction { get; set; }
+
     }
+
+    public record struct Coordinate
+    {
+        public int X { get; set; }
+
+        public int Y { get; set; }
+    }
+
+    public enum GameFraction
+    {
+        ZERO = 0,
+        CROSS = 1
+    }
+
 }

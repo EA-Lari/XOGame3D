@@ -6,6 +6,7 @@ using GameStreamer.Backend.Storage;
 using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 using Hangfire;
 using GameStreamer.Backend.Jobs;
+using MassTransit;
 
 namespace GameStreamer.Backend.Services
 {
@@ -21,17 +22,9 @@ namespace GameStreamer.Backend.Services
         private readonly ICustomJobService _customJobService;
         private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly IRecurringJobManager _recurringJobManager;
-        //void StartRecurringJobs(WebApplication application)
-        //{
-        //    using (application.Services.CreateScope())
-        //    {
-        //        var customJobService = application.Services.GetService<ICustomJobService>();
-        //        var backgroundJobClient = application.Services.GetService<IBackgroundJobClient>();
-        //        var recurringJobManager = application.Services.GetService<IRecurringJobManager>();
 
-        //        
-        //    }    
-        //}
+        private readonly IPublishEndpoint _publishEndpoint;
+
         public TestScheduleService(
             IHubContext<GameHub,
             IGameHub> gameHub,
@@ -42,15 +35,20 @@ namespace GameStreamer.Backend.Services
             
             ICustomJobService customJobService,
             IBackgroundJobClient backgroundJobClient,
-            IRecurringJobManager recurringJobManager)
+            IRecurringJobManager recurringJobManager,
+
+            IPublishEndpoint publishEndpoint)
         {
             _gameHub = gameHub;
             _roomsHub = roomsHub;
             _roomsManager = roomsManager;
             _roomRepository = roomRepository;
+
             _customJobService = customJobService;
             _backgroundJobClient = backgroundJobClient;
             _recurringJobManager = recurringJobManager;
+
+            _publishEndpoint = publishEndpoint;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -71,8 +69,8 @@ namespace GameStreamer.Backend.Services
                 testRoom.JoinedPlayers.Add(testPlayer1);
                 testRoom.JoinedPlayers.Add(testPlayer2);
 
-                //_roomRepository.InsertRoom(testRoom);
-                //_roomRepository.Save();
+                _roomRepository.InsertRoom(testRoom);
+                _roomRepository.Save();
 
                 await _roomsHub.Clients.All.NewRoomAdded(
                     new GameRoomResponseDTO { 
