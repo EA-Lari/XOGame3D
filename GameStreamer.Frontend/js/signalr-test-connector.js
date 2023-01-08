@@ -23,6 +23,52 @@ nicknameInput.value = currentClientNickName;
 const gameRoomTemplate = document.getElementById("game-room-template").content;
 const playerTemplate = document.getElementById("player-item-template").content;
 
+/** Loader */
+const loader = document.querySelector(".loader");
+
+/** Sequence of game process menus */
+const menuElementsDict = new Map([
+    ["typeGameChoose", document.querySelector(".type-game-choose")],
+    ["randomGameChosen", document.querySelector(".random-game-chosen")],
+    ["dedicatedGameChosen", document.querySelector(".dedicated-game-chosen")]
+]);
+
+const startRandomGameButton = menuElementsDict.get('typeGameChoose').querySelector(".start-random-game-button");
+const startDedicatedGameButton = menuElementsDict.get('typeGameChoose').querySelector(".start-dedicated-game-button");
+
+startRandomGameButton.onclick = async function () {
+    toggleVisibility(menuElementsDict.get('typeGameChoose'));
+    toggleVisibility(loader);
+    await delay(1000);
+    toggleVisibility(loader);
+    toggleVisibility(menuElementsDict.get('randomGameChosen'));
+};
+
+startDedicatedGameButton.onclick = async function () {
+    toggleVisibility(menuElementsDict.get('typeGameChoose'));
+    toggleVisibility(loader);
+    await delay(1000);
+    toggleVisibility(loader);
+    toggleVisibility(menuElementsDict.get('dedicatedGameChosen'));
+};
+
+const createRoomButton = menuElementsDict.get('dedicatedGameChosen').querySelector(".create-room-button");
+const joinByRoomNameButton = menuElementsDict.get('dedicatedGameChosen').querySelector(".join-by-room-name-button");
+
+createRoomButton.onclick = async function () {
+    toggleVisibility(menuElementsDict.get('dedicatedGameChosen'));
+    toggleVisibility(loader);
+    await delay(1000);
+    console.log('Нажата кнопка создания комнаты, нужно дописать логику на бэке!');
+};
+
+joinByRoomNameButton.onclick = async function () {
+    toggleVisibility(menuElementsDict.get('dedicatedGameChosen'));
+    toggleVisibility(loader);
+    await delay(1000);
+    console.log('Нажата кнопка присоединения по id комнаты, нужно дописать логику на бэке!');
+};
+
 /** App EntryPoint */
 var gameHubConnection = createHubConnection(GAME_HUB);
 var lobbyHubConnection = createHubConnection(LOBBY_HUB);
@@ -32,6 +78,8 @@ setupLobbyConnection(lobbyHubConnection);
 
 startHubAsync(gameHubConnection);
 startHubAsync(lobbyHubConnection);
+
+openStartMenuAsync();
 
 /** Add Click Events To Buttons */
 
@@ -51,6 +99,21 @@ dropRoomButton.onclick = function () {
 };
 
 /** Functions */
+
+async function openStartMenuAsync() {
+    toggleVisibility(loader);
+    await delay(2000);
+    toggleVisibility(loader);
+    toggleVisibility(menuElementsDict.get('typeGameChoose'));
+};
+
+async function delay(ms) {
+    return await new Promise(resolve => setTimeout(resolve, ms));
+};
+
+function toggleVisibility(element) {
+    element.classList.contains('visually-hidden') ? element.classList.remove("visually-hidden") : element.classList.add("visually-hidden");
+};
 
 function createHubConnection(hubUrl) {
     let connection = new signalR.HubConnectionBuilder()
@@ -74,7 +137,7 @@ function setupGameConnection(gameConnection) {
 function setupLobbyConnection(lobbyConnection) {
     lobbyConnection.on("NewPlayerJoined", (playerDto) => {
         console.log(playerDto.nickName + " with conn id: " + playerDto.connectionId + " joined To The Game Server!");
-        
+
         var newPlayerElement = renderNewPlayerElement(playerDto);
         playersItems.appendChild(newPlayerElement);
     });
@@ -91,11 +154,11 @@ function setupLobbyConnection(lobbyConnection) {
     });
 
     lobbyConnection.on("UpdatePlayersWithoutRooms", (playersWithoutRoomsList) => {
-        
+
         playersWithoutRoomsList.forEach((playerWithoutRooms) => {
             var newPlayerElement = renderNewPlayerElement(playerWithoutRooms);
-                playersItems.appendChild(newPlayerElement);
-            });
+            playersItems.appendChild(newPlayerElement);
+        });
     });
 
     lobbyConnection.on("PlayerLeavedServer", (playerDto) => {
@@ -118,7 +181,7 @@ function setupLobbyConnection(lobbyConnection) {
 };
 
 function findElementByAttr(attributeName, value) {
-    const elementForSearch = document.querySelector("["+ attributeName +"*="+ value +"]");
+    const elementForSearch = document.querySelector("[" + attributeName + "*=" + value + "]");
     return elementForSearch;
 };
 
@@ -154,7 +217,7 @@ function renderNewPlayerElement(newPlayerDto) {
     playerNode.setAttribute('data-playerId', newPlayerDto.nickName);
 
     playerName.appendChild(textContent);
-    
+
     return newPlayerItem;
 };
 
