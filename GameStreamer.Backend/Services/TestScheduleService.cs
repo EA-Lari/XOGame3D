@@ -7,6 +7,7 @@ using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 using Hangfire;
 using GameStreamer.Backend.Jobs;
 using MassTransit;
+using GameStreamer.Backend.DTOs.MessageBus.Consume;
 
 namespace GameStreamer.Backend.Services
 {
@@ -53,13 +54,23 @@ namespace GameStreamer.Backend.Services
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(10));
 
             _recurringJobManager.AddOrUpdate("clearUnactiveRoomsAndPlayersData", () => _customJobService.ReccuringJob(), Cron.HourInterval(3));
 
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
                 Console.WriteLine("TestScheduleService have got next tick! Waiting for 5 sec...");
+
+                await _publishEndpoint.Publish(new TurnNotAcceptedDto {
+                    PlayerGuid = Guid.Empty,
+                    RoomGuid = Guid.Empty,
+                });
+
+                await _publishEndpoint.Publish(new TurnAcceptedDto {
+                    PlayerGuid = Guid.Empty,
+                    RoomGuid = Guid.Empty,
+                });
 
                 var testRoom = new RoomEntity { CreatedAt = DateTime.Now, HubGroupId = "12345", RoomGuid = Guid.NewGuid() };
 

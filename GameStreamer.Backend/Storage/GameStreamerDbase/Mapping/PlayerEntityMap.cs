@@ -20,7 +20,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
             builder.Property(p => p.GameHubId).HasColumnName("game_hub_id").HasMaxLength(32);
             builder.Property(p => p.RoomHubId).HasColumnName("room_hub_id").HasMaxLength(32);
             builder.Property(p => p.PlayerGuid).HasColumnName("player_guid").HasColumnType("UUID");
-            builder.Property(p => p.CreatedAt).HasColumnName("created_at").HasColumnType("timestamp with time zone");
+            builder.Property(p => p.CreatedAt).HasColumnName("created_at");
 
             builder.HasOne<RoomEntity>(player => player.Room)
                 .WithMany(room => room.JoinedPlayers)

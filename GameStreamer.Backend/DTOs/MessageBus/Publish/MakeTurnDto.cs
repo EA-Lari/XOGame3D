@@ -11,7 +11,6 @@
         public Coordinate SmallAreaCoordinates { get; set; }
 
         public GameFraction GameFraction { get; set; }
-
     }
 
     public record struct Coordinate

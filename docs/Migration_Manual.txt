@@ -5,10 +5,10 @@ Scripts/ - Находятся SQL скрипты, которые передае�
 При изменении структуры сущностей Контекстов БД необходимо:
 
 1) Создаем миграцию
-Add-Migration AddAutoGenerateId -Context MbeContext -OutputDir Migrations/MbeContextMigrations
+Add-Migration ChangedDtColumnsConstraints -Context GameStreamerContext -OutputDir Storage/GameStreamerDbase/Migrations
 
 2) Обновляем БД из миграции
-Update-Database -Context MbeContext
+Update-Database -Context GameStreamerContext
 
 3) Формируем SQL скрипт, кладем в папку
 Script-Migration -Context MbeContext -Output src/DataAccess/Migrations/Scripts/actual_script.sql

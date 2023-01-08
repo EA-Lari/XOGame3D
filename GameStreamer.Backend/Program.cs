@@ -9,6 +9,8 @@ using Hangfire;
 using Hangfire.PostgreSql;
 using MassTransit;
 using GameStreamer.Backend.Jobs;
+using GameStreamer.Backend.Consumers;
+using GameStreamer.Backend.Consumers.Definitions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +49,12 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
                 services.AddMassTransit(x =>
                 {
+
+                    x.AddConsumer<TurnAcceptedConsumer>(typeof(TurnAcceptedConsumerDefinition));
+                    x.AddConsumer<TurnNotAcceptedConsumer>(typeof(TurnNotAcceptedConsumerDefinition));
+
+                    x.SetKebabCaseEndpointNameFormatter();
+
                     x.UsingRabbitMq((rmqContext, cfg) =>
                     {
                         cfg.Host("localhost", "xo_game", h =>
@@ -54,6 +62,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                             h.Username("xo_admin");
                             h.Password("xo_admin");
                         });
+
                         cfg.ConfigureEndpoints(rmqContext);
                     });
 
