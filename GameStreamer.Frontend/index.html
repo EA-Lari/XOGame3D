@@ -11,12 +11,46 @@
 </head>
 
 <body>
-    <header class="page-header">
-
-    </header>
+    <header class="page-header"></header>
 
     <main class="page-main">
 
+        <header class="sticky-header"></header>
+
+        <div class="game-process-container">
+
+            <div class="loader"></div>
+
+            <div class="type-game-choose visually-hidden">
+                
+                <section class="player-settings">
+                    
+                    <h2 class="visually-hidden">Player settings</h2>
+
+                    <form class="login-form" action="#">
+                        <fieldset class="fieldset"> Current login:
+                            <input class="player-nickname-input input" type="text" name="login-input">
+                            <input class="player-nickname-button button" type="button" name="send-login-button" value="Change">
+                        </fieldset>
+                    </form>
+                    
+                </section>
+
+                <button class="start-random-game-button button">Random game</button>
+                <button class="start-dedicated-game-button button">Game with friends</button>
+
+            </div>
+
+            <div class="random-game-chosen visually-hidden">
+                Waiting for filling your room and starting the game...
+            </div>
+
+            <div class="dedicated-game-chosen visually-hidden">
+                <button class="button">Create room</button>
+                <button class="button">Join by room name</button>
+            </div>
+
+        </div>
 
         <!-- Send from Front:
 
@@ -40,9 +74,9 @@
                 Zero: 1
             } -->
 
-        <div class="lds-dual-ring"></div>
+        <!-- Loader <div class="loader"></div> -->
 
-        <div class="sections-container">
+        <!-- <div class="sections-container">
             <h1 class="main-header">Ultimate TicTacToe (with SignalR)</h1>
             
             <section class="current-turn">
@@ -174,19 +208,9 @@
                 </div>
 
             </section>
-        </div>
+        </div> -->
 
-        <div class="sections-container">
-
-            <section class="player-settings">
-                <h2 class="visually-hidden">Player settings</h2>
-                <form class="login-form" action="#">
-                    <fieldset class="fieldset"> Current login:
-                        <input class="player-nickname-input input" type="text" name="login-input">
-                        <input class="player-nickname-button button" type="button" name="send-login-button" value="Change">
-                    </fieldset>
-                </form>
-            </section>
+        <!-- <div class="sections-container">
 
             <section class="messenger">
                 <h2 class="visually-hidden">Game chat</h2>
@@ -267,7 +291,8 @@
                 <h3 class="visually-hidden">List of server's rooms:</h3>
                 <ul class="room-list list"></ul>
             </section>
-        </div>
+        </div> -->
+
     </main>
 
     <footer class="page-footer">

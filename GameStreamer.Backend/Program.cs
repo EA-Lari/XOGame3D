@@ -15,7 +15,7 @@ using GameStreamer.Backend.Consumers.Definitions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
-            .ConfigureContainer<ContainerBuilder>(ConfigueGameStreamerHost)
+            .ConfigureContainer<ContainerBuilder>(ConfigureGameStreamerHost)
             .ConfigureServices((hostContext, services) =>
             {
 
@@ -94,10 +94,10 @@ InitializeDatabase(app);
 
 app.Run();
 
-void ConfigueGameStreamerHost(HostBuilderContext builderContext, ContainerBuilder containerBuilder)
+void ConfigureGameStreamerHost(HostBuilderContext builderContext, ContainerBuilder containerBuilder)
 {
 
-    //#region Persistance Setup
+    #region Persistence Setup
 
     containerBuilder.Register(context =>
                     new DbContextOptionsBuilder<GameStreamerContext>()
@@ -107,7 +107,7 @@ void ConfigueGameStreamerHost(HostBuilderContext builderContext, ContainerBuilde
 
     containerBuilder.RegisterType<GameStreamerContext>().InstancePerDependency();
 
-    //#endregion
+    #endregion
 }
 
 void InitializeDatabase(IApplicationBuilder application)
