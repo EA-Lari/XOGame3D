@@ -22,8 +22,8 @@
 
     public enum GameFraction
     {
-        ZERO = 0,
-        CROSS = 1
+        Zero = 0,
+        Cross = 1
     }
 
 }

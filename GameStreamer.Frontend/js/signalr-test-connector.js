@@ -30,7 +30,8 @@ const loader = document.querySelector(".loader");
 const menuElementsDict = new Map([
     ["typeGameChoose", document.querySelector(".type-game-choose")],
     ["randomGameChosen", document.querySelector(".random-game-chosen")],
-    ["dedicatedGameChosen", document.querySelector(".dedicated-game-chosen")]
+    ["dedicatedGameChosen", document.querySelector(".dedicated-game-chosen")],
+    ["gameArea", document.querySelector(".game-area")]
 ]);
 
 const startRandomGameButton = menuElementsDict.get('typeGameChoose').querySelector(".start-random-game-button");
@@ -39,9 +40,11 @@ const startDedicatedGameButton = menuElementsDict.get('typeGameChoose').querySel
 startRandomGameButton.onclick = async function () {
     toggleVisibility(menuElementsDict.get('typeGameChoose'));
     toggleVisibility(loader);
-    await delay(1000);
+    await delay(2000);
     toggleVisibility(loader);
     toggleVisibility(menuElementsDict.get('randomGameChosen'));
+    
+    lobbyHubConnection.invoke("PlayerIsReady");
 };
 
 startDedicatedGameButton.onclick = async function () {
@@ -79,7 +82,9 @@ setupLobbyConnection(lobbyHubConnection);
 startHubAsync(gameHubConnection);
 startHubAsync(lobbyHubConnection);
 
-openStartMenuAsync();
+// let person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+
+startGameProcessAsync();
 
 /** Add Click Events To Buttons */
 
@@ -100,7 +105,7 @@ dropRoomButton.onclick = function () {
 
 /** Functions */
 
-async function openStartMenuAsync() {
+async function startGameProcessAsync() {
     toggleVisibility(loader);
     await delay(2000);
     toggleVisibility(loader);
@@ -108,7 +113,7 @@ async function openStartMenuAsync() {
 };
 
 async function delay(ms) {
-    return await new Promise(resolve => setTimeout(resolve, ms));
+    return await new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 function toggleVisibility(element) {
@@ -127,6 +132,17 @@ function createHubConnection(hubUrl) {
 function setupGameConnection(gameConnection) {
     gameConnection.on("TestBroadcastPublish", (message) => {
         console.log(message);
+    });
+
+    gameConnection.on("GameIsStarted", async () => {
+        console.log('Игра начинается...');
+        
+        await delay(2000);
+        toggleVisibility(menuElementsDict.get('randomGameChosen'));
+        toggleVisibility(loader);
+        await delay(1000);
+        toggleVisibility(loader);
+        toggleVisibility(menuElementsDict.get('gameArea'));
     });
 
     gameConnection.onclose(async () => {
