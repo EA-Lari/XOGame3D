@@ -19,6 +19,9 @@ const changeNickButton = document.querySelector(".player-nickname-button");
 const nicknameInput = document.querySelector(".player-nickname-input");
 nicknameInput.value = currentClientNickName;
 
+// const dropRoomButton = document.querySelector(".drop-room-button");
+const roomNameInput = document.querySelector(".room-name-input");
+
 /** Templates */
 const gameRoomTemplate = document.getElementById("game-room-template").content;
 const playerTemplate = document.getElementById("player-item-template").content;
@@ -27,6 +30,7 @@ const playerTemplate = document.getElementById("player-item-template").content;
 const loader = document.querySelector(".loader");
 
 /** Sequence of game process menus */
+
 const menuElementsDict = new Map([
     ["typeGameChoose", document.querySelector(".type-game-choose")],
     ["randomGameChosen", document.querySelector(".random-game-chosen")],
@@ -37,13 +41,30 @@ const menuElementsDict = new Map([
 const startRandomGameButton = menuElementsDict.get('typeGameChoose').querySelector(".start-random-game-button");
 const startDedicatedGameButton = menuElementsDict.get('typeGameChoose').querySelector(".start-dedicated-game-button");
 
+const createRoomButton = menuElementsDict.get('dedicatedGameChosen').querySelector(".create-room-button");
+const joinByRoomNameButton = menuElementsDict.get('dedicatedGameChosen').querySelector(".join-by-room-name-button");
+
+/** Add Click Events To Buttons */
+
+changeNickButton.onclick = function () {
+    lobbyHubConnection.invoke("PlayerAddedLogin", nicknameInput.value);
+    currentClientNickName = nicknameInput.value;
+};
+
+// dropRoomButton.onclick = function () {
+//     if (roomNameInput.value) {
+//         var element = findElementByAttr("data-roomId", roomNameInput.value);
+//         deleteNode(element);
+//     }
+// };
+
 startRandomGameButton.onclick = async function () {
     toggleVisibility(menuElementsDict.get('typeGameChoose'));
     toggleVisibility(loader);
     await delay(2000);
     toggleVisibility(loader);
     toggleVisibility(menuElementsDict.get('randomGameChosen'));
-    
+
     lobbyHubConnection.invoke("PlayerIsReady");
 };
 
@@ -55,22 +76,25 @@ startDedicatedGameButton.onclick = async function () {
     toggleVisibility(menuElementsDict.get('dedicatedGameChosen'));
 };
 
-const createRoomButton = menuElementsDict.get('dedicatedGameChosen').querySelector(".create-room-button");
-const joinByRoomNameButton = menuElementsDict.get('dedicatedGameChosen').querySelector(".join-by-room-name-button");
-
-createRoomButton.onclick = async function () {
+createRoomButton.onclick = function () {
     toggleVisibility(menuElementsDict.get('dedicatedGameChosen'));
     toggleVisibility(loader);
-    await delay(1000);
-    console.log('Нажата кнопка создания комнаты, нужно дописать логику на бэке!');
 };
 
-joinByRoomNameButton.onclick = async function () {
+joinByRoomNameButton.onclick = function () {
     toggleVisibility(menuElementsDict.get('dedicatedGameChosen'));
     toggleVisibility(loader);
-    await delay(1000);
-    console.log('Нажата кнопка присоединения по id комнаты, нужно дописать логику на бэке!');
 };
+
+let gameCells = document.querySelectorAll(".cell");
+
+gameCells.forEach(cell => {
+
+    cell.addEventListener('click', (event)=> {
+    console.log('Координаты ячейки: ' + event.target.dataset.cellCoordinates + ' Координаты поля: ' + event.target.parentNode.dataset.fieldCoordinates);
+   });
+
+});
 
 /** App EntryPoint */
 var gameHubConnection = createHubConnection(GAME_HUB);
@@ -82,26 +106,7 @@ setupLobbyConnection(lobbyHubConnection);
 startHubAsync(gameHubConnection);
 startHubAsync(lobbyHubConnection);
 
-// let person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
-
 startGameProcessAsync();
-
-/** Add Click Events To Buttons */
-
-changeNickButton.onclick = function () {
-    lobbyHubConnection.invoke("PlayerAddedLogin", nicknameInput.value);
-    currentClientNickName = nicknameInput.value;
-};
-
-const dropRoomButton = document.querySelector(".drop-room-button");
-const roomNameInput = document.querySelector(".room-name-input");
-
-dropRoomButton.onclick = function () {
-    if (roomNameInput.value) {
-        var element = findElementByAttr("data-roomId", roomNameInput.value);
-        deleteNode(element);
-    }
-};
 
 /** Functions */
 
@@ -109,7 +114,8 @@ async function startGameProcessAsync() {
     toggleVisibility(loader);
     await delay(2000);
     toggleVisibility(loader);
-    toggleVisibility(menuElementsDict.get('typeGameChoose'));
+    // toggleVisibility(menuElementsDict.get('typeGameChoose'));
+    toggleVisibility(menuElementsDict.get('gameArea'));
 };
 
 async function delay(ms) {
@@ -137,6 +143,8 @@ function setupGameConnection(gameConnection) {
     gameConnection.on("GameIsStarted", async () => {
         console.log('Игра начинается...');
         
+        // gameDto
+
         await delay(2000);
         toggleVisibility(menuElementsDict.get('randomGameChosen'));
         toggleVisibility(loader);

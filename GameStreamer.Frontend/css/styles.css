@@ -144,32 +144,39 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 20px;
 }
 
 /* Game Sequence */
 
-
 /* Current turn */
 
 .current-turn-container {
-    width: 250px;
-    height: 150px;
-    margin: 0 auto;
     display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
 }
 
-.player-side-list {
-    width: 250px;
-    height: 150px;
-    display: inherit;
+.player-side-list {    
+    display: flex;
     justify-content: space-around;
+    gap: 20px;
 }
 
-.player-side-item {
+.player-side-item {    
+    align-self: center;
+    display: flex;
+    
+    align-items: center;
+}
+
+.player-nick {
+    margin: 0 10px;
+}
+
+.player-logo {
     width: 70px;
     height: 70px;
-    align-self: center;
-
 }
 
 /* Playground */
@@ -177,9 +184,8 @@
 .field-large {
     flex-flow: row wrap;
     display: flex;
-    margin: 0 auto;
-    padding: 5px;
-    width: 650px;
+    gap: 20px;
+    width: 700px;
 }
 
 .field-small {
@@ -188,7 +194,6 @@
     flex-basis: 210px;
     padding: 2px;
     align-items: center;
-    margin: 0 auto;
 }
 
 .cell {

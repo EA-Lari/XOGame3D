@@ -61,10 +61,16 @@
     
                     <div class="current-turn-container">
                         <ul class="player-side-list list">
-                            <li class="player-side-item cross-hold active-area"><span class="visually-hidden"
-                                    hidden>X</span>
+                            <li class="player-side-item">
+                                <span class="visually-hidden">X</span>
+                                <span class="player-nick">Anon12345 (You)</span>
+                                <div class="player-logo cross-hold active-area"></div>
                             </li>
-                            <li class="player-side-item zero-hold"><span class="visually-hidden" hidden>O</span></li>
+                            <li class="player-side-item">
+                                <span class="visually-hidden">O</span>
+                                <div class="player-logo zero-hold"></div>
+                                <span class="player-nick">Anon67890</span>
+                            </li>
                         </ul>
                     </div>
     
@@ -75,112 +81,116 @@
     
                     <div class="field-large">
     
-                        <div class="field-small active-area cross-hold">
-                            <div class="cell cross-hold"></div>
+                        <div class="field-small" data-field-coordinates="1,1">
+                            <!-- <div class="cell cross-hold"></div>
                             <div class="cell zero-hold"></div>
-                            <div class="cell draw-hold"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                            <div class="cell draw-hold"></div> -->
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
     
-                        <div class="field-small inactive-area zero-hold">
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                        <!-- <div class="field-small inactive-area zero-hold"> -->
+                        <div class="field-small" data-field-coordinates="1,2">
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
     
-                        <div class="field-small inactive-area draw-hold">
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                        <div class="field-small" data-field-coordinates="1,3">
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
     
-                        <div class="field-small inactive-area">
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                        <div class="field-small" data-field-coordinates="2,1">
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
     
-                        <div class="field-small draw-hold">
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                        <div class="field-small" data-field-coordinates="2,2">
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
     
-                        <div class="field-small">
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                        <div class="field-small" data-field-coordinates="2,3">
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
     
-                        <div class="field-small">
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                        <div class="field-small" data-field-coordinates="3,1">
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
     
-                        <div class="field-small">
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                        <div class="field-small" data-field-coordinates="3,2">
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
     
-                        <div class="field-small">
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
-                            <div class="cell"></div>
+                        <div class="field-small" data-field-coordinates="3,3">
+                            <div class="cell" data-cell-coordinates="1,1"></div>
+                            <div class="cell" data-cell-coordinates="1,2"></div>
+                            <div class="cell" data-cell-coordinates="1,3"></div>
+                            <div class="cell" data-cell-coordinates="2,1"></div>
+                            <div class="cell" data-cell-coordinates="2,2"></div>
+                            <div class="cell" data-cell-coordinates="2,3"></div>
+                            <div class="cell" data-cell-coordinates="3,1"></div>
+                            <div class="cell" data-cell-coordinates="3,2"></div>
+                            <div class="cell" data-cell-coordinates="3,3"></div>
                         </div>
                     </div>
     
