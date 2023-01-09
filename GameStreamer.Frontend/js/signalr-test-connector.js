@@ -6,6 +6,12 @@ const LOBBY_HUB = "/lobbies";
 /** Const Functions */
 const varNameToString = varObj => Object.keys(varObj)[0];
 
+/** Game Entities */
+const gameCells = document.querySelectorAll(".cell");
+const smallGameAreas = document.querySelectorAll(".field-small");
+let isCurrentClientPlayCross = true;
+let lastCellChoosedForTurn;
+
 /** Common Variables */
 var currentClientNickName = "Anon" + Math.floor(Math.random() * 100000);;
 
@@ -53,7 +59,7 @@ changeNickButton.onclick = function () {
 
 // dropRoomButton.onclick = function () {
 //     if (roomNameInput.value) {
-//         var element = findElementByAttr("data-roomId", roomNameInput.value);
+//         var element = findElementByAttr(document, "data-roomId", roomNameInput.value);
 //         deleteNode(element);
 //     }
 // };
@@ -86,13 +92,24 @@ joinByRoomNameButton.onclick = function () {
     toggleVisibility(loader);
 };
 
-let gameCells = document.querySelectorAll(".cell");
-
 gameCells.forEach(cell => {
+    cell.addEventListener('click', async (event) => {
+        await delay(500);
+        setPlayerFigure(cell);
+        lockPlayground();
 
-    cell.addEventListener('click', (event)=> {
-    console.log('Координаты ячейки: ' + event.target.dataset.cellCoordinates + ' Координаты поля: ' + event.target.parentNode.dataset.fieldCoordinates);
-   });
+        const cellCoordArr = event.target.dataset.cellCoordinates.split(',');
+        const fieldCoordArr = event.target.parentElement.dataset.fieldCoordinates.split(',');
+
+        const turnData = {
+            smallAreaCoordinates: { x: fieldCoordArr[0], y: fieldCoordArr[1] },
+            cellCoordinates: { x: cellCoordArr[0], y: cellCoordArr[1] }
+        };
+
+        gameHubConnection.invoke("PlayerDoTurn", turnData);
+
+        lastCellChoosedForTurn = cell;
+    });
 
 });
 
@@ -122,6 +139,49 @@ async function delay(ms) {
     return await new Promise((resolve) => setTimeout(resolve, ms));
 };
 
+/** Game Func */
+
+function setPlayerFigure(cell) {
+
+    if (isCurrentClientPlayCross) {
+        cell.classList.add("cross-hold");
+    }
+    else {
+        cell.classList.add("zero-hold");
+    }
+};
+
+function setOpponentFigure(cell) {
+    if (isCurrentClientPlayCross) {
+        cell.classList.add("zero-hold");
+    }
+    else {
+        cell.classList.add("cross-hold");
+    }
+
+};
+
+function rollbackTurn(cell) {
+    if (isCurrentClientPlayCross) {
+        cell.classList.remove("cross-hold");
+    }
+    else {
+        cell.classList.remove("zero-hold");
+    }
+};
+
+function lockPlayground() {
+    smallGameAreas.forEach(smallArea => {
+        smallArea.classList.add("inactive-area");
+    });
+};
+
+function unlockPlayground() {
+    smallGameAreas.forEach(smallArea => {
+        smallArea.classList.remove("inactive-area");
+    });
+};
+
 function toggleVisibility(element) {
     element.classList.contains('visually-hidden') ? element.classList.remove("visually-hidden") : element.classList.add("visually-hidden");
 };
@@ -142,8 +202,6 @@ function setupGameConnection(gameConnection) {
 
     gameConnection.on("GameIsStarted", async () => {
         console.log('Игра начинается...');
-        
-        // gameDto
 
         await delay(2000);
         toggleVisibility(menuElementsDict.get('randomGameChosen'));
@@ -151,6 +209,28 @@ function setupGameConnection(gameConnection) {
         await delay(1000);
         toggleVisibility(loader);
         toggleVisibility(menuElementsDict.get('gameArea'));
+    });
+
+    gameConnection.on("TurnAccepted", async () => {
+        console.log('Ход принят успешно!');
+    });
+
+    gameConnection.on("TurnDenied", async () => {
+        console.log('Ход отменен, откатываем последний ход, разблокируем поле для повторного!');
+        rollbackTurn(lastCellChoosedForTurn);
+        unlockPlayground();
+    });
+
+    gameConnection.on("OpponentDoTurn", async (turnData) => {
+        console.log('Ваш оппонент сходил!');
+
+        const areaCoordStr = turnData.smallAreaCoordinates.x.toString().concat(",", turnData.smallAreaCoordinates.y.toString());
+        const cellCoordStr = turnData.cellCoordinates.x.toString().concat(",", turnData.cellCoordinates.y.toString());
+
+        const parentArea = findElementByAttr(document, "data-field-coordinates", areaCoordStr);
+        const targetCell = findElementByAttr(parentArea, "data-cell-coordinates", cellCoordStr);;
+        setOpponentFigure(targetCell);
+        unlockPlayground();
     });
 
     gameConnection.onclose(async () => {
@@ -170,7 +250,7 @@ function setupLobbyConnection(lobbyConnection) {
         if (currentClientNickName === changedPlayerDataDto.nickName) {
             console.log("Логины совпадают! Клиент который сменил логин найден!");
         }
-        var playerNode = findElementByAttr("data-playerId", changedPlayerDataDto.nickName);
+        var playerNode = findElementByAttr(document, "data-playerId", changedPlayerDataDto.nickName);
         const playerName = newPlayerItem.querySelector('.player-nickname');
         playerName.textContent = changedPlayerDataDto.nickName;
         playerNode.data = "";
@@ -188,7 +268,7 @@ function setupLobbyConnection(lobbyConnection) {
     lobbyConnection.on("PlayerLeavedServer", (playerDto) => {
         console.log(playerDto.nickName + " with conn id: " + playerDto.connectionId + " left from The Game Server!");
 
-        var element = findElementByAttr("data-playerId", playerDto.nickName);
+        var element = findElementByAttr(document, "data-playerId", playerDto.nickName);
         deleteNode(element);
     });
 
@@ -204,8 +284,8 @@ function setupLobbyConnection(lobbyConnection) {
     });
 };
 
-function findElementByAttr(attributeName, value) {
-    const elementForSearch = document.querySelector("[" + attributeName + "*=" + value + "]");
+function findElementByAttr(parentElement, attributeName, value) {
+    const elementForSearch = parentElement.querySelector("[" + attributeName + "*=" + value + "]");
     return elementForSearch;
 };
 

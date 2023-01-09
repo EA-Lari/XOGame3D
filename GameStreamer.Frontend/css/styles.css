@@ -214,9 +214,10 @@
     border-radius: 15%;
 }
 
-.inactive-area>.cell {
+.inactive-area > .cell {
     border: 2px solid #6b7078;
     background-color: #6b707841;
+    pointer-events: none;
 }
 
 .cross-hold {
