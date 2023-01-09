@@ -7,9 +7,9 @@ namespace GameStreamer.Backend.Hubs
     public class RoomsHub : Hub<IRoomsHub>
     {
 
-        private readonly IRoomsManager _roomsManager;
+        private readonly IRoomManager _roomsManager;
 
-        public RoomsHub(IRoomsManager roomsManager)
+        public RoomsHub(IRoomManager roomsManager)
         {
             _roomsManager = roomsManager;
         }
@@ -18,6 +18,20 @@ namespace GameStreamer.Backend.Hubs
         {
             var changedPlayerDataDto = _roomsManager.ChangePlayerNickName(Context.ConnectionId, playerLogin);
             Clients.All.PlayerChangedNickName(changedPlayerDataDto);
+            return Task.CompletedTask;
+        }
+
+        public Task PlayerIsReady(bool isRandomMatch)
+        {
+            if (isRandomMatch)
+            {
+                //_roomsManager.AddPlayerToServer(Context.ConnectionId, "");
+            }
+            else
+            {
+                //_roomsManager.AddPlayerToServer(Context.ConnectionId, "");
+            }
+
             return Task.CompletedTask;
         }
 

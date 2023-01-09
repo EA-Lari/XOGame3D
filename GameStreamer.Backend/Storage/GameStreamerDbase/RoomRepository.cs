@@ -12,7 +12,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase
             _gameStreamerContext = gameStreamerContext;
         }
 
-        public IEnumerable<RoomEntity> GetAllRooms()
+        public IQueryable<RoomEntity> GetAllRooms()
         {
             throw new NotImplementedException();
         }

@@ -70,8 +70,8 @@ startRandomGameButton.onclick = async function () {
     await delay(2000);
     toggleVisibility(loader);
     toggleVisibility(menuElementsDict.get('randomGameChosen'));
-
-    lobbyHubConnection.invoke("PlayerIsReady");
+    const isRandomGame = true;
+    lobbyHubConnection.invoke("PlayerIsReady", isRandomGame);
 };
 
 startDedicatedGameButton.onclick = async function () {
@@ -131,8 +131,7 @@ async function startGameProcessAsync() {
     toggleVisibility(loader);
     await delay(2000);
     toggleVisibility(loader);
-    // toggleVisibility(menuElementsDict.get('typeGameChoose'));
-    toggleVisibility(menuElementsDict.get('gameArea'));
+    toggleVisibility(menuElementsDict.get('typeGameChoose'));
 };
 
 async function delay(ms) {

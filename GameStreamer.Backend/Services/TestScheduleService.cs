@@ -17,7 +17,7 @@ namespace GameStreamer.Backend.Services
         private readonly IHubContext<GameHub, IGameHub> _gameHub;
         private readonly IHubContext<RoomsHub, IRoomsHub> _roomsHub;
         private readonly Random _random = new Random();
-        private readonly IRoomsManager _roomsManager;
+        private readonly IRoomManager _roomsManager;
         private readonly IRoomRepository _roomRepository;
 
         private readonly ICustomJobService _customJobService;
@@ -31,7 +31,7 @@ namespace GameStreamer.Backend.Services
             IGameHub> gameHub,
             IHubContext<RoomsHub,
             IRoomsHub> roomsHub,
-            IRoomsManager roomsManager,
+            IRoomManager roomsManager,
             IRoomRepository roomRepository,
             
             ICustomJobService customJobService,

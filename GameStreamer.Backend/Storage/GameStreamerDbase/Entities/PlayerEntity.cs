@@ -42,9 +42,19 @@
         public Guid PlayerGuid { get; set; }
 
         /// <summary>
+        /// Flag of player readiness
+        /// </summary>
+        public bool IsReadyForGame { get; set; }
+
+        /// <summary>
+        /// Flag of game type that player choosed
+        /// </summary>
+        public bool IsRandomGameChosen { get; set; }
+
+        /// <summary>
         /// Date/Time of Player creation
         /// </summary>
         public DateTime CreatedAt { get; set; }
-
+        
     }
 }

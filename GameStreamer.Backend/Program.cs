@@ -37,7 +37,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
                 services.AddHostedService<TestScheduleService>();
 
-                services.AddSingleton<IRoomsManager, RoomsManager>();
+                services.AddSingleton<IRoomManager, RoomManager>();
                 services.AddSingleton<IRoomRepository, RoomRepository>();
 
                 services.AddScoped<ICustomJobService, CustomJobService>();
