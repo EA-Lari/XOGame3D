@@ -2,7 +2,7 @@
 
 namespace GameStreamer.Backend.Consumers.Definitions
 {
-    public class TurnNotAcceptedConsumerDefinition : ConsumerDefinition<TurnNotAcceptedConsumer>
+    public class TurnNotAcceptedConsumerDefinition : ConsumerDefinition<TurnDeniedConsumer>
     {
         public TurnNotAcceptedConsumerDefinition()
         {
@@ -14,7 +14,7 @@ namespace GameStreamer.Backend.Consumers.Definitions
 
         protected override void ConfigureConsumer(
             IReceiveEndpointConfigurator endpointConfigurator,
-            IConsumerConfigurator<TurnNotAcceptedConsumer> consumerConfigurator)
+            IConsumerConfigurator<TurnDeniedConsumer> consumerConfigurator)
         {
             endpointConfigurator.UseMessageRetry(r => r.Interval(5, 1000));
             endpointConfigurator.UseInMemoryOutbox();

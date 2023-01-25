@@ -5,9 +5,9 @@ using GameStreamer.Backend.DTOs.MessageBus.Consume;
 namespace GameStreamer.Backend.Consumers
 {
 
-    public class TurnNotAcceptedConsumer : IConsumer<TurnNotAcceptedDto>
+    public class TurnDeniedConsumer : IConsumer<TurnDeniedDto>
     {
-        public Task Consume(ConsumeContext<TurnNotAcceptedDto> context)
+        public Task Consume(ConsumeContext<TurnDeniedDto> context)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("!!! Turn wasn't correct!");

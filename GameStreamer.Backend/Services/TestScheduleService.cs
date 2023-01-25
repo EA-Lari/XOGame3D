@@ -18,7 +18,7 @@ namespace GameStreamer.Backend.Services
         private readonly IHubContext<RoomsHub, IRoomsHub> _roomsHub;
         private readonly Random _random = new Random();
         private readonly IRoomManager _roomsManager;
-        private readonly IRoomRepository _roomRepository;
+        private readonly IGameStreamRepository _gameStreamRepository;
 
         private readonly ICustomJobService _customJobService;
         private readonly IBackgroundJobClient _backgroundJobClient;
@@ -32,7 +32,7 @@ namespace GameStreamer.Backend.Services
             IHubContext<RoomsHub,
             IRoomsHub> roomsHub,
             IRoomManager roomsManager,
-            IRoomRepository roomRepository,
+            IGameStreamRepository gameStreamRepository,
             
             ICustomJobService customJobService,
             IBackgroundJobClient backgroundJobClient,
@@ -43,7 +43,7 @@ namespace GameStreamer.Backend.Services
             _gameHub = gameHub;
             _roomsHub = roomsHub;
             _roomsManager = roomsManager;
-            _roomRepository = roomRepository;
+            _gameStreamRepository = gameStreamRepository;
 
             _customJobService = customJobService;
             _backgroundJobClient = backgroundJobClient;
@@ -62,7 +62,7 @@ namespace GameStreamer.Backend.Services
             {
                 Console.WriteLine("TestScheduleService have got next tick! Waiting for 5 sec...");
 
-                await _publishEndpoint.Publish(new TurnNotAcceptedDto {
+                await _publishEndpoint.Publish(new TurnDeniedDto {
                     PlayerGuid = Guid.Empty,
                     RoomGuid = Guid.Empty,
                 });
@@ -80,8 +80,8 @@ namespace GameStreamer.Backend.Services
                 testRoom.JoinedPlayers.Add(testPlayer1);
                 testRoom.JoinedPlayers.Add(testPlayer2);
 
-                _roomRepository.InsertRoom(testRoom);
-                _roomRepository.Save();
+                _gameStreamRepository.InsertRoom(testRoom);
+                _gameStreamRepository.Save();
 
                 await _roomsHub.Clients.All.NewRoomAdded(
                     new GameRoomResponseDTO { 

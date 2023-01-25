@@ -71,7 +71,7 @@ startRandomGameButton.onclick = async function () {
     toggleVisibility(loader);
     toggleVisibility(menuElementsDict.get('randomGameChosen'));
     const isRandomGame = true;
-    lobbyHubConnection.invoke("PlayerIsReady", isRandomGame);
+    gameHubConnection.invoke("PlayerIsReady", isRandomGame);
 };
 
 startDedicatedGameButton.onclick = async function () {

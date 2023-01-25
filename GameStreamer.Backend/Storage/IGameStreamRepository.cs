@@ -2,7 +2,7 @@
 
 namespace GameStreamer.Backend.Storage
 {
-    public interface IRoomRepository : IDisposable
+    public interface IGameStreamRepository : IDisposable
     {
         IQueryable<RoomEntity> GetAllRooms();
         

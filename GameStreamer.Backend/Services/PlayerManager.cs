@@ -41,6 +41,18 @@ namespace GameStreamer.Backend.Services
             return new PlayerDataResponseDTO() { ConnectionId = removedPlayer.ConnectionId, NickName = removedPlayer.NickName };
         }
 
+        public PlayerDataResponseDTO MakePlayerReadyToGame(string connectionId)
+        {
+            Console.WriteLine("Метод MakePlayerReadyToGame еще не реализован!");
+            return new PlayerDataResponseDTO();
+        }
+
+        public PlayerDataResponseDTO SetMatchTypeToPlayer(string connectionId, bool matchType)
+        {
+            Console.WriteLine("Метод SetMatchTypeToPlayer еще не реализован!");
+            return new PlayerDataResponseDTO();
+        }
+
         public PlayerDataResponseDTO ChangePlayerNickName(string connectionId, string nickName)
         {
             Player changedPlayer;

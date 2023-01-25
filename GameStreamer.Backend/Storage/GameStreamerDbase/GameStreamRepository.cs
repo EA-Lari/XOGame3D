@@ -2,12 +2,12 @@
 
 namespace GameStreamer.Backend.Storage.GameStreamerDbase
 {
-    public class RoomRepository : IRoomRepository
+    public class GameStreamRepository : IGameStreamRepository
     {
 
         private GameStreamerContext _gameStreamerContext;
 
-        public RoomRepository(GameStreamerContext gameStreamerContext)
+        public GameStreamRepository(GameStreamerContext gameStreamerContext)
         {
             _gameStreamerContext = gameStreamerContext;
         }

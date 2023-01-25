@@ -5,6 +5,10 @@ namespace GameStreamer.Backend.Services
     public interface IPlayerManager
     {
 
+        public PlayerDataResponseDTO MakePlayerReadyToGame(string connectionId);
+
+        public PlayerDataResponseDTO SetMatchTypeToPlayer(string connectionId, bool matchType);
+
         public PlayerDataResponseDTO ChangePlayerNickName(string connectionId, string nickName);
 
         public PlayerDataResponseDTO AddPlayerToServer(string connectionId, string nickName);

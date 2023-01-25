@@ -49,7 +49,7 @@
         /// <summary>
         /// Flag of game type that player choosed
         /// </summary>
-        public bool IsRandomGameChosen { get; set; }
+        public bool IsRandomGameMode { get; set; }
 
         /// <summary>
         /// Date/Time of Player creation

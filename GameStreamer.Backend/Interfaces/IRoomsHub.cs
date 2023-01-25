@@ -11,11 +11,6 @@ namespace GameStreamer.Backend.Interfaces
 
         Task NewRoomAdded(GameRoomResponseDTO gameRoomResponseDto);
 
-        /// <summary>
-        /// Игрок покинул сервер
-        /// </summary>
-        /// <param name="playerResponseDto">Модель ответной DTO игрока</param>
-        /// <returns></returns>
         Task PlayerLeavedServer(PlayerDataResponseDTO playerResponseDto);
 
         Task UpdatePlayersWithoutRooms(List<PlayerDataResponseDTO> playersWithoutRoomsList);

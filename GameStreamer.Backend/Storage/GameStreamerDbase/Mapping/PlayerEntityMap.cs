@@ -20,6 +20,8 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
             builder.Property(p => p.GameHubId).HasColumnName("game_hub_id").HasMaxLength(32);
             builder.Property(p => p.RoomHubId).HasColumnName("room_hub_id").HasMaxLength(32);
             builder.Property(p => p.PlayerGuid).HasColumnName("player_guid").HasColumnType("UUID");
+            builder.Property(p => p.IsReadyForGame).HasColumnName("is_ready_for_game");
+            builder.Property(p => p.IsRandomGameMode).HasColumnName("is_random_game_mode");
             builder.Property(p => p.CreatedAt).HasColumnName("created_at");
 
             builder.HasOne<RoomEntity>(player => player.Room)

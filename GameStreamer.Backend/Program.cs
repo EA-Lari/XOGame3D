@@ -38,7 +38,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 services.AddHostedService<TestScheduleService>();
 
                 services.AddSingleton<IRoomManager, RoomManager>();
-                services.AddSingleton<IRoomRepository, RoomRepository>();
+                services.AddSingleton<IGameStreamRepository, GameStreamRepository>();
+                services.AddSingleton<IPlayerManager, PlayerManager>();
 
                 services.AddScoped<ICustomJobService, CustomJobService>();
 
@@ -51,7 +52,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 {
 
                     x.AddConsumer<TurnAcceptedConsumer>(typeof(TurnAcceptedConsumerDefinition));
-                    x.AddConsumer<TurnNotAcceptedConsumer>(typeof(TurnNotAcceptedConsumerDefinition));
+                    x.AddConsumer<TurnDeniedConsumer>(typeof(TurnNotAcceptedConsumerDefinition));
 
                     x.SetKebabCaseEndpointNameFormatter();
 
