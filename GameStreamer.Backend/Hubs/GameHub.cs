@@ -12,14 +12,14 @@ namespace GameStreamer.Backend.Hubs
         public Task PlayerDoTurn(PlayerMadeTurnDto turnData)
         {
             Console.WriteLine(
-                $"SignalR received player turn: cell: (X-{turnData.CellCoordinates.X}, Y-{turnData.CellCoordinates.Y}) area: (X-{turnData.SmallAreaCoordinates.X},Y-{turnData.SmallAreaCoordinates.Y})");
+                $"SignalR received player turn: cell: (X-{turnData.CellCoordinates.X}, Y-{turnData.CellCoordinates.Y}) area: (X-{turnData.SmallAreaCoordinates.X}, Y-{turnData.SmallAreaCoordinates.Y})");
             return Task.CompletedTask;
         }
 
         public Task PlayerIsReady(bool isRandomMatch)
         {
-            //_playerManager.MakePlayerReadyToGame(Context.ConnectionId);
-            //_playerManager.SetMatchTypeToPlayer(Context.ConnectionId, isRandomMatch);
+            //_playerManager.MakePlayerReadyToGame(Context.RoomConnectionId);
+            //_playerManager.SetMatchTypeToPlayer(Context.RoomConnectionId, isRandomMatch);
 
             // Добавить Publisher Endpoint для запуска проверки создания игры
             //_publishEndpoint.Publish<>();

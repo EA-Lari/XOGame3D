@@ -38,7 +38,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 services.AddHostedService<TestScheduleService>();
 
                 services.AddSingleton<IRoomManager, RoomManager>();
-                services.AddSingleton<IGameStreamRepository, GameStreamRepository>();
+                services.AddTransient<IGameStreamRepository, GameStreamRepository>();
                 services.AddSingleton<IPlayerManager, PlayerManager>();
 
                 services.AddScoped<ICustomJobService, CustomJobService>();
@@ -109,6 +109,7 @@ void ConfigureGameStreamerHost(HostBuilderContext builderContext, ContainerBuild
     containerBuilder.RegisterType<GameStreamerContext>().InstancePerDependency();
 
     #endregion
+
 }
 
 void InitializeDatabase(IApplicationBuilder application)

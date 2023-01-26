@@ -1,21 +1,39 @@
-﻿using System.Collections.Concurrent;
-using GameStreamer.Backend.DTOs;
+﻿using GameStreamer.Backend.DTOs;
 using GameStreamer.Backend.Models;
+using System.Collections.Concurrent;
+using GameStreamer.Backend.Storage;
 
 namespace GameStreamer.Backend.Services
 {
 
     public class PlayerManager : IPlayerManager
     {
-        private readonly Random _random = new Random();
-        private readonly ConcurrentDictionary<string, Player> _playersConcurrDict = new ConcurrentDictionary<string, Player>();
+
+        private readonly IGameStreamRepository _gameRepo;
+        //private readonly Random _random = new Random();
+        //private readonly ConcurrentDictionary<string, PlayerFromRoomHub> _playersConcurrDict = new ConcurrentDictionary<string, PlayerFromRoomHub>();
+
+        public PlayerManager(IGameStreamRepository gameRepo)
+        {
+            _gameRepo = gameRepo;
+        }
 
         public PlayerDataResponseDTO AddPlayerToServer(string connectionId, string nickName)
         {
-            var playerForAdd = new Player(connectionId, nickName);
-            _playersConcurrDict.TryAdd(connectionId, playerForAdd);
+            var playerForAdd = new PlayerFromRoomHub(connectionId, nickName);
+            var addedPlayerData = _gameRepo.AddPlayer(playerForAdd);
 
-            return new PlayerDataResponseDTO { ConnectionId = playerForAdd.ConnectionId, NickName = playerForAdd.NickName };
+            return addedPlayerData;
+        }
+
+        public PlayerDataResponseDTO ChangePlayerNickName(string connectionId, string nickName)
+        {
+
+            var existedPlayer = _gameRepo.GetPlayerBy(connectionId);
+            existedPlayer.SetNewNickName(nickName);
+            _gameRepo.UpdatePlayer(existedPlayer);
+
+            return new PlayerDataResponseDTO { ConnectionId = changedPlayerFromRoomHub.RoomConnectionId, NickName = changedPlayerFromRoomHub.NickName };
         }
 
         public PlayerDataResponseDTO GetPlayerDataBy(string connectionId)
@@ -25,20 +43,20 @@ namespace GameStreamer.Backend.Services
 
         public PlayerDataResponseDTO GetRandomPlayer()
         {
-            return new PlayerDataResponseDTO { NickName = $"Player_{_random.Next(1, 999)}", ConnectionId = $"id_{_random.Next(3000, 9000)}" };
+            //return new PlayerDataResponseDTO { NickName = $"Player_{_random.Next(1, 999)}", RoomConnectionId = $"id_{_random.Next(3000, 9000)}" };
         }
 
         public List<PlayerDataResponseDTO> GetAllPlayersWithoutRoom()
         {
-            return _playersConcurrDict.Select(x => new PlayerDataResponseDTO { ConnectionId = x.Key, NickName = x.Value.NickName }).ToList();
+            //return _playersConcurrDict.Select(x => new PlayerDataResponseDTO { RoomConnectionId = x.Key, NickName = x.Value.NickName }).ToList();
         }
 
         public PlayerDataResponseDTO RemovePlayer(string connectionId)
         {
-            Player removedPlayer;
-            _playersConcurrDict.TryRemove(connectionId, out removedPlayer);
+            PlayerFromRoomHub removedPlayerFromRoomHub;
+            //_playersConcurrDict.TryRemove(connectionId, out removedPlayerFromRoomHub);
 
-            return new PlayerDataResponseDTO() { ConnectionId = removedPlayer.ConnectionId, NickName = removedPlayer.NickName };
+            return new PlayerDataResponseDTO() { ConnectionId = removedPlayerFromRoomHub.RoomConnectionId, NickName = removedPlayerFromRoomHub.NickName };
         }
 
         public PlayerDataResponseDTO MakePlayerReadyToGame(string connectionId)
@@ -51,16 +69,6 @@ namespace GameStreamer.Backend.Services
         {
             Console.WriteLine("Метод SetMatchTypeToPlayer еще не реализован!");
             return new PlayerDataResponseDTO();
-        }
-
-        public PlayerDataResponseDTO ChangePlayerNickName(string connectionId, string nickName)
-        {
-            Player changedPlayer;
-            _playersConcurrDict.TryGetValue(connectionId, out changedPlayer);
-            changedPlayer?.SetNewNickName(nickName);
-            _playersConcurrDict.TryUpdate(connectionId, changedPlayer, changedPlayer);
-
-            return new PlayerDataResponseDTO { ConnectionId = changedPlayer.ConnectionId, NickName = changedPlayer.NickName };
         }
 
     }

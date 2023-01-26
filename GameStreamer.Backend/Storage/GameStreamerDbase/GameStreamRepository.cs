@@ -1,4 +1,6 @@
-﻿using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
+﻿using GameStreamer.Backend.DTOs;
+using GameStreamer.Backend.Models;
+using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 
 namespace GameStreamer.Backend.Storage.GameStreamerDbase
 {
@@ -12,10 +14,9 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase
             _gameStreamerContext = gameStreamerContext;
         }
 
-        public IQueryable<RoomEntity> GetAllRooms()
-        {
-            throw new NotImplementedException();
-        }
+        #region Rooms
+
+        public IQueryable<RoomEntity> GetAllRooms() => _gameStreamerContext.Set<RoomEntity>().AsQueryable();
 
         public void DeleteRoom(int roomId)
         {
@@ -30,16 +31,46 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase
         public void InsertRoom(RoomEntity room)
         {
             _gameStreamerContext.Set<RoomEntity>().Add(room);
-        }
-
-        public void Save()
-        {
-            _gameStreamerContext.SaveChanges();
+            Save();
         }
 
         public void UpdateRoom(RoomEntity room)
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Players
+
+        public PlayerDataResponseDTO AddPlayer(PlayerFromRoomHub forAdd)
+        {
+            var playerEntity = new PlayerEntity()
+            {
+                Nickname = forAdd.NickName,
+                RoomHubId = forAdd.RoomConnectionId,
+                CreatedAt = DateTime.Now,
+                IsReadyForGame = false
+            };
+
+            _gameStreamerContext.Set<PlayerEntity>().Add(playerEntity);
+            Save();
+
+            return new PlayerDataResponseDTO { ConnectionId = forAdd.RoomConnectionId, NickName = forAdd.NickName };
+        }
+
+        public PlayerFromRoomHub GetPlayerBy(string roomHubConnectionId) => _gameStreamerContext.Set<PlayerEntity>().First(p => p.RoomHubId);
+
+        public PlayerDataResponseDTO UpdatePlayer(PlayerFromRoomHub playerFromRoom)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        private void Save()
+        {
+            _gameStreamerContext.SaveChanges();
         }
 
         #region Dispose

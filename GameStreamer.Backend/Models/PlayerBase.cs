@@ -1,22 +1,15 @@
 ﻿namespace GameStreamer.Backend.Models
 {
-
-    /// <summary>
-    /// Модель данных нового игрока
-    /// </summary>
-    public class Player
+    public abstract class PlayerBase
     {
-        public Player(string connectionId, string nickName)
+
+        public PlayerBase(string nickName)
         {
-            this.ConnectionId = connectionId;
             this.NickName = string.IsNullOrEmpty(nickName) ? "Anon" : nickName;
         }
-
-        public string ConnectionId { get; }
 
         public string NickName { get; private set; }
 
         public void SetNewNickName(string nickName) => this.NickName = nickName;
-
     }
 }

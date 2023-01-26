@@ -25,6 +25,27 @@ namespace GameStreamer.Backend.Hubs
             return Task.CompletedTask;
         }
 
+        public Task PlayerChoseRandomGame()
+        {
+            
+        }
+
+        public Task PlayerChoseStandardGame() => Task.CompletedTask;
+
+        public override Task OnConnectedAsync()
+        {
+            var newPlayerDto = _playerManager.AddPlayerToServer(Context.ConnectionId, null);
+
+            var gameRoomsList = _roomManager.GetAllGameRooms();
+
+            var playersWithoutRoomList = _playerManager.GetAllPlayersWithoutRoom();
+
+            Clients.AllExcept(Context.ConnectionId).NewPlayerJoined(newPlayerDto);
+            Clients.Caller.UpdatePlayersWithoutRooms(playersWithoutRoomList);
+
+            return base.OnConnectedAsync();
+        }
+
         public override Task OnDisconnectedAsync(Exception? exception)
         {
 
@@ -33,18 +54,6 @@ namespace GameStreamer.Backend.Hubs
             Clients.AllExcept(Context.ConnectionId).PlayerLeavedServer(removedPlayerDto);
 
             return base.OnDisconnectedAsync(exception);
-        }
-
-        public override Task OnConnectedAsync()
-        {
-            var newPlayerDto = _playerManager.AddPlayerToServer(Context.ConnectionId, null);
-
-            var gameRoomsList = _roomManager.GetAllGameRooms();
-            var playersWithoutRoomList = _playerManager.GetAllPlayersWithoutRoom();
-
-            Clients.AllExcept(Context.ConnectionId).NewPlayerJoined(newPlayerDto);
-            Clients.Caller.UpdatePlayersWithoutRooms(playersWithoutRoomList);
-            return base.OnConnectedAsync();
         }
 
     }

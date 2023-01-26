@@ -26,7 +26,7 @@
         #endregion
 
         /// <summary>
-        /// Player nickname
+        /// PlayerFromRoomHub nickname
         /// </summary>
         public string Nickname { get; set; }
 
@@ -37,7 +37,7 @@
         public string RoomHubId { get; set; }
 
         /// <summary>
-        /// Player's Guid for external systems
+        /// PlayerFromRoomHub's Guid for external systems
         /// </summary>
         public Guid PlayerGuid { get; set; }
 
@@ -52,7 +52,7 @@
         public bool IsRandomGameMode { get; set; }
 
         /// <summary>
-        /// Date/Time of Player creation
+        /// Date/Time of PlayerFromRoomHub creation
         /// </summary>
         public DateTime CreatedAt { get; set; }
         

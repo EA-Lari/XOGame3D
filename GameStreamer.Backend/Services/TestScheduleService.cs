@@ -62,35 +62,35 @@ namespace GameStreamer.Backend.Services
             {
                 Console.WriteLine("TestScheduleService have got next tick! Waiting for 5 sec...");
 
-                await _publishEndpoint.Publish(new TurnDeniedDto {
-                    PlayerGuid = Guid.Empty,
-                    RoomGuid = Guid.Empty,
-                });
+                //await _publishEndpoint.Publish(new TurnDeniedDto {
+                //    PlayerGuid = Guid.Empty,
+                //    RoomGuid = Guid.Empty,
+                //});
 
-                await _publishEndpoint.Publish(new TurnAcceptedDto {
-                    PlayerGuid = Guid.Empty,
-                    RoomGuid = Guid.Empty,
-                });
+                //await _publishEndpoint.Publish(new TurnAcceptedDto {
+                //    PlayerGuid = Guid.Empty,
+                //    RoomGuid = Guid.Empty,
+                //});
 
-                var testRoom = new RoomEntity { CreatedAt = DateTime.Now, HubGroupId = "12345", RoomGuid = Guid.NewGuid() };
+                //var testRoom = new RoomEntity { CreatedAt = DateTime.Now, HubGroupId = "12345", RoomGuid = Guid.NewGuid() };
 
-                var testPlayer1 = new PlayerEntity { Nickname = "Noob1", ChatHubId = "111aaa", GameHubId = "222aaa", RoomHubId = "333aaa", CreatedAt = DateTime.Now, PlayerGuid = Guid.NewGuid() };
-                var testPlayer2 = new PlayerEntity { Nickname = "Noob2", ChatHubId = "111bbb", GameHubId = "222bbb", RoomHubId = "333bbb", CreatedAt = DateTime.Now, PlayerGuid = Guid.NewGuid() };
+                //var testPlayer1 = new PlayerEntity { Nickname = "Noob1", ChatHubId = "111aaa", GameHubId = "222aaa", RoomHubId = "333aaa", CreatedAt = DateTime.Now, PlayerGuid = Guid.NewGuid() };
+                //var testPlayer2 = new PlayerEntity { Nickname = "Noob2", ChatHubId = "111bbb", GameHubId = "222bbb", RoomHubId = "333bbb", CreatedAt = DateTime.Now, PlayerGuid = Guid.NewGuid() };
 
-                testRoom.JoinedPlayers.Add(testPlayer1);
-                testRoom.JoinedPlayers.Add(testPlayer2);
+                //testRoom.JoinedPlayers.Add(testPlayer1);
+                //testRoom.JoinedPlayers.Add(testPlayer2);
 
-                _gameStreamRepository.InsertRoom(testRoom);
-                _gameStreamRepository.Save();
+                //_gameStreamRepository.InsertRoom(testRoom);
+                //_gameStreamRepository.Save();
 
-                await _roomsHub.Clients.All.NewRoomAdded(
-                    new GameRoomResponseDTO { 
-                        RoomName = $"Room_{_random.Next(8000, 15000)}",
-                        PlayersList = new List<PlayerDataResponseDTO> {
-                            new PlayerDataResponseDTO { ConnectionId = "123", NickName = "Pidor_666" },
-                            new PlayerDataResponseDTO { ConnectionId = "456", NickName = "Pidor_777" },
-                        }
-                    });
+                //await _roomsHub.Clients.All.NewRoomAdded(
+                //    new GameRoomResponseDTO { 
+                //        RoomName = $"Room_{_random.Next(8000, 15000)}",
+                //        PlayersList = new List<PlayerDataResponseDTO> {
+                //            new PlayerDataResponseDTO { RoomConnectionId = "123", NickName = "Pidor_666" },
+                //            new PlayerDataResponseDTO { RoomConnectionId = "456", NickName = "Pidor_777" },
+                //        }
+                //    });
 
                 _backgroundJobClient.Enqueue(() => _customJobService.FireAndForgetJob());
 

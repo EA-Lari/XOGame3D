@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
 
-        public List<Player> PlayersList { get; } = new List<Player>();
+        public List<PlayerFromRoomHub> PlayersList { get; } = new List<PlayerFromRoomHub>();
 
     }
 }
