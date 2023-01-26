@@ -7,11 +7,9 @@ namespace GameStreamer.Backend.Hubs
     public class GameHub : Hub<IGameHub>
     {
         public GameHub()
-        {
+        { }
 
-        }
-
-        Task PlayerDoTurn(PlayerMadeTurnDto turnData)
+        public Task PlayerDoTurn(PlayerMadeTurnDto turnData)
         {
             Console.WriteLine(
                 $"SignalR received player turn: cell: (X-{turnData.CellCoordinates.X}, Y-{turnData.CellCoordinates.Y}) area: (X-{turnData.SmallAreaCoordinates.X},Y-{turnData.SmallAreaCoordinates.Y})");

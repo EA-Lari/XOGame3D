@@ -2,8 +2,8 @@
 {
     public record Coordinate
     {
-        public int X { get; set; }
+        public string X { get; set; }
 
-        public int Y { get; set; }
+        public string Y { get; set; }
     }
 }

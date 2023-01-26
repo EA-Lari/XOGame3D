@@ -102,8 +102,8 @@ gameCells.forEach(cell => {
         const fieldCoordArr = event.target.parentElement.dataset.fieldCoordinates.split(',');
 
         const turnData = {
-            smallAreaCoordinates: { x: fieldCoordArr[0], y: fieldCoordArr[1] },
-            cellCoordinates: { x: cellCoordArr[0], y: cellCoordArr[1] }
+            SmallAreaCoordinates: { X: fieldCoordArr[0], Y: fieldCoordArr[1] },
+            CellCoordinates: { X: cellCoordArr[0], Y: cellCoordArr[1] }
         };
 
         gameHubConnection.invoke("PlayerDoTurn", turnData);
@@ -256,13 +256,13 @@ function setupLobbyConnection(lobbyConnection) {
         playerNode.setAttribute('', newPlayerDto.nickName);
     });
 
-    lobbyConnection.on("UpdatePlayersWithoutRooms", (playersWithoutRoomsList) => {
+    // lobbyConnection.on("UpdatePlayersWithoutRooms", (playersWithoutRoomsList) => {
 
-        playersWithoutRoomsList.forEach((playerWithoutRooms) => {
-            var newPlayerElement = renderNewPlayerElement(playerWithoutRooms);
-            playersItems.appendChild(newPlayerElement);
-        });
-    });
+    //     playersWithoutRoomsList.forEach((playerWithoutRooms) => {
+    //         var newPlayerElement = renderNewPlayerElement(playerWithoutRooms);
+    //         playersItems.appendChild(newPlayerElement);
+    //     });
+    // });
 
     lobbyConnection.on("PlayerLeavedServer", (playerDto) => {
         console.log(playerDto.nickName + " with conn id: " + playerDto.connectionId + " left from The Game Server!");
@@ -271,12 +271,12 @@ function setupLobbyConnection(lobbyConnection) {
         deleteNode(element);
     });
 
-    lobbyConnection.on("NewRoomAdded", (newRoomDto) => {
-        console.log("NewGameRoom is added: " + newRoomDto.roomName);
+    // lobbyConnection.on("NewRoomAdded", (newRoomDto) => {
+    //     console.log("NewGameRoom is added: " + newRoomDto.roomName);
 
-        var newRoomElement = renderNewRoomElement(newRoomDto);
-        roomsItems.appendChild(newRoomElement);
-    });
+    //     var newRoomElement = renderNewRoomElement(newRoomDto);
+    //     roomsItems.appendChild(newRoomElement);
+    // });
 
     lobbyConnection.onclose(async () => {
         setTimeout(await startHubAsync(lobbyConnection), 5000);
