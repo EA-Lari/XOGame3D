@@ -18,32 +18,32 @@ namespace GameStreamer.Backend.Hubs
             _playerManager = playerManager;
         }
 
-        public Task PlayerAddedLogin(string playerLogin)
+        public Task PlayerChangedLogin(string prevNickName, string playerLogin)
         {
-            var changedPlayerDataDto = _playerManager.ChangePlayerNickName(Context.ConnectionId, playerLogin);
+            var changedPlayerDataDto = _playerManager.ChangePlayerNickName(prevNickName, playerLogin);
             Clients.All.PlayerChangedNickName(changedPlayerDataDto);
             return Task.CompletedTask;
         }
 
         public Task PlayerChoseRandomGame()
         {
-            
+            return Task.CompletedTask;
         }
 
         public Task PlayerChoseStandardGame() => Task.CompletedTask;
 
-        public override Task OnConnectedAsync()
+        public Task GreetNewPlayer(string nickName)
         {
-            var newPlayerDto = _playerManager.AddPlayerToServer(Context.ConnectionId, null);
+            var newPlayerDto = _playerManager.AddNewPlayerToServer(nickName);
 
-            var gameRoomsList = _roomManager.GetAllGameRooms();
+            //var gameRoomsList = _roomManager.GetAllGameRooms();
 
-            var playersWithoutRoomList = _playerManager.GetAllPlayersWithoutRoom();
+            //var playersWithoutRoomList = _playerManager.GetAllPlayersWithoutRoom();
 
             Clients.AllExcept(Context.ConnectionId).NewPlayerJoined(newPlayerDto);
-            Clients.Caller.UpdatePlayersWithoutRooms(playersWithoutRoomList);
+            //Clients.Caller.UpdatePlayersWithoutRooms(playersWithoutRoomList);
 
-            return base.OnConnectedAsync();
+            return Task.CompletedTask;
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)

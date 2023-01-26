@@ -1,5 +1,9 @@
 ﻿namespace GameStreamer.Backend.Storage.GameStreamerDbase.Entities
 {
+
+    /// <summary>
+    /// Entity that shows Game Room with Players within
+    /// </summary>
     public class RoomEntity
     {
         /// <summary>
@@ -12,7 +16,7 @@
         /// <summary>
         /// Collection of Players who join room
         /// </summary>
-        public ICollection<PlayerEntity> JoinedPlayers { get; } = new List<PlayerEntity>();
+        public ICollection<JoinedPlayerEntity> JoinedPlayers { get; } = new List<JoinedPlayerEntity>();
 
         #endregion
 

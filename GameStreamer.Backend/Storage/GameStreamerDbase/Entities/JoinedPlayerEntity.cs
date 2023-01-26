@@ -2,12 +2,12 @@
 {
 
     /// <summary>
-    /// Сущность подключенного игрока в БД 
+    ///Entity that shows Player who joined to the Game Room
     /// </summary>
-    public class PlayerEntity
+    public class JoinedPlayerEntity
     {
         /// <summary>
-        /// Id записи в БД
+        /// Id
         /// </summary>
         public int Id { get; set; }
 

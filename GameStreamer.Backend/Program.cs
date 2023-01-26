@@ -40,7 +40,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 services.AddSingleton<IRoomManager, RoomManager>();
                 services.AddTransient<IGameStreamRepository, GameStreamRepository>();
                 services.AddSingleton<IPlayerManager, PlayerManager>();
-
+                services.AddSingleton<IHashService, HashService>();
                 services.AddScoped<ICustomJobService, CustomJobService>();
 
                 services.AddHangfire(config =>

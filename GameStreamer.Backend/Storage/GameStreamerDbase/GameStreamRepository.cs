@@ -43,30 +43,42 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase
 
         #region Players
 
-        public PlayerDataResponseDTO AddPlayer(PlayerFromRoomHub forAdd)
+        public PlayerDataResponseDTO AddNewPlayer(PlayerFromRoomHub forAdd)
         {
-            var playerEntity = new PlayerEntity()
+            var newPlayerEntity = new NewPlayerEntity()
             {
                 Nickname = forAdd.NickName,
-                RoomHubId = forAdd.RoomConnectionId,
                 CreatedAt = DateTime.Now,
-                IsReadyForGame = false
             };
 
-            _gameStreamerContext.Set<PlayerEntity>().Add(playerEntity);
+            _gameStreamerContext.Set<NewPlayerEntity>().Add(newPlayerEntity);
             Save();
 
-            return new PlayerDataResponseDTO { ConnectionId = forAdd.RoomConnectionId, NickName = forAdd.NickName };
+            return new PlayerDataResponseDTO { NickName = forAdd.NickName };
         }
 
-        public PlayerFromRoomHub GetPlayerBy(string roomHubConnectionId) => _gameStreamerContext.Set<PlayerEntity>().First(p => p.RoomHubId);
-
-        public PlayerDataResponseDTO UpdatePlayer(PlayerFromRoomHub playerFromRoom)
+        public PlayerFromRoomHub GetPlayerBy(Guid playerDataHashGuid)
         {
-            throw new NotImplementedException();
+            //var playerEntity = GetOneEntityBy(playerDataHashGuid);
+
+            return new PlayerFromRoomHub("");
+        }
+
+        public PlayerDataResponseDTO UpdatePlayer(PlayerFromRoomHub playerFromRoom, Guid oldHashGuid)
+        {
+            var playerFromDb = GetOneEntityBy(oldHashGuid);
+            playerFromDb.Nickname = playerFromRoom.NickName;
+            //playerFromDb.PlayerGuid = playerFromRoom.PlayerDataHashGuid;
+
+            Save();
+
+            return new PlayerDataResponseDTO { ConnectionId = "", NickName = playerFromRoom.NickName };
         }
 
         #endregion
+
+        private JoinedPlayerEntity GetOneEntityBy(Guid playerDataHashGuid) => _gameStreamerContext.Set<JoinedPlayerEntity>()
+            .First(p => p.PlayerGuid == playerDataHashGuid);
 
         private void Save()
         {

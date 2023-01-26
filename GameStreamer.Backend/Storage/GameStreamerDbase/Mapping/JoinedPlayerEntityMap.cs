@@ -4,11 +4,11 @@ using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 
 namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
 {
-    public class PlayerEntityMap : IEntityTypeConfiguration<PlayerEntity>
+    public class JoinedPlayerEntityMap : IEntityTypeConfiguration<JoinedPlayerEntity>
     {
-        public void Configure(EntityTypeBuilder<PlayerEntity> builder)
+        public void Configure(EntityTypeBuilder<JoinedPlayerEntity> builder)
         {
-            builder.ToTable("connected_players", "game_streamer");
+            builder.ToTable("players_in_rooms", "game_streamer");
 
             builder.HasKey(k => k.Id);
             builder.Property(p => p.Id).ValueGeneratedOnAdd();
@@ -16,9 +16,9 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
             builder.Property(p => p.Id).HasColumnName("id");
             builder.Property(p => p.RoomId).HasColumnName("room_id");
             builder.Property(p => p.Nickname).HasColumnName("nickname").HasMaxLength(64);
-            builder.Property(p => p.ChatHubId).HasColumnName("chat_hub_id").HasMaxLength(32);
-            builder.Property(p => p.GameHubId).HasColumnName("game_hub_id").HasMaxLength(32);
-            builder.Property(p => p.RoomHubId).HasColumnName("room_hub_id").HasMaxLength(32);
+            builder.Property(p => p.ChatHubId).IsRequired(false).HasColumnName("chat_hub_id").HasMaxLength(32);
+            builder.Property(p => p.GameHubId).IsRequired(false).HasColumnName("game_hub_id").HasMaxLength(32);
+            builder.Property(p => p.RoomHubId).IsRequired(false).HasColumnName("room_hub_id").HasMaxLength(32);
             builder.Property(p => p.PlayerGuid).HasColumnName("player_guid").HasColumnType("UUID");
             builder.Property(p => p.IsReadyForGame).HasColumnName("is_ready_for_game");
             builder.Property(p => p.IsRandomGameMode).HasColumnName("is_random_game_mode");
@@ -28,9 +28,6 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
                 .WithMany(room => room.JoinedPlayers)
                 .HasForeignKey(player => player.RoomId)
                 .IsRequired();
-
-            // Convert enum <==> int on read/write to table
-            //builder.Property(c => c.ClientType).HasConversion<int>();
 
             #region Default Data
 

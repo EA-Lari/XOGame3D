@@ -23,11 +23,11 @@ namespace GameStreamer.Backend.Storage
 
         #region Players
 
-        public PlayerDataResponseDTO AddPlayer(PlayerFromRoomHub forAdd);
+        public PlayerDataResponseDTO AddNewPlayer(PlayerFromRoomHub forAdd);
 
-        public PlayerFromRoomHub GetPlayerBy(string roomHubConnectionId);
+        public PlayerFromRoomHub GetPlayerBy(Guid playerDataHashGuid);
 
-        public PlayerDataResponseDTO UpdatePlayer(PlayerFromRoomHub playerFromRoom);
+        public PlayerDataResponseDTO UpdatePlayer(PlayerFromRoomHub playerFromRoom, Guid oldHashGuid);
 
         #endregion
 

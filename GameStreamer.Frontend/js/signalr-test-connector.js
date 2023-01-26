@@ -53,7 +53,7 @@ const joinByRoomNameButton = menuElementsDict.get('dedicatedGameChosen').querySe
 /** Add Click Events To Buttons */
 
 changeNickButton.onclick = function () {
-    lobbyHubConnection.invoke("PlayerAddedLogin", nicknameInput.value);
+    lobbyHubConnection.invoke("PlayerChangedLogin", currentClientNickName, nicknameInput.value);
     currentClientNickName = nicknameInput.value;
 };
 
@@ -121,7 +121,11 @@ setupGameConnection(gameHubConnection);
 setupLobbyConnection(lobbyHubConnection);
 
 startHubAsync(gameHubConnection);
-startHubAsync(lobbyHubConnection);
+startHubAsync(lobbyHubConnection).then(
+    function() {
+        lobbyHubConnection.invoke("GreetNewPlayer", currentClientNickName);    
+    }
+);
 
 startGameProcessAsync();
 
@@ -281,6 +285,7 @@ function setupLobbyConnection(lobbyConnection) {
     lobbyConnection.onclose(async () => {
         setTimeout(await startHubAsync(lobbyConnection), 5000);
     });
+
 };
 
 function findElementByAttr(parentElement, attributeName, value) {

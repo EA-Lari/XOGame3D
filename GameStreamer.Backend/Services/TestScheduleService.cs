@@ -33,7 +33,6 @@ namespace GameStreamer.Backend.Services
             IRoomsHub> roomsHub,
             IRoomManager roomsManager,
             IGameStreamRepository gameStreamRepository,
-            
             ICustomJobService customJobService,
             IBackgroundJobClient backgroundJobClient,
             IRecurringJobManager recurringJobManager,
@@ -61,7 +60,7 @@ namespace GameStreamer.Backend.Services
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
                 Console.WriteLine("TestScheduleService have got next tick! Waiting for 5 sec...");
-
+                
                 //await _publishEndpoint.Publish(new TurnDeniedDto {
                 //    PlayerGuid = Guid.Empty,
                 //    RoomGuid = Guid.Empty,

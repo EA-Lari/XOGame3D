@@ -3,6 +3,7 @@ using System;
 using GameStreamer.Backend.Storage.GameStreamerDbase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GameStreamer.Backend.Storage.GameStreamerDbase.Migrations
 {
     [DbContext(typeof(GameStreamerContext))]
-    partial class GameStreamerContextModelSnapshot : ModelSnapshot
+    [Migration("20230126172303_MakeHubsColumnsNull")]
+    partial class MakeHubsColumnsNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +25,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("GameStreamer.Backend.Storage.GameStreamerDbase.Entities.JoinedPlayerEntity", b =>
+            modelBuilder.Entity("GameStreamer.Backend.Storage.GameStreamerDbase.Entities.PlayerEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,31 +79,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("players_in_rooms", "game_streamer");
-                });
-
-            modelBuilder.Entity("GameStreamer.Backend.Storage.GameStreamerDbase.Entities.NewPlayerEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Nickname")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("nickname");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("new_players_without_room", "game_streamer");
+                    b.ToTable("connected_players", "game_streamer");
                 });
 
             modelBuilder.Entity("GameStreamer.Backend.Storage.GameStreamerDbase.Entities.RoomEntity", b =>
@@ -132,7 +110,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Migrations
                     b.ToTable("game_rooms", "game_streamer");
                 });
 
-            modelBuilder.Entity("GameStreamer.Backend.Storage.GameStreamerDbase.Entities.JoinedPlayerEntity", b =>
+            modelBuilder.Entity("GameStreamer.Backend.Storage.GameStreamerDbase.Entities.PlayerEntity", b =>
                 {
                     b.HasOne("GameStreamer.Backend.Storage.GameStreamerDbase.Entities.RoomEntity", "Room")
                         .WithMany("JoinedPlayers")
