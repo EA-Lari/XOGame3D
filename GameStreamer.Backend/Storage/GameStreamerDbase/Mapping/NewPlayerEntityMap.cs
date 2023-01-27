@@ -15,6 +15,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
 
             builder.Property(p => p.Id).HasColumnName("id");
             builder.Property(p => p.Nickname).HasColumnName("nickname").HasMaxLength(64);
+            builder.Property(p => p.PlayerHashGuid).HasColumnName("player_hash_guid").HasColumnType("UUID");
 
             builder.Property(p => p.CreatedAt).HasColumnName("created_at");
 

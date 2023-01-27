@@ -39,7 +39,7 @@
         /// <summary>
         /// PlayerFromRoomHub's Guid for external systems
         /// </summary>
-        public Guid PlayerGuid { get; set; }
+        public Guid PlayerHashGuid { get; set; }
 
         /// <summary>
         /// Flag of player readiness

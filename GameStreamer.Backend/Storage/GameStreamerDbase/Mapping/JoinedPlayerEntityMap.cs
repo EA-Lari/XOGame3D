@@ -19,7 +19,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
             builder.Property(p => p.ChatHubId).IsRequired(false).HasColumnName("chat_hub_id").HasMaxLength(32);
             builder.Property(p => p.GameHubId).IsRequired(false).HasColumnName("game_hub_id").HasMaxLength(32);
             builder.Property(p => p.RoomHubId).IsRequired(false).HasColumnName("room_hub_id").HasMaxLength(32);
-            builder.Property(p => p.PlayerGuid).HasColumnName("player_guid").HasColumnType("UUID");
+            builder.Property(p => p.PlayerHashGuid).HasColumnName("player_hash_guid").HasColumnType("UUID");
             builder.Property(p => p.IsReadyForGame).HasColumnName("is_ready_for_game");
             builder.Property(p => p.IsRandomGameMode).HasColumnName("is_random_game_mode");
             builder.Property(p => p.CreatedAt).HasColumnName("created_at");

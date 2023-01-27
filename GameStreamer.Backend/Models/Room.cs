@@ -1,10 +1,12 @@
-﻿namespace GameStreamer.Backend.Models
+﻿using GameStreamer.Backend.DTOs.DataAccess;
+
+namespace GameStreamer.Backend.Models
 {
     public class Room
     {
         public string Name { get; set; }
 
-        public List<PlayerFromRoomHub> PlayersList { get; } = new List<PlayerFromRoomHub>();
+        public List<PlayerWithHashDto> PlayersList { get; } = new List<PlayerWithHashDto>();
 
     }
 }

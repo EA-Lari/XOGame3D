@@ -18,9 +18,10 @@ namespace GameStreamer.Backend.Hubs
             _playerManager = playerManager;
         }
 
-        public Task PlayerChangedLogin(string prevNickName, string playerLogin)
+        public Task PlayerChangedLogin(string prevLogin, string actualLogin)
         {
-            var changedPlayerDataDto = _playerManager.ChangePlayerNickName(prevNickName, playerLogin);
+            var changedPlayerDataDto = _playerManager.ChangePlayerNickName(prevLogin, actualLogin);
+            
             Clients.All.PlayerChangedNickName(changedPlayerDataDto);
             return Task.CompletedTask;
         }

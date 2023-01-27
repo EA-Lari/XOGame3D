@@ -1,4 +1,5 @@
 ﻿using GameStreamer.Backend.DTOs;
+using GameStreamer.Backend.DTOs.DataAccess;
 using GameStreamer.Backend.Models;
 using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 
@@ -23,11 +24,15 @@ namespace GameStreamer.Backend.Storage
 
         #region Players
 
-        public PlayerDataResponseDTO AddNewPlayer(PlayerFromRoomHub forAdd);
+        public PlayerDataResponseDTO AddNewPlayer(PlayerWithHashDto addedPlayer);
 
-        public PlayerFromRoomHub GetPlayerBy(Guid playerDataHashGuid);
+        public PlayerWithHashDto GetNewPlayerBy(Guid playerDataHashGuid);
 
-        public PlayerDataResponseDTO UpdatePlayer(PlayerFromRoomHub playerFromRoom, Guid oldHashGuid);
+        public PlayerWithHashDto GetPlayerWithRoomBy(Guid playerDataHashGuid);
+
+        public PlayerDataResponseDTO UpdateNewPlayer(PlayerWithHashDto updatedPlayer);
+
+        public PlayerDataResponseDTO UpdatePlayerWithRoom(PlayerWithHashDto updatedPlayer);
 
         #endregion
 

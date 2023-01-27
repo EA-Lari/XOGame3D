@@ -1,4 +1,5 @@
 ﻿using GameStreamer.Backend.DTOs;
+using GameStreamer.Backend.DTOs.DataAccess;
 using GameStreamer.Backend.Models;
 using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 
@@ -43,42 +44,108 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase
 
         #region Players
 
-        public PlayerDataResponseDTO AddNewPlayer(PlayerFromRoomHub forAdd)
+        public PlayerDataResponseDTO AddNewPlayer(PlayerWithHashDto addedPlayer)
         {
             var newPlayerEntity = new NewPlayerEntity()
             {
-                Nickname = forAdd.NickName,
-                CreatedAt = DateTime.Now,
+                Nickname = addedPlayer.NickName,
+                PlayerHashGuid = addedPlayer.PlayerDataHashGuid,
+                CreatedAt = DateTime.Now
             };
 
             _gameStreamerContext.Set<NewPlayerEntity>().Add(newPlayerEntity);
             Save();
 
-            return new PlayerDataResponseDTO { NickName = forAdd.NickName };
+            return new PlayerDataResponseDTO { NickName = addedPlayer.NickName };
         }
 
-        public PlayerFromRoomHub GetPlayerBy(Guid playerDataHashGuid)
+        public PlayerWithHashDto GetNewPlayerBy(Guid playerDataHashGuid)
         {
-            //var playerEntity = GetOneEntityBy(playerDataHashGuid);
+            PlayerWithHashDto resultPlayer;
+            var foundedPlayer = _gameStreamerContext.Set<NewPlayerEntity>()
+                .First(p => p.PlayerHashGuid == playerDataHashGuid);
+            
+            if (foundedPlayer != null)
+            {
+                resultPlayer = new PlayerWithHashDto(foundedPlayer.Nickname, foundedPlayer.PlayerHashGuid);
+            }
+            else
+            {
+                resultPlayer = null;
+            }
 
-            return new PlayerFromRoomHub("");
+            return resultPlayer;
         }
 
-        public PlayerDataResponseDTO UpdatePlayer(PlayerFromRoomHub playerFromRoom, Guid oldHashGuid)
+        public PlayerWithHashDto GetPlayerWithRoomBy(Guid playerDataHashGuid)
         {
-            var playerFromDb = GetOneEntityBy(oldHashGuid);
-            playerFromDb.Nickname = playerFromRoom.NickName;
-            //playerFromDb.PlayerGuid = playerFromRoom.PlayerDataHashGuid;
+            PlayerWithHashDto resultPlayer;
 
-            Save();
+            var foundedPlayer = _gameStreamerContext.Set<JoinedPlayerEntity>()
+                .First(p => p.PlayerHashGuid == playerDataHashGuid);
 
-            return new PlayerDataResponseDTO { ConnectionId = "", NickName = playerFromRoom.NickName };
+            if (foundedPlayer != null)
+            {
+                resultPlayer = new PlayerWithHashDto(foundedPlayer.Nickname, foundedPlayer.PlayerHashGuid);
+            }
+            else
+            {
+                resultPlayer = null;
+            }
+
+            return resultPlayer;
+        }
+
+        public PlayerDataResponseDTO UpdateNewPlayer(PlayerWithHashDto updatedPlayer)
+        {
+
+            PlayerDataResponseDTO resultDto;
+
+            var playerForUpdate = GetNewPlayerEntityBy(updatedPlayer.PlayerDataHashGuid);
+
+            if (playerForUpdate != null)
+            {
+                playerForUpdate.Nickname = updatedPlayer.NickName;
+                Save();
+
+                resultDto = new PlayerDataResponseDTO() { NickName = updatedPlayer.NickName };
+            }
+            else
+            {
+                resultDto = null;
+            }
+
+            return resultDto;
+        }
+
+        public PlayerDataResponseDTO UpdatePlayerWithRoom(PlayerWithHashDto updatedPlayer)
+        {
+            PlayerDataResponseDTO resultDto;
+
+            var playerForUpdate = GetJoinedPlayerEntityBy(updatedPlayer.PlayerDataHashGuid);
+            
+            if (playerForUpdate != null)
+            {
+                playerForUpdate.Nickname = updatedPlayer.NickName;
+                Save();
+
+                resultDto = new PlayerDataResponseDTO() { NickName = updatedPlayer.NickName };
+            }
+            else
+            {
+                resultDto = null;
+            }
+
+            return resultDto;
         }
 
         #endregion
 
-        private JoinedPlayerEntity GetOneEntityBy(Guid playerDataHashGuid) => _gameStreamerContext.Set<JoinedPlayerEntity>()
-            .First(p => p.PlayerGuid == playerDataHashGuid);
+        private NewPlayerEntity GetNewPlayerEntityBy(Guid playerDataHashGuid) => _gameStreamerContext.Set<NewPlayerEntity>()
+            .First(p => p.PlayerHashGuid == playerDataHashGuid);
+
+        private JoinedPlayerEntity GetJoinedPlayerEntityBy(Guid playerDataHashGuid) => _gameStreamerContext.Set<JoinedPlayerEntity>()
+            .First(p => p.PlayerHashGuid == playerDataHashGuid);
 
         private void Save()
         {

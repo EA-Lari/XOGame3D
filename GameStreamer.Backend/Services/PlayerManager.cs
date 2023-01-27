@@ -1,6 +1,5 @@
 ﻿using GameStreamer.Backend.DTOs;
-using GameStreamer.Backend.Models;
-using System.Collections.Concurrent;
+using GameStreamer.Backend.DTOs.DataAccess;
 using GameStreamer.Backend.Storage;
 
 namespace GameStreamer.Backend.Services
@@ -10,8 +9,6 @@ namespace GameStreamer.Backend.Services
     {
         private readonly IHashService _hashService;
         private readonly IGameStreamRepository _gameRepo;
-        //private readonly Random _random = new Random();
-        //private readonly ConcurrentDictionary<string, PlayerFromRoomHub> _playersConcurrDict = new ConcurrentDictionary<string, PlayerFromRoomHub>();
 
         public PlayerManager(IGameStreamRepository gameRepo, IHashService hashService)
         {
@@ -21,7 +18,8 @@ namespace GameStreamer.Backend.Services
 
         public PlayerDataResponseDTO AddNewPlayerToServer(string nickName)
         {
-            var playerForAdd = new PlayerFromRoomHub(nickName);
+
+            var playerForAdd = new PlayerWithHashDto(nickName, _hashService.CalculateHashCodeFrom(nickName));
             var addedPlayerData = _gameRepo.AddNewPlayer(playerForAdd);
 
             return addedPlayerData;
@@ -29,15 +27,44 @@ namespace GameStreamer.Backend.Services
 
         public PlayerDataResponseDTO ChangePlayerNickName(string prevNickName, string newNickName)
         {
-            //var playerOldGuid = _hashService.CalculateHashCodeFrom(prevNickName);
-            //var existedPlayer = _gameRepo.GetPlayerBy(playerOldGuid);
-            //Console.WriteLine($"Меняем никнейм игрока, нашли успешно по Guid: {playerOldGuid}");
-            //Console.WriteLine($"Найден игрок: ник-{existedPlayer.NickName}, id в хабе-{existedPlayer.RoomConnectionId}");
-            //existedPlayer.SetNewNickName(newNickName);
-            //existedPlayer.PlayerDataHashGuid = _hashService.CalculateHashCodeFrom(newNickName);
-            //_gameRepo.UpdatePlayer(existedPlayer, playerOldGuid);
+            if (string.IsNullOrEmpty(prevNickName) || string.IsNullOrEmpty(newNickName))
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Попытка задать пустое значение ника. Старый - {prevNickName}, Новый - {newNickName} Ничего не меняем!");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
 
-            return new PlayerDataResponseDTO() { ConnectionId = "", NickName = newNickName };
+                return null;
+            }
+
+            var playerPreviousGuid = _hashService.CalculateHashCodeFrom(prevNickName);
+            var playerNewGuid = _hashService.CalculateHashCodeFrom(prevNickName);
+
+            var existedNewPlayer = _gameRepo.GetNewPlayerBy(playerPreviousGuid);
+
+            if (existedNewPlayer != null)
+            {
+                existedNewPlayer.SetNewNickName(newNickName);
+                existedNewPlayer.SetNewHashGuid(playerNewGuid);
+
+                _gameRepo.UpdateNewPlayer(existedNewPlayer);
+
+                Console.WriteLine($"Поменяли никнейм новому игроку, старый: {prevNickName}, новый: {newNickName}, успешно нашли его под старым uuid: {playerPreviousGuid}, новый uuid: {playerNewGuid}");
+            }
+            else
+            {
+                var existedInRoomPlayer = _gameRepo.GetPlayerWithRoomBy(playerPreviousGuid);
+
+                if (existedInRoomPlayer != null)
+                {
+                    existedInRoomPlayer.SetNewNickName(newNickName);
+                    existedInRoomPlayer.SetNewHashGuid(playerNewGuid);
+
+                    _gameRepo.UpdatePlayerWithRoom(existedInRoomPlayer);
+                    Console.WriteLine($"Поменяли никнейм игроку в группе, старый: {prevNickName}, новый: {newNickName}, успешно нашли его под старым uuid: {playerPreviousGuid}, новый uuid: {playerNewGuid}");
+                }
+            }
+
+            return new PlayerDataResponseDTO() { NickName = newNickName };
         }
 
         public PlayerDataResponseDTO GetPlayerDataBy(string connectionId)

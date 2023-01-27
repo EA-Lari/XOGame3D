@@ -17,6 +17,11 @@
         public string Nickname { get; set; }
 
         /// <summary>
+        /// Player's Guid
+        /// </summary>
+        public Guid PlayerHashGuid { get; set; }
+
+        /// <summary>
         /// Date/Time of PlayerFromRoomHub creation
         /// </summary>
         public DateTime CreatedAt { get; set; }
