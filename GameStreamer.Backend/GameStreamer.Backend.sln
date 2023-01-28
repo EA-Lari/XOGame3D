@@ -5,7 +5,11 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStreamer.Backend", "GameStreamer.Backend.csproj", "{EECC6A9F-C859-4D85-8358-1716E98ECB25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStreamer.Client", "..\Sources\Exampels\GameStreamer.Client\GameStreamer.Client.csproj", "{449F0005-54A0-4716-8B5B-2BA5DC472F83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStreamer.Backend.Tests", "..\tests\GameStreamer.Backend.Tests\GameStreamer.Backend.Tests.csproj", "{BD73E655-87BF-4FD2-8B4D-BBEDF0DDE91B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3BB26758-E35A-4E5C-BF4C-70E9CE85775F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DDB0034C-BCE9-4235-A3CC-02BA97FA7E74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,13 +21,17 @@ Global
 		{EECC6A9F-C859-4D85-8358-1716E98ECB25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EECC6A9F-C859-4D85-8358-1716E98ECB25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EECC6A9F-C859-4D85-8358-1716E98ECB25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{449F0005-54A0-4716-8B5B-2BA5DC472F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{449F0005-54A0-4716-8B5B-2BA5DC472F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{449F0005-54A0-4716-8B5B-2BA5DC472F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{449F0005-54A0-4716-8B5B-2BA5DC472F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD73E655-87BF-4FD2-8B4D-BBEDF0DDE91B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD73E655-87BF-4FD2-8B4D-BBEDF0DDE91B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD73E655-87BF-4FD2-8B4D-BBEDF0DDE91B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD73E655-87BF-4FD2-8B4D-BBEDF0DDE91B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EECC6A9F-C859-4D85-8358-1716E98ECB25} = {3BB26758-E35A-4E5C-BF4C-70E9CE85775F}
+		{BD73E655-87BF-4FD2-8B4D-BBEDF0DDE91B} = {DDB0034C-BCE9-4235-A3CC-02BA97FA7E74}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {69F50C04-E687-46C8-ADE3-40E8D28C4A12}

@@ -1,6 +1,6 @@
 ﻿using GameStreamer.Backend.DTOs;
-using GameStreamer.Backend.DTOs.DataAccess;
 using GameStreamer.Backend.Storage;
+using GameStreamer.Backend.DTOs.DataAccess;
 
 namespace GameStreamer.Backend.Services
 {
@@ -43,7 +43,7 @@ namespace GameStreamer.Backend.Services
 
             if (existedNewPlayer != null)
             {
-                existedNewPlayer.SetNewNickName(newNickName);
+                existedNewPlayer.NickName = newNickName;
                 existedNewPlayer.PlayerDataHashGuid = playerNewGuid;
 
                 _gameRepo.UpdatePlayer(existedNewPlayer);
