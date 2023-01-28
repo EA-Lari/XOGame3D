@@ -1,4 +1,6 @@
-﻿namespace GameStreamer.Backend.Storage.GameStreamerDbase.Entities
+﻿using GameStreamer.Backend.DTOs.DataAccess;
+
+namespace GameStreamer.Backend.Storage.GameStreamerDbase.Entities
 {
 
     /// <summary>
@@ -16,7 +18,7 @@
         /// <summary>
         /// Collection of Players who join room
         /// </summary>
-        public ICollection<JoinedPlayerEntity> JoinedPlayers { get; } = new List<JoinedPlayerEntity>();
+        public IEnumerable<PlayerEntity> JoinedPlayers { get; set; }
 
         #endregion
 

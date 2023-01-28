@@ -79,7 +79,7 @@ namespace GameStreamer.Backend.Services
                 //testRoom.JoinedPlayers.Add(testPlayer1);
                 //testRoom.JoinedPlayers.Add(testPlayer2);
 
-                //_gameStreamRepository.InsertRoom(testRoom);
+                //_gameStreamRepository.AddRoom(testRoom);
                 //_gameStreamRepository.Save();
 
                 //await _roomsHub.Clients.All.NewRoomAdded(

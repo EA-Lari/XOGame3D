@@ -19,7 +19,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
             builder.Property(p => p.CreatedAt).HasColumnName("created_at");
 
             builder
-                .HasMany<JoinedPlayerEntity>(room => room.JoinedPlayers)
+                .HasMany<PlayerEntity>(room => room.JoinedPlayers)
                 .WithOne(player => player.Room);
 
             #region Default Data

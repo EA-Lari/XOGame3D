@@ -35,7 +35,7 @@ namespace GameStreamer.Backend.Hubs
 
         public Task GreetNewPlayer(string nickName)
         {
-            var newPlayerDto = _playerManager.AddNewPlayerToServer(nickName);
+            var newPlayerDto = _playerManager.AddNewPlayer(nickName);
 
             //var gameRoomsList = _roomManager.GetAllGameRooms();
 

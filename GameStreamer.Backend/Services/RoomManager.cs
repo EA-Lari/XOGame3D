@@ -1,14 +1,9 @@
 ﻿using GameStreamer.Backend.DTOs;
-using GameStreamer.Backend.Models;
-using System.Collections.Concurrent;
 
 namespace GameStreamer.Backend.Services
 {
     public class RoomManager : IRoomManager
     {
-
-        private readonly Random _random = new();
-        private readonly ConcurrentDictionary<string, Room> _roomsConcurrDict = new();
 
         public GameRoomResponseDTO GetRandomRoom()
         {

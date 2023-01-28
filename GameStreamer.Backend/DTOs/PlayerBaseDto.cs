@@ -3,14 +3,20 @@
     public abstract class PlayerBaseDto
     {
 
-        public PlayerBaseDto(string nickName)
+        private string _nickName;
+
+        public string NickName
         {
-            NickName = nickName;
+            get => _nickName;
+            set => SetNewNickName(value);
         }
 
-        public string NickName { get; private set; }
+        public PlayerBaseDto(string nickName)
+        {
+            SetNewNickName(nickName);
+        }
 
-        public void SetNewNickName(string nickName) => NickName = nickName;
+        private void SetNewNickName(string nickName) => _nickName = nickName;
 
     }
 }

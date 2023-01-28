@@ -16,11 +16,11 @@ namespace GameStreamer.Backend.Services
             _hashService = hashService;
         }
 
-        public PlayerDataResponseDTO AddNewPlayerToServer(string nickName)
+        public PlayerDataResponseDTO AddNewPlayer(string nickName)
         {
 
-            var playerForAdd = new PlayerWithHashDto(nickName, _hashService.CalculateHashCodeFrom(nickName));
-            var addedPlayerData = _gameRepo.AddNewPlayer(playerForAdd);
+            var playerForAdd = new PlayerDto(nickName, _hashService.CalculateHashCodeFrom(nickName));
+            var addedPlayerData = _gameRepo.AddPlayer(playerForAdd);
 
             return addedPlayerData;
         }
@@ -39,25 +39,25 @@ namespace GameStreamer.Backend.Services
             var playerPreviousGuid = _hashService.CalculateHashCodeFrom(prevNickName);
             var playerNewGuid = _hashService.CalculateHashCodeFrom(prevNickName);
 
-            var existedNewPlayer = _gameRepo.GetNewPlayerBy(playerPreviousGuid);
+            var existedNewPlayer = _gameRepo.GetPlayerBy(playerPreviousGuid);
 
             if (existedNewPlayer != null)
             {
                 existedNewPlayer.SetNewNickName(newNickName);
-                existedNewPlayer.SetNewHashGuid(playerNewGuid);
+                existedNewPlayer.PlayerDataHashGuid = playerNewGuid;
 
-                _gameRepo.UpdateNewPlayer(existedNewPlayer);
+                _gameRepo.UpdatePlayer(existedNewPlayer);
 
                 Console.WriteLine($"Поменяли никнейм новому игроку, старый: {prevNickName}, новый: {newNickName}, успешно нашли его под старым uuid: {playerPreviousGuid}, новый uuid: {playerNewGuid}");
             }
             else
             {
-                var existedInRoomPlayer = _gameRepo.GetPlayerWithRoomBy(playerPreviousGuid);
+                var existedInRoomPlayer = _gameRepo.GetPlayerBy(playerPreviousGuid);
 
                 if (existedInRoomPlayer != null)
                 {
                     existedInRoomPlayer.SetNewNickName(newNickName);
-                    existedInRoomPlayer.SetNewHashGuid(playerNewGuid);
+                    existedInRoomPlayer.PlayerDataHashGuid = playerNewGuid;
 
                     _gameRepo.UpdatePlayerWithRoom(existedInRoomPlayer);
                     Console.WriteLine($"Поменяли никнейм игроку в группе, старый: {prevNickName}, новый: {newNickName}, успешно нашли его под старым uuid: {playerPreviousGuid}, новый uuid: {playerNewGuid}");

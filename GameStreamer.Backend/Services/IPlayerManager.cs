@@ -11,13 +11,13 @@ namespace GameStreamer.Backend.Services
 
         public PlayerDataResponseDTO ChangePlayerNickName(string prevNickName, string newNickName);
 
-        public PlayerDataResponseDTO AddNewPlayerToServer(string nickName);
+        public PlayerDataResponseDTO AddNewPlayer(string nickName);
 
         public PlayerDataResponseDTO RemovePlayer(string connectionId);
 
         public PlayerDataResponseDTO GetRandomPlayer();
 
-        public List<PlayerDataResponseDTO> GetAllPlayersWithoutRoom();
+        public IEnumerable<PlayerDataResponseDTO> GetAllPlayersWithoutRoom();
 
     }
 }

@@ -22,7 +22,7 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase
             modelBuilder.HasDefaultSchema("game_streamer");
 
             modelBuilder.ApplyConfiguration(new NewPlayerEntityMap());
-            modelBuilder.ApplyConfiguration(new JoinedPlayerEntityMap());
+            modelBuilder.ApplyConfiguration(new PlayerEntityMap());
             modelBuilder.ApplyConfiguration(new RoomEntityMap());
         }
 

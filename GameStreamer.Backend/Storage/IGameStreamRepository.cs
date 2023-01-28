@@ -10,29 +10,25 @@ namespace GameStreamer.Backend.Storage
 
         #region Rooms
 
-        IQueryable<RoomEntity> GetAllRooms();
+        RoomDto GetRoomBy(Guid roomGuid);
 
-        RoomEntity GetRoomById(int roomId);
+        void AddRoom(RoomDto roomForAdd);
 
-        void InsertRoom(RoomEntity room);
+        void UpdateRoom(RoomDto roomForUpdate);
 
-        void DeleteRoom(int roomId);
-
-        void UpdateRoom(RoomEntity room);
+        void DeleteRoom(RoomDto roomForDelete);
 
         #endregion
 
         #region Players
 
-        public PlayerDataResponseDTO AddNewPlayer(PlayerWithHashDto addedPlayer);
+        PlayerDataResponseDTO AddPlayer(PlayerDto playerForAdd);
 
-        public PlayerWithHashDto GetNewPlayerBy(Guid playerDataHashGuid);
+        PlayerDto GetPlayerBy(Guid playerDataHashGuid);
 
-        public PlayerWithHashDto GetPlayerWithRoomBy(Guid playerDataHashGuid);
+        PlayerDataResponseDTO UpdatePlayer(PlayerDto playerForUpdate);
 
-        public PlayerDataResponseDTO UpdateNewPlayer(PlayerWithHashDto updatedPlayer);
-
-        public PlayerDataResponseDTO UpdatePlayerWithRoom(PlayerWithHashDto updatedPlayer);
+        PlayerDataResponseDTO DeletePlayer(PlayerDto playerForDelete);
 
         #endregion
 

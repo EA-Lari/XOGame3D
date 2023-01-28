@@ -4,11 +4,11 @@ using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 
 namespace GameStreamer.Backend.Storage.GameStreamerDbase.Mapping
 {
-    public class JoinedPlayerEntityMap : IEntityTypeConfiguration<JoinedPlayerEntity>
+    public class PlayerEntityMap : IEntityTypeConfiguration<PlayerEntity>
     {
-        public void Configure(EntityTypeBuilder<JoinedPlayerEntity> builder)
+        public void Configure(EntityTypeBuilder<PlayerEntity> builder)
         {
-            builder.ToTable("players_in_rooms", "game_streamer");
+            builder.ToTable("players", "game_streamer");
 
             builder.HasKey(k => k.Id);
             builder.Property(p => p.Id).ValueGeneratedOnAdd();

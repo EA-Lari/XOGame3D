@@ -4,7 +4,7 @@
     /// <summary>
     ///Entity that shows Player who joined to the Game Room
     /// </summary>
-    public class JoinedPlayerEntity
+    public class PlayerEntity
     {
         /// <summary>
         /// Id
