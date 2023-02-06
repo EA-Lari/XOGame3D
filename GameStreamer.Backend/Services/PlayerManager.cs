@@ -9,6 +9,7 @@ namespace GameStreamer.Backend.Services
     {
         private readonly IHashService _hashService;
         private readonly IGameStreamRepository _gameRepo;
+        private readonly Random _random = new ();
 
         public PlayerManager(IGameStreamRepository gameRepo, IHashService hashService)
         {
@@ -16,13 +17,40 @@ namespace GameStreamer.Backend.Services
             _hashService = hashService;
         }
 
-        public PlayerDataResponseDTO AddNewPlayer(string nickName)
+        public PlayerDataResponseDTO? AddNewPlayer(PlayerDto addedPlayerDto)
         {
+            PlayerDataResponseDTO? responseDto;
 
-            var playerForAdd = new PlayerDto(nickName, _hashService.CalculateHashCodeFrom(nickName));
-            var addedPlayerData = _gameRepo.AddPlayer(playerForAdd);
+            if (addedPlayerDto.IsRandomGameMode)
+            {
+                var halfEmptyRoom = _gameRepo.GetFirstIncompleteRoom();
+                
+                if (halfEmptyRoom != null)
+                {
+                    halfEmptyRoom.RoomPlayers.Append(addedPlayerDto);
+                    
+                    _gameRepo.UpdateRoom(halfEmptyRoom);
+                }
+                else
+                {
+                    var newRoomHubId = $"TestRoom_{_random.Next(1000, 1999)}";
+                    var newRoom = new RoomDto
+                    {
+                        HubGroupId = newRoomHubId,
+                        RoomGuid = _hashService.CalculateHashCodeFrom(newRoomHubId)
+                    };
 
-            return addedPlayerData;
+                    _gameRepo.AddRoom(newRoom);
+                }
+                responseDto = new PlayerDataResponseDTO { };
+            }
+            else
+            {
+                responseDto = null;
+                Console.WriteLine("Method PlayerManager.AddNewPlayer() with flag (IsRandomGameMode = false) haven't realized yet!");
+            }
+
+            return responseDto;
         }
 
         public PlayerDataResponseDTO ChangePlayerNickName(string prevNickName, string newNickName)
@@ -30,7 +58,7 @@ namespace GameStreamer.Backend.Services
             if (string.IsNullOrEmpty(prevNickName) || string.IsNullOrEmpty(newNickName))
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine($"Попытка задать пустое значение ника. Старый - {prevNickName}, Новый - {newNickName} Ничего не меняем!");
+                Console.WriteLine($"Player tried to add empty nick. Old - {prevNickName}, New - {newNickName} Nick didn't change!");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
 
                 return null;
@@ -52,36 +80,17 @@ namespace GameStreamer.Backend.Services
             }
             else
             {
-                var existedInRoomPlayer = _gameRepo.GetPlayerBy(playerPreviousGuid);
-
-                if (existedInRoomPlayer != null)
-                {
-                    existedInRoomPlayer.SetNewNickName(newNickName);
-                    existedInRoomPlayer.PlayerDataHashGuid = playerNewGuid;
-
-                    _gameRepo.UpdatePlayerWithRoom(existedInRoomPlayer);
-                    Console.WriteLine($"Поменяли никнейм игроку в группе, старый: {prevNickName}, новый: {newNickName}, успешно нашли его под старым uuid: {playerPreviousGuid}, новый uuid: {playerNewGuid}");
-                }
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Игрок с ником {prevNickName} не найден на сервере!");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
             }
 
             return new PlayerDataResponseDTO() { NickName = newNickName };
         }
 
-        public PlayerDataResponseDTO GetPlayerDataBy(string connectionId)
-        {
-            return GetRandomPlayer();
-        }
-
-        public PlayerDataResponseDTO GetRandomPlayer()
-        {
-            return new PlayerDataResponseDTO();
-            //return new PlayerDataResponseDTO { NickName = $"Player_{_random.Next(1, 999)}", RoomConnectionId = $"id_{_random.Next(3000, 9000)}" };
-        }
-
         public List<PlayerDataResponseDTO> GetAllPlayersWithoutRoom()
         {
             return new List<PlayerDataResponseDTO>();
-            //return _playersConcurrDict.Select(x => new PlayerDataResponseDTO { RoomConnectionId = x.Key, NickName = x.Value.NickName }).ToList();
         }
 
         public PlayerDataResponseDTO RemovePlayer(string connectionId)
@@ -91,13 +100,13 @@ namespace GameStreamer.Backend.Services
 
         public PlayerDataResponseDTO MakePlayerReadyToGame(string connectionId)
         {
-            Console.WriteLine("Метод MakePlayerReadyToGame еще не реализован!");
+            Console.WriteLine("Method PlayerManager.MakePlayerReadyToGame() haven't realized yet!");
             return new PlayerDataResponseDTO();
         }
 
         public PlayerDataResponseDTO SetMatchTypeToPlayer(string connectionId, bool matchType)
         {
-            Console.WriteLine("Метод SetMatchTypeToPlayer еще не реализован!");
+            Console.WriteLine("Method PlayerManager.SetMatchTypeToPlayer() haven't realized yet!");
             return new PlayerDataResponseDTO();
         }
 

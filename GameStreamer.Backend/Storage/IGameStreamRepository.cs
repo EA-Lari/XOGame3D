@@ -1,7 +1,5 @@
 ﻿using GameStreamer.Backend.DTOs;
 using GameStreamer.Backend.DTOs.DataAccess;
-using GameStreamer.Backend.Models;
-using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 
 namespace GameStreamer.Backend.Storage
 {
@@ -10,7 +8,9 @@ namespace GameStreamer.Backend.Storage
 
         #region Rooms
 
-        RoomDto GetRoomBy(Guid roomGuid);
+        RoomDto? GetFirstIncompleteRoom();
+
+        RoomDto? GetRoomBy(Guid roomGuid);
 
         void AddRoom(RoomDto roomForAdd);
 
@@ -21,8 +21,6 @@ namespace GameStreamer.Backend.Storage
         #endregion
 
         #region Players
-
-        PlayerDataResponseDTO AddPlayer(PlayerDto playerForAdd);
 
         PlayerDto GetPlayerBy(Guid playerDataHashGuid);
 

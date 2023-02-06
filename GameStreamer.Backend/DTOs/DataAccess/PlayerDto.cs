@@ -32,10 +32,8 @@
 
         public string RoomHubId { get; set; }
 
-        public PlayerDto(string nickName, Guid hashGuid) : base(nickName)
-        {
-            SetNewHashGuid(hashGuid);
-        }
+        public PlayerDto(string nickName) : base(nickName)
+        { }
 
         private void SetNewHashGuid(Guid newHashGuid) => _playerDataHashGuid = newHashGuid;
 

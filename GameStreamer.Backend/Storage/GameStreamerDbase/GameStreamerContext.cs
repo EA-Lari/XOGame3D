@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
 using GameStreamer.Backend.Storage.GameStreamerDbase.Mapping;
 
 namespace GameStreamer.Backend.Storage.GameStreamerDbase
@@ -21,7 +20,6 @@ namespace GameStreamer.Backend.Storage.GameStreamerDbase
         {
             modelBuilder.HasDefaultSchema("game_streamer");
 
-            modelBuilder.ApplyConfiguration(new NewPlayerEntityMap());
             modelBuilder.ApplyConfiguration(new PlayerEntityMap());
             modelBuilder.ApplyConfiguration(new RoomEntityMap());
         }

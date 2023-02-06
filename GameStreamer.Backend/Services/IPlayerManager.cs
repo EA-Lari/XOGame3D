@@ -1,4 +1,5 @@
 ﻿using GameStreamer.Backend.DTOs;
+using GameStreamer.Backend.DTOs.DataAccess;
 
 namespace GameStreamer.Backend.Services
 {
@@ -11,13 +12,13 @@ namespace GameStreamer.Backend.Services
 
         public PlayerDataResponseDTO ChangePlayerNickName(string prevNickName, string newNickName);
 
-        public PlayerDataResponseDTO AddNewPlayer(string nickName);
+        public PlayerDataResponseDTO? AddNewPlayer(PlayerDto addedPlayerDto);
 
         public PlayerDataResponseDTO RemovePlayer(string connectionId);
 
-        public PlayerDataResponseDTO GetRandomPlayer();
+        //public PlayerDataResponseDTO GetRandomPlayer();
 
-        public IEnumerable<PlayerDataResponseDTO> GetAllPlayersWithoutRoom();
+        //public IEnumerable<PlayerDataResponseDTO> GetAllPlayersWithoutRoom();
 
     }
 }

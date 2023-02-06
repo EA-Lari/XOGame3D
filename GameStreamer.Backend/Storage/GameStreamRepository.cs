@@ -3,6 +3,7 @@ using GameStreamer.Backend.DTOs.DataAccess;
 using GameStreamer.Backend.Models;
 using GameStreamer.Backend.Storage.GameStreamerDbase;
 using GameStreamer.Backend.Storage.GameStreamerDbase.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameStreamer.Backend.Storage
 {
@@ -18,31 +19,74 @@ namespace GameStreamer.Backend.Storage
 
         #region Rooms
 
-        public RoomDto GetRoomBy(Guid roomGuid)
+        public RoomDto? GetFirstIncompleteRoom()
         {
 
-            RoomDto resultRoom;
+            RoomDto responseDto;
+
+            var incompleteRoomEntity = _gameStreamerContext.Set<RoomEntity>().Include(p => p.JoinedPlayers.Count() < 2).FirstOrDefault();
+            var playersDtoList = new List<PlayerDto>();
+
+            if (incompleteRoomEntity != null)
+            {
+
+                foreach (var entityPlayer in incompleteRoomEntity.JoinedPlayers)
+                {
+                    var playerDto = new PlayerDto(entityPlayer.Nickname);
+
+                    playerDto.PlayerDataHashGuid = entityPlayer.PlayerHashGuid;
+                    playerDto.ChatHubId = entityPlayer.ChatHubId;
+                    playerDto.GameHubId = entityPlayer.GameHubId;
+                    playerDto.RoomHubId = entityPlayer.RoomHubId;
+                    playerDto.IsReadyForGame = entityPlayer.IsReadyForGame;
+                    playerDto.IsRandomGameMode = entityPlayer.IsRandomGameMode;
+
+                    playersDtoList.Add(playerDto);
+                }
+
+                responseDto = new RoomDto
+                {
+                    RoomGuid = incompleteRoomEntity.RoomGuid,
+                    HubGroupId = incompleteRoomEntity.HubGroupId,
+                    RoomPlayers = playersDtoList
+                };
+
+            }
+
+            else
+            {
+                responseDto = null;
+            }
+
+            return responseDto;
+        }
+
+        public RoomDto? GetRoomBy(Guid roomGuid)
+        {
+
+            RoomDto? resultRoom;
 
             var foundedRoom = GetRoomEntityBy(roomGuid);
 
             var playersDtoList = new List<PlayerDto>();
 
-            foreach (var entityPlayer in foundedRoom.JoinedPlayers)
-            {
-                var playerDto = new PlayerDto(entityPlayer.Nickname, entityPlayer.PlayerHashGuid);
-
-                playerDto.ChatHubId = entityPlayer.ChatHubId;
-                playerDto.GameHubId = entityPlayer.GameHubId;
-                playerDto.RoomHubId = entityPlayer.RoomHubId;
-                playerDto.IsRandomGameMode = entityPlayer.IsRandomGameMode;
-                playerDto.IsReadyForGame = entityPlayer.IsReadyForGame;
-
-                playersDtoList.Add(playerDto);
-            }
-
-
             if (foundedRoom != null)
             {
+
+                foreach (var entityPlayer in foundedRoom.JoinedPlayers)
+                {
+                    var playerDto = new PlayerDto(entityPlayer.Nickname);
+
+                    playerDto.PlayerDataHashGuid = entityPlayer.PlayerHashGuid;
+                    playerDto.ChatHubId = entityPlayer.ChatHubId;
+                    playerDto.GameHubId = entityPlayer.GameHubId;
+                    playerDto.RoomHubId = entityPlayer.RoomHubId;
+                    playerDto.IsReadyForGame = entityPlayer.IsReadyForGame;
+                    playerDto.IsRandomGameMode = entityPlayer.IsRandomGameMode;
+
+                    playersDtoList.Add(playerDto);
+                }
+
                 resultRoom = new RoomDto
                 {
                     RoomGuid = foundedRoom.RoomGuid,
@@ -104,20 +148,20 @@ namespace GameStreamer.Backend.Storage
 
         #region Players
 
-        public PlayerDataResponseDTO AddPlayer(PlayerDto playerForAdd)
-        {
-            var newPlayerEntity = new PlayerEntity()
-            {
-                Nickname = playerForAdd.NickName,
-                PlayerHashGuid = playerForAdd.PlayerDataHashGuid,
-                CreatedAt = DateTime.Now
-            };
+        //public PlayerDataResponseDTO AddPlayer(PlayerDto playerForAdd)
+        //{
+        //    var newPlayerEntity = new PlayerEntity()
+        //    {
+        //        Nickname = playerForAdd.NickName,
+        //        PlayerHashGuid = playerForAdd.PlayerDataHashGuid,
+        //        CreatedAt = DateTime.Now
+        //    };
 
-            _gameStreamerContext.Set<PlayerEntity>().Add(newPlayerEntity);
-            Save();
+        //    _gameStreamerContext.Set<PlayerEntity>().Add(newPlayerEntity);
+        //    Save();
 
-            return new PlayerDataResponseDTO { NickName = playerForAdd.NickName };
-        }
+        //    return new PlayerDataResponseDTO { NickName = playerForAdd.NickName };
+        //}
 
         public PlayerDto GetPlayerBy(Guid playerDataHashGuid)
         {
@@ -127,7 +171,7 @@ namespace GameStreamer.Backend.Storage
 
             if (foundedPlayer != null)
             {
-                resultPlayer = new PlayerDto(foundedPlayer.Nickname, foundedPlayer.PlayerHashGuid);
+                resultPlayer = new PlayerDto(foundedPlayer.Nickname);
             }
             else
             {
@@ -169,11 +213,11 @@ namespace GameStreamer.Backend.Storage
 
         #endregion
 
-        private PlayerEntity GetPlayerEntityBy(Guid playerDataHashGuid) => _gameStreamerContext.Set<PlayerEntity>()
-            .First(p => p.PlayerHashGuid == playerDataHashGuid);
+        private PlayerEntity? GetPlayerEntityBy(Guid playerDataHashGuid) => _gameStreamerContext.Set<PlayerEntity>()
+            .FirstOrDefault(p => p.PlayerHashGuid == playerDataHashGuid);
 
-        private RoomEntity GetRoomEntityBy(Guid roomGuid) => _gameStreamerContext.Set<RoomEntity>()
-            .First(p => p.RoomGuid == roomGuid);
+        private RoomEntity? GetRoomEntityBy(Guid roomGuid) => _gameStreamerContext.Set<RoomEntity>()
+            .FirstOrDefault(p => p.RoomGuid == roomGuid);
 
         private void Save()
         {

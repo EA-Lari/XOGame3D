@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using GameStreamer.Backend.Services;
 using GameStreamer.Backend.Interfaces;
+using GameStreamer.Backend.DTOs.DataAccess;
 
 namespace GameStreamer.Backend.Hubs
 {
@@ -18,6 +19,25 @@ namespace GameStreamer.Backend.Hubs
             _playerManager = playerManager;
         }
 
+        public Task GreetNewPlayer(string nickName)
+        {
+
+            var playerDto = new PlayerDto(nickName);
+            playerDto.RoomHubId = Context.ConnectionId;
+            playerDto.IsRandomGameMode = true;
+
+            var responseData = _playerManager.AddNewPlayer(playerDto);
+            
+            //var gameRoomsList = _roomManager.GetAllGameRooms();
+
+            //var playersWithoutRoomList = _playerManager.GetAllPlayersWithoutRoom();
+
+            Clients.AllExcept(Context.ConnectionId).NewPlayerJoined(responseData);
+            //Clients.Caller.UpdatePlayersWithoutRooms(playersWithoutRoomList);
+
+            return Task.CompletedTask;
+        }
+
         public Task PlayerChangedLogin(string prevLogin, string actualLogin)
         {
             var changedPlayerDataDto = _playerManager.ChangePlayerNickName(prevLogin, actualLogin);
@@ -32,20 +52,6 @@ namespace GameStreamer.Backend.Hubs
         }
 
         public Task PlayerChoseStandardGame() => Task.CompletedTask;
-
-        public Task GreetNewPlayer(string nickName)
-        {
-            var newPlayerDto = _playerManager.AddNewPlayer(nickName);
-
-            //var gameRoomsList = _roomManager.GetAllGameRooms();
-
-            //var playersWithoutRoomList = _playerManager.GetAllPlayersWithoutRoom();
-
-            Clients.AllExcept(Context.ConnectionId).NewPlayerJoined(newPlayerDto);
-            //Clients.Caller.UpdatePlayersWithoutRooms(playersWithoutRoomList);
-
-            return Task.CompletedTask;
-        }
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
